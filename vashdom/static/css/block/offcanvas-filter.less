@@ -1,0 +1,81 @@
+@import '../imports.less';
+
+.offcanvas-filter {
+    position: fixed;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 100;
+    visibility: hidden;
+
+    &__close {
+        position: absolute;
+        background: #000;
+        content: ' ';
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 500;
+        .opacity(0);
+        .transition-duration(0.3s);
+    }
+
+    &&_active {
+        visibility: visible;
+        
+        .offcanvas-filter__close {
+            .opacity(0.4);
+        }
+    }
+
+    &__bar {
+        position: absolute;
+        width: 25%;
+        .md(width, 50%);
+        .xs(width, 80%);
+        top: 0;
+        bottom: 0;
+        left: 0;
+        padding: 25px;
+        background: @primarycolor;
+        z-index: 520;
+        transform: translateX(-100%);
+        .transition-duration(0.3s);
+        overflow-y: auto;
+
+        h3 {
+            color: #fff;
+        }
+
+        #catalog-filter {
+            .metro, .district {
+                width: 100%;
+            }
+        }
+    }
+
+    &__page {
+        transition-duration: 0.5s;
+
+        &&_active {
+            transform: translateX(25%);
+            .md(transform, translateX(50%));
+            .xs(transform, translateX(80%));
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+
+            &-remove {
+                position: fixed;
+                top: 0;
+                bottom: 0;
+                left: 0;
+                right: 0;
+            }
+        }
+    }
+}

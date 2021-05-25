@@ -1,0 +1,54 @@
+@import '../imports.less';
+
+.header {
+    .gradient(@primarycolor, lighten(@primarycolor, 10%), @primarycolor);
+    color: #fff;
+    padding: 10px 0;
+
+    .row {
+        position: relative;
+        align-items: center;
+    }
+
+    &__logo {
+        .col();
+        .xs(flex-grow, 1);
+        .xs(text-align, center);
+
+        img {
+            height: 50px;
+            .sm(height, 30px);
+        }
+    }
+
+    &__contacts {
+        .col();
+        flex-grow: 1;
+        text-align: right;
+        .xs(display, none);
+    }
+
+    &__col {
+        font-size: 12px;
+    }
+
+    &__regim {
+        .sm(display, none);
+    }
+
+    &__tel {
+        font-size: 16px;
+        // background: url('../img/phone.png') no-repeat left center;
+        padding-left: 40px;
+        .sm(padding-left, 0);
+        .sm(font-size, 14px);
+    }
+
+    &__user-block {
+        
+    }
+
+    &__sandwitch {
+        margin: 0 15px;
+    }
+}

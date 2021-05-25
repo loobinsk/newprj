@@ -1,0 +1,25 @@
+{% extends "html.html" %}
+
+{% load main_tags %}
+
+{% block styles %}
+    {{ block.super }}
+    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/public.css">
+{% endblock %}
+
+{% block title %}Панель управления{% endblock %}
+
+{% block page %}
+    <div id='page'>
+        <div class='container'>
+            <div class='row'>
+                <div id="content">
+                    {% include 'breadcrumbs.html' %}
+                    {% block content %}
+
+                    {% endblock %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,75 @@
+@import '../imports.less';
+
+.mainmenu {
+    background: #f7f7f7;
+    border-bottom: 2px solid @primarycolor;
+    border-top: none;
+    .drop-shadow(0, 0, 15px, 30%);
+    .rounded(0);
+    .sm(display, none);
+
+    &__content {
+        .col();
+        .size(12);
+        display: flex;
+    }
+
+    &.fixed {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+        box-shadow: 0 20px 30px rgba(0, 0, 0, 10%), 0 10px 15px rgba(0, 0, 0, 25%);
+    }
+
+    &__items {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+
+        li {
+            flex-grow: 1;
+        }
+
+        a {
+            display: block;
+            padding: 14px 10px;
+            border: 1px solid transparent;
+            text-transform: uppercase;
+            text-align: center;
+            transition-duration: 0.3s;
+
+            &:hover {
+                background: lighten(@primarycolor, 10%);
+                color: #fff;
+                text-decoration: none;
+            }
+        }
+    }
+
+    
+
+    .navbar-nav > li.active > a {
+        color: #fff;
+        background: lighten(@primarycolor, 20%);
+    }
+
+    .navbar-nav.bases {
+        float: right;
+
+        >li > a {
+            padding: 14px 10px;
+
+            &.mainbase {
+                font-weight: bold;
+            }
+        }
+    }
+
+    .collapse {
+        padding: 0;
+    }
+
+}

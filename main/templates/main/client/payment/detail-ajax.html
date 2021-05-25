@@ -1,0 +1,38 @@
+{% load main_tags %}
+
+<div class="payment-detail payment-item-{{ payment.id }} {% if my %}my-payment{% endif %} editable-content">
+    <div class="content">
+        <h1 class="page-title">{% if title %}{{ title }}: {% endif %}Заказ #{{ payment.id }}</h1>
+
+        <div class="date"><strong>Дата.:</strong> {{ payment.created|fmt_date }}</div>
+
+        {% with item_list=payment.items.all %}
+            {% include 'main/client/payment/item-list.html' %}
+        {% endwith %}
+
+        <div class="sum"><strong>Сумма:</strong> {{ payment.sum }} р.</div>
+        <div class="discount"><strong>Скидка:</strong> {{ payment.total_discount }} р.</div>
+        <div class="total"><strong>Итого:</strong> {{ payment.total }} р.</div>
+        {% if payment.promocode %}
+            <div class="promocode"><strong>Промокод:</strong> {{ payment.promocode.promotion.title }}</div>
+        {% endif %}
+
+        {% if payment.status == 'w' %}
+            {% payment_form payment %}
+
+            {% if not payment.promocode %}
+                {% promocode_form payment %}
+            {% endif %}
+        {% endif %}
+        {% if payment.status == 'c' %}
+            <div class="success">
+                Оплачено
+            </div>
+        {% endif %}
+        {% if payment.status == 'к' %}
+            <div class="rejected">
+                Отменен
+            </div>
+        {% endif %}
+    </div>
+</div>

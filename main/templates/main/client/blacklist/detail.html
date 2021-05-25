@@ -1,0 +1,9 @@
+{% extends 'page-client.html' %}
+
+{% load main_tags %}
+
+{% block title %}{{ blacklist.tel }} &middot; {{ block.super }}{% endblock %}
+
+{% block content %}
+    {% include 'main/client/blacklist/detail-ajax.html' %}
+{% endblock %}

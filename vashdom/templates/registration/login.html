@@ -1,0 +1,69 @@
+{% extends 'page.html' %}
+
+{% load thumbnail %}
+{% load main_tags %}
+
+{% block title %}Вход в личный кабинет  &middot; {{ block.super }}{% endblock %}
+
+{% block content %}
+    <form action="{% url 'auth_login' %}" method="post" class="login-form">
+        {% csrf_token %}
+        <h1 class="page-title">Вход в личный кабинет</h1>
+        <div class="content">
+            <div class="name">
+                {% if user.is_authenticated %}
+                    Вы авторизованы как <strong>{{ user.get_full_name }}</strong>
+                {% endif %}
+            </div>
+            <div class="credentials on-anonymous {% if user.is_authenticated %}hidden{% endif %}">
+                    <div><label>Ваш E-mail</label>{{ form.username }}</div>
+                    <div><label>Пароль</label>{{ form.password }}</div>
+                    <div><label></label><a href="{% url 'auth_password_reset' %}">Забыли пароль?</a></div>
+                    <button class="btn btn-secondary btn-block btn-login" type="submit" data-loading-text="Вход...">Вход</button>
+
+                    <a href="{% url 'socialauth_begin' 'vk-oauth' %}" class="btn btn-vk btn-block">Вход через <img src="{{ STATIC_URL }}img/vklogo.png"></a>
+                    <a href="{% url 'socialauth_begin' 'google-oauth2' %}" class="btn btn-gplus btn-block">Вход через <img src="{{ STATIC_URL }}img/google-plus.png"></a>
+                    <a href="{% url 'registration_register' %}" class="btn btn-secondary btn-block">Регистрация</a>
+            </div>
+            <p class="action-buttons on-auth {% if not user.is_authenticated %}hidden{% endif %}">
+                <a href="{% url "profile:my" %}" class="btn btn-secondary btn-block">Перейти в личный кабинет</a><br>
+                <a href="{% url 'auth_logout' %}" class="btn btn-secondary btn-block">Выйти</a>
+            </p>
+        </div>
+    </form>
+
+    <script type="text/javascript">
+        function failFunction(e) {
+            var data = jQuery.parseJSON(e.responseText);
+            $('.bottom-left').notify({
+                message: { html: data.message },
+                closable: true,
+                type: 'notice'
+            }).show();
+        }
+
+        jQuery(document).ready(function() {
+             $('form.login-form').ajaxForm({
+                dataType: 'json',
+                url: '/login/ajax',
+                form: this,
+                success: function(data, status, xhr, form) {
+                    if (data.success){
+                        window.location = '/profile/';
+                    } else {
+                        $(form).find('#id_username').popover({
+                            content: data.message,
+                            html: true,
+                            placement: 'left',
+                            title: 'Ошибка',
+                            trigger: 'focus'
+                        });
+                        $(form).find('#id_username').popover('show');
+                        $(form).find('.btn-login').button('reset');
+                    }
+                },
+                error: failFunction
+            });
+        });
+    </script>
+{% endblock %}

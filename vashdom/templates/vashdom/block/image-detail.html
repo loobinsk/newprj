@@ -1,0 +1,13 @@
+{% load thumbnail %}
+
+{% if image_list|length > 0 %}
+    <div class='image-list detail'>
+        {% for image in image_list %}
+            {% thumbnail image.image "110x110" crop='center' as img_small %}
+                <a href="{{ image.image.url }}" class="colorbox" title="{{ title }}" rel="image-list">
+                    <img src="{{ img_small.url }}">
+                </a>
+            {% endthumbnail %}
+        {% endfor %}
+    </div>
+{% endif %}

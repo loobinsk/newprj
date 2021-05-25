@@ -1,0 +1,19 @@
+{% extends 'page-client.html' %}
+
+{% load bootstrap_pagination %}
+{% load main_tags %}
+
+{% block title %}Мои объявления &middot; {{ block.super }}{% endblock %}
+
+{% block content %}
+    <h1 class="page-title padding">Мои объявления</h1>
+
+    <ul class="nav nav-tabs padding">
+        <li class="{% if not request.GET.archive %}active{% endif %}"><a href="{% url 'client:advert:my' %}">Актуальные <span class="badge badge-">{{ archive_no_count }}</span></a></li>
+        <li class="{% if request.GET.archive == '1' %}active{% endif %}"><a href="{% url 'client:advert:my' %}?archive=1">В архиве <span class="badge">{{ archive_yes_count }}</span></a></li>
+    </ul>
+
+    {% include 'main/client/advert/list-my.html' %}
+
+    {% bootstrap_paginate page_obj range=6 show_first_last='true' %}
+{% endblock %}

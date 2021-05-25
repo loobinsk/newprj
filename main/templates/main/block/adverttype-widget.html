@@ -1,0 +1,10 @@
+<div class="btn-group cattype" data-toggle="buttons">
+    {% for choice in choices %}
+        <label class="btn btn-cattype {% if choice.0 == value %}active{% endif %}">
+            <input type="radio" name="{{ id }}" value="{{ choice.0 }}" {% if choice.0 == value %}checked{% endif %}> {{ choice.1 }}
+        </label>
+    {% endfor %}
+    <label class="btn btn-cattype {% if 'LP' == value %}active{% endif %}">
+        <input type="radio" name="{{ id }}" value="LP" {% if 'LP'  == value %}checked{% endif %}> Снять посуточно
+    </label>
+</div>

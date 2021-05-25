@@ -1,0 +1,262 @@
+{% load main_tags %}
+{% load uimg_tags %}
+{% load comment_tags %}
+{% load cache %}
+
+<tr class="catalog-preview item catalog-item-{{ advert.id }} {% if advert.id in folded %}fold{% endif %}">
+    {% block before %}
+    {% endblock %}
+    <td class="col col-fav">
+        <a href="#" class='btn-add-favorite {% if advert.id in favorites %}in{% endif %}' data-id='{{ advert.id }}' data-toggle="tooltip" title='В избранное'><span class="glyphicon glyphicon-star"></span></a>
+    </td>
+    <td class="col col-title">
+        <h2>
+            {{ advert.short_title }}
+        </h2>
+        <div class="date hide-fold">{{ advert.date|fmt_date }}</div>
+        {% if not is_moder %}
+            <div class="ident hide-fold"><a href="http://gsn.su/id{{ advert.id }}" target="_blank">#{{ advert.id }}</a></div>
+        {% endif %}
+        {% block status %}
+        {% endblock %}
+        {% if advert.is_archive %}
+            <span class="archive hide-fold"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> В архиве</span>
+        {% endif %}
+    </td>
+    {% cache 3600 catalog_preview_client advert.id is_moder %}
+    <td class="col col-image">
+        {% with image_list=advert.images.all %}
+            {% if image_list|length > 0 %}
+                <div class="dropdown keep-open gallery">
+                    <a data-toggle="dropdown" class="btn btn-load-images btn-sm" href="#" data-id='{{ advert.id }}'><span class="glyphicon glyphicon-picture"></span></a>
+                    <div class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                        <div class="loading"></div>
+                    </div>
+                </div>
+            {% else %}
+                &nbsp;
+            {% endif %}
+        {% endwith %}
+    </td>
+    <td class="col col-address">
+        <div class="metro hide-fold">
+            <a href="{% url 'client:home' %}?metro={{ advert.metro.id }}">{{ advert.metro.title }}</a>
+            {% with need_metro=advert.need_metro.all %}
+                {% if need_metro %}
+                    {% with metro=need_metro|first %}
+                        <a href="{% url 'client:home' %}?metro={{ metro.id }}">{{ metro.title }}</a>
+                    {% endwith %}
+
+                    <a href="#" class="btn-catalog-show-metro">Показать все...</a>
+                    <div class="more">
+                        <ul>
+                            <li>{{ advert.metro.title }}</li>
+                            {% for metro in need_metro %}
+                                <li>{{ metro.title }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
+            {% endwith %}
+        </div>
+        <div class="address hide-fold">{{ advert.address }}</div>
+        {% if advert.latitude and advert.longitude %}
+            <a href="#" class="btn-address-map-client" data-id='{{ advert.id }}'>Показать на карте</a>
+        {% endif %}
+        <div class="map hidden">
+            <div class="desc">{{ advert.title }} - {{ advert.address }}</div>
+            <button class="btn btn-link btn-address-map-close-client">Закрыть</button>
+            <div class="content"></div>
+        </div>
+    </td>
+    <td class="col col-square">
+        {% if advert.need == 's' %}
+            {% if advert.floor %}
+                <div class="floor"><strong>Этажность:</strong> {{ advert.floor }}{% if advert.count_floor %}/{{ advert.count_floor }}{% endif %}</div>
+            {% endif %}
+            <div class="square"><strong>Площадь:</strong> {{ advert.square|default_if_none:'Нет' }}/{{ advert.living_square|default_if_none:'Нет' }}/{{ advert.kitchen_square|default_if_none:'Нет' }}</div>
+        {% endif %}
+        {% if advert.need == 'd' %}
+            {% if advert.floor or advert.floor_max %}
+            <div class="floor"><strong>Этаж:</strong> {{ advert.floor|default_if_none:'Нет' }} - {{ advert.floor_max|default_if_none:'Нет' }} </div>
+            {% endif %}
+            {% if advert.square or advert.square_max %}
+                <div class="square"><strong>Обшая, м<sup>2</sup>:</strong> {{ advert.square|default:'Нет' }}-{{ advert.square_max|default:'Нет' }}</div>
+            {% endif %}
+            {% if advert.living_square or advert.living_square_max %}
+                <div class="square"><strong>Жилая, м<sup>2</sup>:</strong> {{ advert.living_square|default:'Нет' }}-{{ advert.living_square_max|default:'Нет' }}</div>
+            {% endif %}
+            {% if advert.kitchen_square or advert.kitchen_square_max %}
+                <div class="square"><strong>Кухня, м<sup>2</sup>:</strong> {{ advert.kitchen_square|default:'Нет' }}-{{ advert.kitchen_square_max|default:'Нет' }}</div>
+            {% endif %}
+        {% endif %}
+    </td>
+    <td class="col col-desc">
+        {% if advert.body.strip %}
+            <div class="desc hide-fold">
+                <div class="txt">
+                    {{ advert.description|truncatewords:10|safe }}
+                </div>
+                <a href="#" class="btn-catalog-show-desc">Подробно</a>
+                <div class="more">{{ advert.description|safe }}</div>
+            </div>
+        {% endif %}
+
+        <ul class="icon-list">
+            {% for field in advert.comfort_list %}
+                {% if field.1 %}<li><span class="glyphicon {{ field.0 }}" data-toggle="tooltip" title='{{ field.2 }}'></span> </li>{% endif %}
+            {% endfor %}
+        </ul>
+    </td>
+    <td class="col col-price">
+        <div class="price">{{ advert.price|fmt_price }}&nbsp;р.</div>
+        <div class="type hide-fold">
+            {% if advert.adtype == 'L' %}
+                Аренда
+            {% else %}
+                Продажа
+            {% endif %}
+        </div>
+
+        {% if not is_moder %}
+            <div class="client-count hide-fold">
+                {% if advert.count_clients > 0 %}
+                    <a href="#catalog-clients-{{ advert.id }}" class="btn-show-clients">
+                        {{ advert.count_clients }}
+                        {% if advert.need == 's' %}
+                            клиент(ов)
+                        {% else %}
+                            объект(ов)
+                        {% endif %}
+
+                        {% if advert.last_add_client_count > 0 %}
+                            (&nbsp;+{{ advert.last_add_client_count }}&nbsp;)
+                        {% endif %}
+                    </a>
+                {% endif %}
+            </div>
+        {% endif %}
+        {% if is_moder %}
+            <div class="complains-count hide-fold">
+                {% if advert.count_complains > 0 %}
+                    <a href="#catalog-complains-{{ advert.id }}" class="btn-show-complains">
+                        {{ advert.count_complains }} жалоб(ы)
+                    </a>
+                {% endif %}
+            </div>
+        {% endif %}
+    </td>
+    {% endcache %}
+
+    <td class="col col-owner">
+        {% if advert.company %}
+            <div class="company hide-fold">{{ advert.company.title }}</div>
+            <div class="user">{{ advert.user.get_full_name }}</div>
+        {% else %}
+            <div class="company hide-fold">Частное лицо</div>
+            <div class="user">{{ advert.owner_name|default:'&nbsp;' }}</div>
+        {% endif %}
+        {% if is_moder %}
+            {% if advert.not_answer %}
+                <div class="text-danger">Не берет трубку</div>
+            {% endif %}
+        {% else %}
+            {% cache 800 catalog_preview_tel advert.id request.user.id %}
+                {% with viewed=advert|is_advert_viewed:request.user  %}
+                    <div class="showtel hide-fold {% if viewed %}open{% endif %}">
+                        {% if not is_moder %}
+                            <div class="dropdown complain hide-fold">
+                                <a href="#" data-toggle='dropdown' title="Пожаловаться"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a>
+                                <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                    {% if advert.company %}
+                                        <li><a href="#" class="btn-complain" data-id='{{ advert.id }}' data-reason="1">Не актуально</a></li>
+                                        <li><a href="#" class="btn-complain" data-id='{{ advert.id }}' data-reason="2">Вымышленный объект</a></li>
+                                    {% else %}
+                                        <li><a href="#" class="btn-complain" data-id='{{ advert.id }}' data-reason="7">Это агент</a></li>
+                                        <li><a href="#" class="btn-complain" data-id='{{ advert.id }}' data-reason="1">Не актуально</a></li>
+                                    {% endif %}
+                                    <li><a href="#" class="btn-complain" data-id='{{ advert.id }}' data-reason="9">Неверная цена</a></li>
+                                    <li><a href="#" class="btn-complain" data-id='{{ advert.id }}' data-reason="5">Неверный адрес</a></li>
+                                    <li><a href="#" class="btn-complain" data-id='{{ advert.id }}' data-reason="6">Не дозвониться</a></li>
+                                </ul>
+                            </div>
+                        {% endif %}
+
+                        {% if viewed %}
+                            <img src='{% url 'phone:owner' %}?id={{ advert.id }}&hash={% random_number 5 %}'>
+                        {% else %}
+                            <a href="#" class="show-owner-tel" data-id="{{ advert.id }}">
+                                Показать телефон
+                            </a>
+                        {% endif %}
+                    </div>
+                {% endwith %}
+            {% endcache %}
+        {% endif %}
+    </td>
+
+    <td class="col col-action">
+        <a href="#" class='btn-fold' data-id='{{ advert.id }}'>{% if advert.id in folded %}развернуть{% else %}свернуть{% endif %}</a>
+        <span class="views-count">
+{#            <span class="glyphicon glyphicon-eye-open" data-toggle='tooltip' data-placement="bottom" title='Просмотров'></span> {{ advert.views_tel }}#}
+        </span>
+{#        {% if not is_moder %}#}
+{#            {% my_comments_count 'advert_agent' advert.id %}#}
+{#        {% endif %}#}
+        {% block actions %}
+            {% if advert.is_buyed %}
+                <div class="buyed hide-fold">Выкуплено до<br>{{ advert.buy_date|fmt_date }}</div>
+            {% else %}
+                <a href="#" class="btn btn-default btn-block btn-catalog-buy" data-id='{{ advert.id }}'>Выкупить</a>
+            {% endif %}
+        {% endblock %}
+{#        {% if not is_moder %}#}
+{#            <a href="#catalog-comment-{{ advert.id }}" class="btn-show-comments">Написать комментарий</a>#}
+{#        {% endif %}#}
+    </td>
+</tr>
+
+{#{% if not is_moder %}#}
+{#    <tr class="catalog-comment hidden" id="catalog-comment-{{ advert.id }}">#}
+{#        <td colspan="9">#}
+{#            <div class="corner"></div>#}
+{#            {% show_my_comments 'advert_agent' advert.id %}#}
+{#        </td>#}
+{#    </tr>#}
+{#{% endif %}#}
+
+{% if not is_moder %}
+    {% cache 3600 catalog_preview_client_clients_count advert.id %}
+        {% if advert.count_clients %}
+            <tr class="catalog-clients hidden" id="catalog-clients-{{ advert.id }}">
+                <td colspan="9">
+                    <div class="corner"></div>
+                    <div class="clients" data-id='{{ advert.id }}'>
+                        <ul class="nav nav-tabs">
+                            <li class="active"><a href="#client-tab-all-{{ advert.id }}" role="tab" data-toggle="tab" data-owner="all">Все <span class="badge">{{ advert.count_clients }}</span></a></li>
+                            <li><a href="#client-tab-owner-{{ advert.id }}" role="tab" data-toggle="tab" data-owner="owner">{% if advert.need == 's' %}Клиенты{% else %}Собственники{% endif %}<span class="badge">{{ advert.count_clients_owner }}</span></a></li>
+                            <li><a href="#client-tab-company-{{ advert.id }}" role="tab" data-toggle="tab" data-owner="company">Агентства <span class="badge">{{ advert.count_clients_company }}</span></a></li>
+                        </ul>
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane tab-all active" id="client-tab-all-{{ advert.id }}"></div>
+                            <div role="tabpanel" class="tab-pane tab-owner" id="client-tab-owner-{{ advert.id }}"></div>
+                            <div role="tabpanel" class="tab-pane tab-company" id="client-tab-company-{{ advert.id }}"></div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        {% endif %}
+    {% endcache %}
+{% endif %}
+
+{% if is_moder %}
+    {% if advert.count_complains %}
+        <tr class="catalog-complains hidden" id="catalog-complains-{{ advert.id }}">
+            <td colspan="9">
+                <div class="complains" data-id='{{ advert.id }}'>
+
+                </div>
+            </td>
+        </tr>
+    {% endif %}
+{% endif %}

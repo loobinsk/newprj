@@ -1,0 +1,24 @@
+{% load main_tags %}
+
+<div class="cr-preview cr-item-{{ cr.id }}">
+    <div class="new">
+        {% if not cr.is_viewed %}
+            <span class="glyphicon glyphicon-star not-viewed" aria-hidden="true"></span>
+        {% endif %}
+    </div>
+    <div class="date">
+        <a href="{% url 'client:client-request:detail' cr.id %}">{{ cr.date|fmt_date }}</a>
+    </div>
+    <div class="contacts">
+        <div class="name">{{ cr.name }}</div>
+        <div class="tel">Телефон: {{ cr.tel|fmt_tel }}</div>
+        <div class="email">E-mail: {{ cr.email|default_if_none:'' }}</div>
+    </div>
+    <div class="desc">{{ cr.body|default:'&nbsp;' }}</div>
+    <div class="clients"><a href="#cr-adverts-{{ cr.id }}" class="btn-show-cr-adverts">Объявления ({{ cr.count_adverts }})</a></div>
+
+    <div class="cr-adverts hidden" id="cr-adverts-{{ cr.id }}">
+        <div class="corner"></div>
+        <div class="clients" data-id='{{ cr.id }}'></div>
+    </div>
+</div>

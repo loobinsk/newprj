@@ -1,0 +1,19 @@
+{% extends 'page.html' %}
+
+{% load bootstrap_pagination %}
+{% load main_tags %}
+
+{% block title %}История платежей &middot; {{ block.super }}{% endblock %}
+
+{% block content %}
+        <h1 class="page-title">
+            История платежей
+        </h1>
+
+        {% if payment_list %}
+            {% include 'vashdom/payment/list.html' %}
+            {% bootstrap_paginate page_obj alignment='left' range=6 show_first_last='true'%}
+        {% else %}
+            <div class="alert alert-info">Нет платежей</div>
+        {% endif %}
+{% endblock %}

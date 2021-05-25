@@ -1,0 +1,8 @@
+{% load main_tags %}
+
+<div class="metro-preview metro metro-item-{{ metro.id }} editable-content">
+    <div class="content">
+        <h2><a href="#" class="btn-metro-edit" data-id='{{ metro.id }}'>{{ metro.title }}</a></h2>
+    </div>
+    {% include 'main/client/metro/edit-buttons.html' %}
+</div>

@@ -1,0 +1,36 @@
+{% load uimg_tags %}
+{% load uvideo_tags %}
+
+<ul class="nav nav-tabs">
+    <li class="active"><a href="#main" data-toggle="tab">Новость</a></li>
+    <li><a href="#images" data-toggle="tab">Изображения</a></li>
+    <li><a href="#video" data-toggle="tab">Видео</a></li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane active" id="main">
+        <form method="POST" action="{{ action }}" id="news-form">
+            {% csrf_token %}
+            <dl>
+                <dt>{{ form.title.label_tag }}</dt>
+                <dd>{{ form.title }}</dd>
+                <dt>{{ form.section.label_tag }}</dt>
+                <dd>{{ form.section }}</dd>
+            </dl>
+
+            {{ form.body }}
+
+            {{ form.images }}
+            {{ form.video }}
+        </form>
+    </div>
+    <div class="tab-pane" id="images">
+        {% image_upload_multiple form.images %}
+    </div>
+    <div class="tab-pane" id="video">
+        {% video_upload form.video %}
+    </div>
+</div>
+
+<script type="text/javascript" src='{{ STATIC_URL }}ckeditor/ckeditor/ckeditor.js'></script>
+<script type="text/javascript" src='{{ STATIC_URL }}ckeditor/ckeditor-init.js'></script>

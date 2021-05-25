@@ -1,0 +1,19 @@
+{% extends 'page-client-center.html' %}
+
+{% load main_tags %}
+{% load uimg_tags %}
+
+{% block title %}Разместить объявление &middot; {{ block.super }}{% endblock %}
+
+{% block center %}
+    <div class="catalog-create">
+        <h1 class="page-title">Разместить объявление</h1>
+
+        <div class="create-form">
+            {% include 'main/client/advert/form.html' %}
+            <div class="text-center actions">
+                <button class="btn btn-flt3 btn-lg btn-catalog-form-create" data-loading-text="Сохранение объявления...">Разместить объявление</button>
+            </div>
+        </div>
+    </div>
+{% endblock %}

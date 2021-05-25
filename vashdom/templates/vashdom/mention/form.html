@@ -1,0 +1,14 @@
+<form id="mention-form" method="post" enctype="multipart/form-data" action="{% url 'mention:add' %}">
+    {% csrf_token %}
+
+    <h2>Добавить отзыв</h2>
+    <p>Для добавления отзыва заполните форму ниже.
+        Отзывы могут оставить только авторизованные пользователи. Войдите через ВКонтакте..</p>
+
+    <div class="body">
+        {{ form.body.label_tag }}
+        {{ form.body }}
+    </div>
+
+    <button class="btn btn-secondary btn-block btn-create-mention">Отправить отзыв</button>
+</form>

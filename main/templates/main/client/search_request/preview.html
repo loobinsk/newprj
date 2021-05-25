@@ -1,0 +1,139 @@
+{% load main_tags %}
+{% load cache %}
+
+<tr class="catalog-preview item request-item-{{ sr.id }}">
+    {% cache 800 search_request_preview sr.id %}
+    <td class="col col-title">
+        <h2>
+            {{ sr.short_title }}
+        </h2>
+        <div class="date">{{ sr.date|fmt_date }}</div>
+        {% block status %}
+            {% if sr.active %}
+                <div class="text-success">Запущен поиск</div>
+            {% else %}
+                <div class="text-danger">Остановлена</div>
+            {% endif %}
+        {% endblock %}
+    </td>
+    <td class="col col-address">
+        <div class="metro">
+            {% with metro_list=sr.metro.all %}
+                {% if metro_list %}
+                    {% with metro=metro_list|first %}
+                        <a href="{% url 'client:home' %}?metro={{ metro.id }}">{{ metro.title }}</a>
+                    {% endwith %}
+
+                    <a href="#" class="btn-catalog-show-metro">Показать все...</a>
+                    <div class="more">
+                        <ul>
+                            {% for metro in metro_list %}
+                                <li>{{ metro.title }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
+            {% endwith %}
+        </div>
+        <div class="district">
+            {% with district_list=sr.district.all %}
+                {% if district_list %}
+                    {% with district=district_list|first %}
+                        <a href="{% url 'client:home' %}?district={{ district.id }}">{{ district.title }}</a>
+                    {% endwith %}
+
+                    <a href="#" class="btn-catalog-show-metro">Показать все...</a>
+                    <div class="more">
+                        <ul>
+                            {% for district in district_list %}
+                                <li>{{ district.title }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
+            {% endwith %}
+        </div>
+    </td>
+    <td class="col col-square">
+        {% if sr.floor or sr.floor_max %}
+            <div class="floor"><strong>Этаж:</strong> {{ sr.floor|default_if_none:'Нет' }} - {{ sr.floor_max|default_if_none:'Нет' }} </div>
+        {% endif %}
+        {% if sr.square or sr.square_max %}
+            <div class="square"><strong>Обшая, м<sup>2</sup>:</strong> {{ sr.square|default:'Нет' }}-{{ sr.square_max|default:'Нет' }}</div>
+        {% endif %}
+        {% if sr.living_square or sr.living_square_max %}
+            <div class="square"><strong>Жилая, м<sup>2</sup>:</strong> {{ sr.living_square|default:'Нет' }}-{{ sr.living_square_max|default:'Нет' }}</div>
+        {% endif %}
+        {% if sr.kitchen_square or sr.kitchen_square_max %}
+            <div class="square"><strong>Кухня, м<sup>2</sup>:</strong> {{ sr.kitchen_square|default:'Нет' }}-{{ sr.kitchen_square_max|default:'Нет' }}</div>
+        {% endif %}
+    </td>
+    <td class="col col-desc">
+        {% if sr.body.strip %}
+            <div class="desc">
+                <div class="txt">
+                    {{ sr.body|truncatewords:10 }}
+                </div>
+                <a href="#" class="btn-catalog-show-desc">Подробно</a>
+                <div class="more">{{ sr.body }}</div>
+            </div>
+        {% endif %}
+
+        <ul class="icon-list">
+            {% for field in sr.comfort_list %}
+                {% if field.1 %}<li><span class="glyphicon {{ field.0 }}" data-toggle="tooltip" title='{{ field.2 }}'></span> </li>{% endif %}
+            {% endfor %}
+        </ul>
+    </td>
+    <td class="col col-price">
+        <div class="price">
+            от&nbsp;{{ sr.min_price|fmt_price }}&nbsp;р.<br>
+            до&nbsp;{{ sr.price|fmt_price }}&nbsp;р.
+        </div>
+        <div class="type">
+            {% if sr.adtype == 'L' %}
+                Аренда
+            {% else %}
+                Продажа
+            {% endif %}
+        </div>
+
+        <div class="client-count">
+            <a href="#sr-clients-{{ sr.id }}" class="btn-show-request-clients">
+                {{ sr.count_clients }}
+                {% if sr.need == 's' %}
+                    клиент(ов)
+                {% else %}
+                    объект(ов)
+                {% endif %}
+
+                {% if sr.last_add_client_count > 0 %}
+                    (&nbsp;+{{ sr.last_add_client_count }}&nbsp;)
+                {% endif %}
+            </a>
+        </div>
+    </td>
+    <td class="col col-owner">
+        <div class="company">Частное лицо</div>
+        <div class="user">{{ sr.owner_name|default:'&nbsp;' }}</div>
+    </td>
+    {% endcache %}
+    <td class="col col-action">
+        {% block actions %}
+            <a href="{% url 'client:search-request:edit' sr.id %}" class="btn btn-default btn-block">Редактировать</a>
+            <a href="#" class="btn btn-danger btn-block btn-search-request-del" data-id='{{ sr.id }}'>Удалить</a>
+            {% if sr.active %}
+                <a href="#" class="btn btn-default btn-block btn-search-request-stop" data-id='{{ sr.id }}'>Остановить</a>
+            {% else %}
+                <a href="#" class="btn btn-default btn-block btn-search-request-start" data-id='{{ sr.id }}'>Запустить</a>
+            {% endif %}
+        {% endblock %}
+    </td>
+</tr>
+
+<tr class="catalog-clients hidden" id="sr-clients-{{ sr.id }}">
+    <td colspan="9">
+        <div class="corner"></div>
+        <div class="clients" data-id='{{ sr.id }}'></div>
+    </td>
+</tr>

@@ -1,0 +1,25 @@
+{% extends 'page-client-center.html' %}
+
+{% load bootstrap_pagination %}
+{% load main_tags %}
+
+{% block title %}Привлеченные пользователи &middot; {{ block.super }}{% endblock %}
+
+{% block center %}
+        <h1 class="page-title">
+            Привлеченные пользователи по ссылке {{ referral.link }}
+        </h1>
+
+        {% if user_list %}
+            <div class="user-list">
+                {% for item in user_list %}
+                    {% with object=item.user %}
+                        {% include 'main/client/user/preview.html' %}
+                    {% endwith %}
+                {% endfor %}
+            </div>
+            {% bootstrap_paginate page_obj alignment='left' range=6 show_first_last='true' %}
+        {% else %}
+            <div class="alert alert-info">Нет пользователей</div>
+        {% endif %}
+{% endblock %}

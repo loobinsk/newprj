@@ -1,0 +1,32 @@
+{% extends 'page.html' %}
+
+{% load bootstrap_pagination %}
+{% load main_tags %}
+
+{% block title %}Привлеченные пользователи &middot; {{ block.super }}{% endblock %}
+
+{% block content %}
+        <h1 class="page-title">
+            Привлеченные пользователи по ссылке {{ referral.link }}
+        </h1>
+
+        {% if user_list %}
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Дата</th>
+                        <th>Пользователь</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for object in user_list %}
+                        {% include 'vashdom/referral/user_preview.html' %}
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            {% bootstrap_paginate page_obj alignment='left' range=6 show_first_last='true' %}
+        {% else %}
+            <div class="alert alert-info">Нет пользователей</div>
+        {% endif %}
+{% endblock %}

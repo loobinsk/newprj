@@ -1,0 +1,5 @@
+<form method="POST" action="{{ action }}" id="userimage-form-{{ image.id }}" class="userimage-form">
+    {% csrf_token %}
+    {{ form.desc }}
+</form>
+<button class="btn btn-primary btn-xs btn-block btn-userimage-form-save" data-id="{{ image.id }}">Сохранить</button>

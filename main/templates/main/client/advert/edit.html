@@ -1,0 +1,44 @@
+{% extends 'page-client-center.html' %}
+
+{% load main_tags %}
+{% load uimg_tags %}
+
+{% block title %}{{ advert.title }} &middot; {{ block.super }}{% endblock %}
+
+{% block center %}
+    <div class="catalog-create">
+        <h1 class="page-title">Редактирование объявления №{{ advert.id }}{% if is_moder %} ({{ advert.status|advert_status }}){% endif %}</h1>
+
+        {% if is_moder and advert.blocked and advert.block_user != user %}
+            <div class='alert alert-danger'>
+                Объявление заблокировано другим пользователем{% if user.is_staff %} {{ advert.block_user.get_full_name }}{% endif %}. Вы не сможете его сохранить или разместить.
+            </div>
+        {% endif %}
+
+        <div class="create-form">
+            {% include 'main/client/advert/form.html' %}
+            <div class="text-center actions">
+                <button class="btn btn-flt3 btn-lg btn-catalog-form-edit" data-loading-text="Сохранение объявления...">Сохранить объявление</button>
+                {% if is_moder %}
+                    <button class="btn btn-flt4 btn-lg btn-catalog-approve pull-right" data-loading-text="Одобрение объявления..." data-id='{{ advert.id }}'>
+                        <span class="glyphicon glyphicon-ok"></span> Разместить объявление
+                    </button>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    {% if advert.blocked and advert.block_user == user %}
+        <script type="text/javascript">
+            function advert_block_func(){
+                jQuery.post('/client/catalog/{{ advert.id }}/block', function(data){
+                    if (data.result) {
+                        block_timer = setTimeout(advert_block_func, 300000);
+                    }
+                }, 'json');
+            }
+
+            block_timer = setTimeout(advert_block_func, 300000);
+        </script>
+    {% endif %}
+{% endblock %}

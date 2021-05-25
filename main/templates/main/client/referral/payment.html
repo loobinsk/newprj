@@ -1,0 +1,45 @@
+{% extends 'page-client-center.html' %}
+
+{% load bootstrap_pagination %}
+{% load main_tags %}
+
+{% block title %}Привлеченные платежи &middot; {{ block.super }}{% endblock %}
+
+{% block center %}
+        <h1 class="page-title">
+            Привлеченные платежи по реферальной ссылке {{ referral.link }}
+        </h1>
+
+        <form method="GET" action="{% url 'client:referral:payment' referral.id %}" id="referral-filter-form" class="row">
+            <div class="col-xs-3">
+                <div>
+                    <label>{{ form.start_date.label }}</label>
+                    {{ form.start_date }}
+                </div>
+            </div>
+             <div class="col-xs-3">
+                <div>
+                    <label>{{ form.end_date.label }}</label>
+                    {{ form.end_date }}
+                </div>
+            </div>
+            <div class="col-xs-3 text-right">
+                <input type="submit" class="btn btn-flt3" value="Поиск">
+            </div>
+        </form>
+
+        {% if payment_list %}
+            {% if referral.site.domain == 'bazavashdom.ru' %}
+                <div class='payment-list'>
+                    {% for item in payment_list %}
+                        {% with payment=item.payment %}
+                            {% include 'main/client/payment/vashdom/preview.html' %}
+                        {% endwith %}
+                    {% endfor %}
+                </div>
+            {% endif %}
+            {% bootstrap_paginate page_obj alignment='left' range=6 show_first_last='true' %}
+        {% else %}
+            <div class="alert alert-info">Нет платежей</div>
+        {% endif %}
+{% endblock %}

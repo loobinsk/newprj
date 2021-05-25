@@ -1,0 +1,50 @@
+{% load main_tags %}
+{% load vashdom_tags %}
+
+<article class="payment-detail payment-item-{{ payment.id }}">
+    <h1 class="payment-detail__title">{% if title %}{{ title }}: {% endif %}Платеж №{{ payment.id }}</h1>
+
+    <div class="content">
+        <div class="date"><strong>Дата:</strong> {{ payment.created|fmt_date }}</div>
+        <div class="town"><strong>Город</strong> {{ payment.town.title }}</div>
+        <div class="tariff"><strong>Тариф:</strong>
+            {% if payment.tariff.tariff_type == 'c' %}
+                {{ payment.count }} объявлений
+            {% else %}
+                {{ payment.tariff.title }}
+            {% endif %}
+        </div>
+{#        <div class="discount"><strong>Скидка:</strong> {{ payment.total_discount }} р.</div>#}
+        <div class="sum"><strong>Сумма:</strong> {{ payment.total }} р.</div>
+{#        {% if payment.promocode %}#}
+{#            <div class="promocode"><strong>Промокод:</strong> {{ payment.promocode.promotion.title }}</div>#}
+{#        {% endif %}#}
+        <div class="tel"><strong>Телефон:</strong> {{ payment.tel|fmt_tel }}</div>
+        <div class="email"><strong>Email:</strong> {{ payment.email }}</div>
+
+        {% if payment.status == 'w' %}
+            {% vashdom_payment_form payment %} 
+
+{#            {% vashdom_w1payment_form payment %} #}
+
+            <script> new Clipboard('.btn_copy'); </script>
+
+            {% if not payment.promocode %}
+                {% vashdom_promocode_form payment %}
+            {% endif %}
+        {% endif %}
+
+        {% if payment.status == 'c' %}
+            <div class="success">
+                Оплачено
+            </div>
+        {% endif %}
+        {% if payment.status == 'к' %}
+            <div class="rejected">
+                Отменен
+            </div>
+        {% endif %}
+    </div>
+    <p>Оплата проходит быстро. Смс с паролем доступа высылается сразу после зачисления средств.</p>
+    <p>При возникновении любых вопросов, пишите в онлайн-консультант КРУГЛОСУТОЧНО.</p>
+</article>

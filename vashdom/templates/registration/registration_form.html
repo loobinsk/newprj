@@ -1,0 +1,120 @@
+{% extends 'page.html' %}
+
+{% load main_tags %}
+
+{% block title %}Регистрация  &middot; {{ block.super }}{% endblock %}
+
+{% block content %}
+<div class="register-form">
+    <div class="container">
+        <div class="row">
+                <form method="POST" action="{% url 'registration_register' %}" id="register-form" class="form order-form register-form__form">
+                    {% csrf_token %}
+            
+                    <h1 class="register-form__title">Укажите Ваши данные</h1>
+                    <p>Регистрация позволит Вам не дожидаться смс с паролем и не вводить его в объявлениях. Доступ открывается сразу после оплаты.</p>
+                    <br> 
+                    <div>
+                        <label>E-mail *</label>
+                        {{ form.username }}
+                        <span class="help-text">{{ form.username.help_text }}</span>
+                        {{ form.username.errors }}
+                        {{ form.email.errors }}
+                    </div>
+                    <div>
+                        <label>Телефон *</label>
+                        {{ form.tel }}
+                        <span class="help-text">{{ form.tel.help_text }}</span>
+                        {{ form.tel.errors }}
+                    </div>
+                    <div>
+                        {{ form.password1.label_tag }}
+                        {{ form.password1 }}
+                        <span class="help-text">{{ form.password1.help_text }}</span>
+                        {{ form.password1.errors }}
+                    </div>
+                    <div>
+                        {{ form.password2.label_tag }}
+                        {{ form.password2 }}
+                        <span class="help-text">{{ form.password2.help_text }}</span>
+                        {{ form.password2.errors }}
+                    </div>
+            {#        <div>#}
+            {#            {{ form.captcha }}#}
+            {#            {{ form.captcha.help_text }}#}
+            {#            {{ form.captcha.errors }}#}
+            {#        </div>#}
+            
+                    <a href="{% url 'socialauth_begin' 'vk-oauth' %}" class="btn btn-vk" title="Заполнить поля из профиля ВК" style="margin: 15px 0;">Вход через <img src="{{ STATIC_URL }}img/vklogo.png"></a>
+            
+                    <h2 class="page-title">Выберите город</h2>
+            
+                    <label>Город</label> {{ form.town }}
+            
+                    <h2 class="page-title">Выберите тариф при оплате сразу</h2>
+            
+                    <table class="table table-tariff">
+                        <tbody>
+                            {% for tariff in tariff_list %}
+                                <tr class="{% if tariff.main_base %}need_main_base{% endif %} {% if tariff.vk_base %} need_vk_base{% endif %}
+                                            {% if tariff.main_base and not current_town.main_base %} hidden{% endif %}
+                                            {% if tariff.vk_base and not current_town.vk_base %} hidden{% endif %}
+                                            city city-{{ tariff.town_id }} {% if tariff.town_id != current_town.id %}city-hidden{% endif %}">
+                                    <td>
+                                        {% if tariff.main_base and tariff.vk_base %}
+                                            <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
+                                        {% endif %}
+                                        <strong>{{ tariff.title }}</strong><br>{{ tariff.desc }}
+                                    </td>
+                                    <td>
+                                        {% if tariff.tariff_type == 'c' %}
+                                            {{ form.count }}
+                                        {% else %}
+                                            {{ tariff.price|fmt_price }} руб.
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        <input type="radio" name="tariff" value="{{ tariff.id }}" id="id_tariff_{{ tariff.id }}" {% if forloop.first %}checked="checked"{% endif %}>
+                                        <label for="id_tariff_{{ tariff.id }}">Выбрать</label>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+            
+                    <p>Оплата без комиссии через <strong>Robokassa</strong><br></p>
+                    <img alt="Принимаемые варианты оплаты" title="Способы оплаты" src="/static/img/picons.jpg" style="height:112px; width:583px">
+                    
+                    <div class="agree">
+                    {#    {{ form.agree }} <label for="id_agree">Я прочитал(а) и согласен(сна) с#}
+                    {#    <a href="/agreement/" target="_blank" class="btn-agreement-big" data-id='#id_agree'>пользовательским соглашением</a></label>#}
+                    {#    {{ form.agree.errors }}#}
+                    </div>
+            
+                    <input type="submit" value="Зарегистрироваться"  class="btn btn-large btn-secondary btn-register" title="Зарегистрироваться">
+                </form>
+            
+                <script type="text/javascript">
+                    jQuery(document).ready(function(){
+            
+                        function failFunction(e) {
+                            var data = jQuery.parseJSON(e.responseText);
+                            jQuery.notify(data.message);
+                        }
+            
+                        jQuery('#register-form').ajaxForm({
+                            dataType: 'json',
+                            success: function(data, status, xhr, form) {
+                                window.location = data.object.url;
+                            },
+                            error: failFunction
+                        });
+                    });
+                </script>
+
+        </div>
+    </div>
+</div>
+
+    
+{% endblock %}

@@ -1,0 +1,12 @@
+<table class="catalog-list">
+    {% for advert in advert_list %}
+        {% if is_moder %}
+            {% include 'main/client/advert/preview-moder.html' %}
+        {% else %}
+            {% include 'main/client/advert/preview.html' %}
+        {% endif %}
+    {% endfor %}
+</table>
+{% if page_obj.has_next %}
+    <button class="btn-more-clients btn" data-page="{{ page_obj.next_page_number }}" data-id="{{ parent_advert.id }}" data-owner="{{ owner }}">Показать еще...</button>
+{% endif %}

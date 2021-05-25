@@ -1,0 +1,82 @@
+<div class='container'>
+    <div class='row'>
+        <div class="col-xs-3">
+            <h3>Аренда недвижимости</h3>
+            <ul>
+                <li><a href="{% url 'advert:list' %}?type=L&estate=R">Комнаты</a></li>
+                <li><a href="{% url 'advert:list' %}?type=L&estate=F&rooms=1">1-комн. квартиры</a></li>
+                <li><a href="{% url 'advert:list' %}?type=L&estate=F&rooms=2">2-комн. квартиры</a></li>
+                <li><a href="{% url 'advert:list' %}?type=L&estate=F&rooms=3">3-комн. квартиры</a></li>
+                <li><a href="{% url 'advert:list' %}?type=L&estate=F&rooms=4">4-комн. и больше квартиры</a></li>
+                <li><a href="{% url 'advert:list' %}?type=L&estate=H">Дома</a></li>
+                <li><a href="{% url 'advert:list' %}?type=L&estate=T">Земельные участки</a></li>
+                <li><a href="{% url 'advert:list' %}?type=L&estate=C">Торговые площади и офисы</a></li>
+            </ul>
+        </div>
+        <div class="col-xs-3">
+            <h3>Продажа недвижимости</h3>
+            <ul>
+                <li><a href="{% url 'advert:list' %}?type=S&estate=R">Комнаты</a></li>
+                <li><a href="{% url 'advert:list' %}?type=S&estate=F&rooms=1">1-комн. квартиры</a></li>
+                <li><a href="{% url 'advert:list' %}?type=S&estate=F&rooms=2">2-комн. квартиры</a></li>
+                <li><a href="{% url 'advert:list' %}?type=S&estate=F&rooms=3">3-комн. квартиры</a></li>
+                <li><a href="{% url 'advert:list' %}?type=S&estate=F&rooms=4">4-комн. и больше квартиры</a></li>
+                <li><a href="{% url 'advert:list' %}?type=S&estate=H">Дома</a></li>
+                <li><a href="{% url 'advert:list' %}?type=S&estate=T">Земельные участки</a></li>
+                <li><a href="{% url 'advert:list' %}?type=S&estate=C">Торговые площади и офисы</a></li>
+            </ul>
+        </div>
+        <div class="col-xs-3">
+            <h3>О компании</h3>
+            <ul>
+                <li><a href="/about/">О проекте</a></li>
+                <li><a href="{% url 'registration_register' %}">Агентствам недвижимости</a></li>
+                <li><a href="{% url 'reclame' %}">Реклама на сайте</a></li>
+                <li><a href="{% url 'contacts' %}">Контакты</a></li>
+                <li><a href="{% url 'company:list' %}">Реестр агентств</a></li>
+{#                <li><a href="{% url 'vacancy:list' %}">Вакансии</a></li>#}
+{#                <li><a href="{% url 'question:list' %}">FAQ</a></li>#}
+
+                <li>&nbsp;</li>
+                <li><a href="{% url 'advert:create' %}">Разместить объявление</a></li>
+                <li><a href="#" class="btn-catalog-request">Заявка на поиск недвижимости</a></li>
+            </ul>
+        </div>
+
+
+    </div>
+    <div class='row'>
+        <div class="col-xs-4">
+            <img src='{{ STATIC_URL }}img/logo.png' class="logo">
+        </div>
+        <div class="col-xs-3">
+            <h3>Мы в соцсетях</h3>
+            {% if current_town.id == 1 %}
+                <a href="https://vk.com/gsn_msk" title='Мы в контакте' target="_blank"><span class="social-icon vkontakte"></span></a>
+            {% endif %}
+            {% if current_town.id == 2 %}
+                <a href="https://vk.com/gsn_spb" title='Мы в контакте' target="_blank"><span class="social-icon vkontakte"></span></a>
+            {% endif %}
+            <a href="https://www.facebook.com/gsnrus" title='Мы в facebook'c><span class="social-icon facebook"></span></a>
+            <a href="https://twitter.com/GSNRF" title='Мы в твиттере' target="_blank"><span class="social-icon twitter"></span></a>
+{#            <a href="#" title='Мы в одноклассниках'><span class="social-icon odnoklassniki"></span></a>#}
+            <a href="https://plus.google.com/110486730365215896989" title='Мы в Google+' target="_blank"><span class="social-icon google-plus"></span></a>
+{#            <a href="#" title='Мы в Моем мире'><span class="social-icon mail"></span></a>#}
+        </div>
+        <div class="col-xs-2 text-right">
+            <h3>Совместно с PAYSTO</h3>
+{#            <!-- begin paysto verification -->#}
+{#            <a href="http://paysto.ru/fromshop=21823" target="_blank"><img src="{{ STATIC_URL }}img/paysto.png"></a>#}
+{#            <!-- end paysto verification -->#}
+            <!-- begin paysto verification --><a href="http://paysto.ru/fromshop=21823" target="_blank"><img src="{{ STATIC_URL }}img/paysto.png"></a><!-- end paysto verification -->
+        </div>
+        <div class="col-xs-2 text-center">
+            <h3>Защищено при помощи</h3>
+            <a href="https://ssl.comodo.com">
+            <img src="{{ STATIC_URL }}img/comodo.png" alt="SSL Certificate" style="border: 0px;"><br> <span style="font-weight:bold; font-size:7pt">SSL Certificate</span></a>
+        </div>
+        <div class="col-xs-1 text-right">
+            {% include 'main/block/metriks.html' %}
+        </div>
+    </div>
+</div>

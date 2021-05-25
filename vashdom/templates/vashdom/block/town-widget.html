@@ -1,0 +1,11 @@
+{% load main_tags %}
+{#<div class="bfh-selectbox town" id="{{ attrs.id }}" data-name="{{ name }}" data-value="{{ value|to_str|default_if_none:'' }}" data-filter="true">#}
+{#    {% for choice in choices %}#}
+{#        <div data-value="{{ choice.0 }}">{{ choice.1 }}</div>#}
+{#    {% endfor %}#}
+{#</div>#}
+{{ select }}
+
+<script type="text/javascript">
+    var town_bases = {{ town_bases|jsonify }};
+</script>

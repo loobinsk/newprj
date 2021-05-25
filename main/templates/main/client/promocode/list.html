@@ -1,0 +1,15 @@
+<table class="table table-bordered promocode-list">
+    <thead>
+        <tr>
+            <th>Промокод</th>
+            <th>Промоакция</th>
+            <th>Пользователь</th>
+            <th>Действия</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for promocode in promocode_list %}
+            {% include 'main/client/promocode/preview.html' %}
+        {% endfor %}
+    </tbody>
+</table>

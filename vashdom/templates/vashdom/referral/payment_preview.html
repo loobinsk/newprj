@@ -1,0 +1,10 @@
+{% load main_tags %}
+{% load paysto_tags %}
+
+<tr class="payment-preview payment-{{ payment.id }}">
+    <td>{{ payment.id }}</td>
+    <td>{{ payment.created|fmt_date }}</td>
+    <td>{{ payment.tariff.title }} - {{ payment.town.title }}</td>
+    <td>{{ payment.total|fmt_price }} р.</td>
+    <td>{{ payment.status|payment_status }}</td>
+</tr>

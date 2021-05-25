@@ -1,0 +1,26 @@
+{% load main_tags %}
+{% load cache %}
+{% load vashdom_tags %}
+
+{% cache 3600 vashdom_catalog_similar_preview advert.id %}
+<div class="catalog-preview-similar catalog-item-{{ advert.id }}" data-id="{{ advert.id }}">
+    {% vashdom_image_preview advert %}
+    <div class="content">
+        <div class="title"><a href="{{advert.get_absolute_url}}">{{ advert.title }}</a></div>
+        <div class="metro"> м.&nbsp;{{ advert.metro.title }}</div>
+{#        <div class="address">{{ advert.address }}</div>#}
+{#        <div class="date">Размещено: <span>{{ advert.date|fmt_date }}</span></div>#}
+        <div class="price">
+            <strong>{{ advert.price|fmt_price }}</strong>&nbsp;р.
+            {% if advert.limit == 'd' %}
+                <span>сутки</span>
+            {% else %}
+                <span>в месяц</span>
+            {% endif %}
+        </div>
+        <a href="{{advert.get_absolute_url}}" class="btn btn-secondary btn-sm btn-block">
+            Подробно
+        </a>
+    </div>
+</div>
+{% endcache %}

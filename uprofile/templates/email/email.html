@@ -1,0 +1,75 @@
+{% load main_tags %}
+{% load thumbnail %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block title %}{% endblock %}</title>
+
+    <style type="text/css">
+        body {
+            background: #ddd;
+            font-family: Arial, serif;
+        }
+
+        #content {
+            width: 600px;
+            background: #fff;
+            padding: 15px;
+            border: 1px solid #d0d0d0;
+            margin: 30px auto;
+        }
+
+        .header {
+            overflow: hidden;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #bbb;
+        }
+
+        #footer {
+            padding-top: 15px;
+            margin-top: 15px;
+            border-top: 1px solid #bbb;
+            color: #555;
+        }
+
+        .company-logo {
+            float: left;
+            margin-right: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div id="content">
+        <div class="header">
+            <div class="company-logo">
+                <a href="{{ company.get_absolute_url }}" title="{{ company.name }}">
+                    {% thumbnail company.logo "40x40" crop="center" as image %}
+                        <img src="{{ company.get_absolute_url }}{{ image.url }}">
+                    {% empty %}
+                        <img src="{{ company.get_absolute_url }}{{ STATIC_URL }}img/logo.png">
+                    {% endthumbnail %}
+                </a>
+            </div>
+            <a href="{{ company.get_absolute_url }}">{{ company.name }}</a>
+            <div>{{ company.slogan }}</div>
+        </div>
+        <h1>{{ title }}</h1>
+        {% block content %}
+        {% endblock %}
+        <div id="footer">
+            <p>{{ company.name }} &copy; {% now 'Y' %}</p>
+            {% if company.tel %}
+                <p>Тел.: {{ company.tel }}</p>
+            {% endif %}
+            {% if company.email %}
+                <p>E-mail: {{ company.email }}</p>
+            {% endif %}
+            {% if company.address %}
+                <p>Адрес: {{ company.address }}</p>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

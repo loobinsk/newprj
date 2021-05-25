@@ -1,0 +1,271 @@
+{% load uimg_tags %}
+{% load main_tags %}
+
+<div class="alert alert-warning">
+    Внимание! По каждой заявке автопоиска может быть выслано не более 20 объявлений в день.
+    По возможности указывайте более конкретные параметры поиска.
+</div>
+
+<form method="POST" action="{{ action }}" id="catalog-form" data-advert-id={{ advert.id }}>
+    {% csrf_token %}
+
+    <div class="row">
+        <div class="col col-1">
+            <div>
+                {{ form.metro.label_tag }}
+                {{ form.metro }}
+            </div>
+            <div>
+                {{ form.district.label_tag }}
+                {{ form.district }}
+            </div>
+
+            <hr>
+            <div>
+                {{ form.type2 }}
+            </div>
+            <div>
+                {{ form.estate }}
+            </div>
+            <hr>
+            <div class="for_room for_flat">
+                {{ form.live }}
+                <span style="margin-left: 15px;" class="for_flat">
+                    {{ form.live_flat1 }}<label for="id_live_flat1">{{ form.live_flat1.label }}</label>
+                    {{ form.live_flat2 }}<label for="id_live_flat2">{{ form.live_flat2.label }}</label>
+                    {{ form.live_flat3 }}<label for="id_live_flat3">{{ form.live_flat3.label }}</label>
+                    {{ form.live_flat4 }}<label for="id_live_flat4">{{ form.live_flat4.label }}</label>
+                </span>
+            </div>
+            <div class="for_house hidden">
+                {{ form.country }}
+            </div>
+            <div class="for_commercial hidden">
+                {{ form.commercial }}
+            </div>
+            <div class="for_territory hidden">
+                {{ form.territory }}
+            </div>
+            <div class="for_room for_flat for_house">
+                {{ form.limit }}
+            </div>
+            <div class="period">
+                <label>Выбрать срок</label>
+                {{ form.period }}
+            </div>
+            <div class="from_agent">
+                {{ form.from_agent }} <label for="id_from_agent">Высылать предложения от агентств недвижимости</label>
+            </div>
+            <div class="from_owner">
+                {{ form.from_owner }} <label for="id_from_owner">Высылать предложения от собственников</label>
+            </div>
+
+            <div class="dropdown comfort auto keep-open">
+                <a href="#" data-toogle='dropdown'>
+                    Выбрать удобства
+                    <ul class='icon-list'>
+                        {% for field in advert.comfort_list %}
+                            {% if field.1 %}<span class="glyphicon {{ field.0 }}"></span>{% endif %}
+                        {% endfor %}
+                    </ul>
+                </a>
+                <div class="dropdown-menu">
+                    <div class='for_flat for_room for_house for_commercial'>
+                        <h3>Интерьер</h3>
+                        <div class="btn-group options" data-toggle="buttons">
+                            {{ form.refrigerator|add_class:'for_flat for_room for_house' }}
+                            {{ form.tv|add_class:'for_flat for_room for_house' }}
+                            {{ form.washer|add_class:'for_flat for_room for_house' }}
+                            {{ form.phone }}
+                            {{ form.internet }}
+                            {{ form.conditioner }}
+                            {{ form.furniture }}
+                            {{ form.separate_wc }}
+                            {{ form.balcony }}
+                        </div>
+                    </div>
+
+                    <div class='for_flat for_room for_house for_commercial'>
+                        <div class="for_lease">
+                            <h3>Проживание</h3>
+                            <div class="btn-group options" data-toggle="buttons">
+                                {{ form.live_one }}
+                                {{ form.live_two }}
+                                {{ form.live_pare }}
+                                {{ form.live_more }}
+                                {{ form.live_child }}
+                                {{ form.live_animal }}
+                                {{ form.live_girl }}
+                                {{ form.live_man }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class='for_house for_commercial for_territory for_sale hidden'>
+                        <h3>Коммуникации</h3>
+                        <div class="btn-group options" data-toggle="buttons">
+                            {{ form.electric }}
+                            {{ form.gas }}
+                            {{ form.water }}
+                            {{ form.sewage }}
+                            {{ form.brick_building }}
+                            {{ form.wood_building }}
+                        </div>
+                    </div>
+
+                    <div class='for_flat for_room for_house for_commercial'>
+                        <h3>Ремонт</h3>
+                        <div class="btn-group options" data-toggle="buttons">
+                            {{ form.euroremont }}
+                            {{ form.redecoration }}
+                            {{ form.no_remont }}
+                            {{ form.need_remont }}
+                        </div>
+                    </div>
+
+                    <div class='for_flat for_room for_house for_commercial for_territory'>
+                        <h3>Разное</h3>
+                        <div class="btn-group options" data-toggle="buttons">
+                            {{ form.parking }}
+                            {{ form.lift|add_class:'for_flat for_room for_commercial' }}
+                            {{ form.concierge|add_class:'for_flat for_room' }}
+                            {{ form.guard }}
+                            {{ form.garage|add_class:'for_flat for_room for_commercial for_house' }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col col-2">
+            <div class="floor-count for_flat for_room for_house for_commercial">
+                <label>Этаж</label>
+                {{ form.floor }} {{ form.floor_max }}
+            </div>
+            <div class='square'>
+                <label>Общая площадь, м<sup>2</sup></label>
+                {{ form.square }} {{ form.square_max }}
+            </div>
+            <div class='square'>
+                <label>Жилая площадь, м<sup>2</sup></label>
+                {{ form.living_square }} {{ form.living_square_max }}
+            </div>
+            <div class='square'>
+                <label>Кухня, м<sup>2</sup></label>
+                {{ form.kitchen_square }} {{ form.kitchen_square_max }}
+            </div>
+            <hr>
+            <div>Подробное описание</div>
+            <div>
+                {{ form.body }}
+            </div>
+            <div class="price">
+                {{ form.price.label_tag }}
+                {{ form.min_price }} {{ form.price }} руб.
+            </div>
+            <hr>
+            <div>
+                <label>Имя клиента</label>
+                {{ form.owner_name }}
+            </div>
+            <div class="owner-tel">
+                <label>Телефон клиента</label>
+                {{ form.owner_tel }}
+            </div>
+            <div class="owner-email">
+                <label>Email клиента</label>
+                {{ form.owner_email }}
+            </div>
+
+        </div>
+    </div>
+</form>
+
+
+<script type="text/javascript">
+    var estate = 'flat';
+    var adtype = 'lease';
+    var need = 'need_sale';
+    var advert_town = {{ map_town.id }};
+
+    function show_estate() {
+        var new_estate = 'flat';
+
+        switch(jQuery('#catalog-form input[name="estate"]:checked').val()) {
+            case 'F':
+                switch(jQuery('#catalog-form input[name="live"]:checked').val()) {
+                    case 'R':
+                        new_estate = 'room';
+                        break;
+                    case 'F':
+                        new_estate = 'flat';
+                        break;
+                }
+                break;
+            case 'H':
+                new_estate = 'house';
+                break;
+            case 'C':
+                new_estate = 'commercial';
+                break;
+            case 'T':
+                new_estate = 'territory';
+                break;
+            default:
+                new_estate = estate;
+        }
+
+        jQuery('#catalog-form .for_'+estate).addClass('hidden');
+        estate = new_estate;
+        jQuery('#catalog-form .for_'+estate).removeClass('hidden');
+
+        var new_adtype = 'lease';
+        var new_need = 'need_sale';
+        switch(jQuery('#catalog-form input[name="type2"]:checked').val()) {
+            case 'LS':
+                new_adtype = 'lease';
+                new_need = 'need_sale';
+                break;
+            case 'SS':
+                new_adtype = 'sale';
+                new_need = 'need_sale';
+                break;
+            case 'LD':
+                new_adtype = 'lease';
+                new_need = 'need_demand';
+                break;
+            case 'SD':
+                new_adtype = 'sale';
+                new_need = 'need_demand';
+                break;
+            default:
+                new_adtype = adtype;
+                new_need = need;
+        }
+
+        jQuery('#catalog-form .for_'+adtype).addClass('hidden');
+        adtype = new_adtype;
+        jQuery('#catalog-form .for_'+adtype).removeClass('hidden');
+
+        jQuery('#catalog-form .for_'+need).addClass('hidden');
+        need = new_need;
+        jQuery('#catalog-form .for_'+need).removeClass('hidden');
+    }
+
+    jQuery('input[name="estate"]').change(show_estate);
+    jQuery('input[name="live"]').change(show_estate);
+    jQuery('input[name="type2"]').change(show_estate);
+
+
+    jQuery('#catalog-form .comfort input[type="checkbox"]').change(function(e){
+        if (this.checked) {
+            jQuery(this.parentNode).find('.glyphicon').clone().appendTo(jQuery(this).parents('.comfort').find('.icon-list'));
+        } else {
+            var classes = jQuery(this.parentNode).find('.glyphicon').attr('class');
+            jQuery(this).parents('.comfort').find('.icon-list').find('span[class="'+classes+'"]').remove();
+        }
+
+    });
+
+    show_estate();
+</script>
+

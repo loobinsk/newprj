@@ -1,0 +1,20 @@
+@import '../imports.less';
+
+.mentions {
+    &__content {
+        .col();
+        .size(12);
+        margin-bottom: 30px;
+    }
+
+    &__title {
+        padding: 30px 0 15px 0;
+        margin: 0;
+        border-bottom: 1px solid #ddd;
+        font-weight: bold;
+        color: #555;
+        display: flex;
+        align-items: center;
+        .md(flex-wrap, wrap);
+    }
+}

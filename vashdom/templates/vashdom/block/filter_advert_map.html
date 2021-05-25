@@ -1,0 +1,67 @@
+{% load main_tags %}
+
+<div class="catalog-filter-map" id="catalog-filter-map">
+    <form method="get" action="{{ url }}">
+        <div class="content">
+            <div class="col">
+                <h3>Я хочу снять</h3>
+                {{ form.rooms }}
+            </div>
+            <div class="col metro">
+                <h3>Метро</h3>
+                {{ form.metro }}
+            </div>
+            <div class="col price">
+                <h3>Цена, руб.</h3>
+                <div class="">
+                    <input id="price-slider" type="text" class="slider" value="" data-slider-min="0"
+                           data-slider-max="100000" data-slider-step="1000"
+                           data-slider-value="[{{ form.min_price.value|default:'0' }},{{ form.max_price.value|default:'200000' }}]"
+                           data-slider-orientation="horizontal" data-slider-selection="after">
+                    {{ form.min_price }} {{ form.max_price }}
+                </div>
+            </div>
+
+            <div class="col options">
+                <div class="option refrigerator">
+                    {{ form.refrigerator }} <label for="id_refrigerator" title="Холодильник"></label>
+                </div>
+                <div class="option tv">
+                    {{ form.tv }} <label for="id_tv" title="Телевизор"></label>
+                </div>
+                <div class="option washer">
+                    {{ form.washer }} <label for="id_washer" title="Стиральная машина"></label>
+                </div>
+                <div class="option furniture">
+                    {{ form.furniture }} <label for="id_furniture" title="Мебель"></label>
+                </div>
+            </div>
+
+            <button class="btn btn-secondary btn-search pull-right" title="Найти подходящие">Найти</button>
+        </div>
+    </form>
+</div>
+
+<script type="text/javascript">
+    jQuery(document).ready(function(){
+        jQuery('#price-slider').slider()
+            .on('slide', function(e){
+                jQuery('#id_min_price').val(e.value[0]);
+                jQuery('#id_max_price').val(e.value[1]);
+            });
+
+        $('.catalog-filter-map .btn-search').click(function(e){
+            var content = $('#map-content');
+            content.addClass('loading');
+            $(this.form).ajaxSubmit({
+                success: function(data) {
+                    content.html(data);
+                    content.removeClass('loading');
+                },
+                error: failFunction
+            });
+            e.preventDefault();
+            return false;
+        });
+    });
+</script>

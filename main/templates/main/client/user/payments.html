@@ -1,0 +1,19 @@
+{% extends 'page-client-center.html' %}
+
+{% load main_tags %}
+{% load bootstrap_pagination %}
+
+{% block title %}Платежи {{ agent.get_full_name }} &middot; {{ block.super }}{% endblock %}
+
+{% block center %}
+    <h1 class="page-title">{{ agent.get_full_name }}</h1>
+
+    {% include 'main/client/user/tabs.html' %}
+
+    {% include 'main/client/payment/list.html' %}
+
+    {% if not payment_list %}
+        <div class="alert alert-info no-services">Платежей нет</div>
+    {% endif %}
+
+{% endblock %}

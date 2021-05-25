@@ -1,0 +1,210 @@
+<form id="payment-order-form" method="POST" action="{% url 'client:payment:order' %}">
+    {% csrf_token %}
+
+    <div class="tariff active">
+        <div class="desc firm">
+            <div class="title">Фирменный</div>
+            <p>Безлимитный доступ для экспертов + Доступ к базе ВКонтакте</p>
+            <div class="sum"><strong>3000</strong> рублей/месяц</div>
+        </div>
+        <div class="content">
+            <div class="col">
+                <div class="check">
+                    <input type="radio" name="tariff" value="{{ payment_form.tariffs.firm.id }}" id="tariff_{{ payment_form.tariffs.firm.id }}" data-sum="3000">
+                    <label for="tariff_{{ payment_form.tariffs.firm.id }}"></label>
+                </div>
+                <p>Безлимитный доступ в базе объявлений</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="tariff">
+        <div class="desc">
+            <div class="title">Деловой</div>
+            <p>Расширенный доступ для профессионалов</p>
+            <div class="sum"><strong>2000</strong> рублей/месяц</div>
+        </div>
+        <div class="content">
+            <div class="col">
+                <div class="check">
+                    <input type="radio" name="tariff" value="{{ payment_form.tariffs.delovoy1.id }}" id="tariff_{{ payment_form.tariffs.delovoy1.id }}" data-sum="2000">
+                    <label for="tariff_{{ payment_form.tariffs.delovoy1.id }}"></label>
+                </div>
+                <p>Объекты: <strong>25</strong> в день</p>
+                <p>Клиенты: <strong>10</strong> в день</p>
+            </div>
+            <div class="col">
+                <div class="check">
+                    <input type="radio" name="tariff" value="{{ payment_form.tariffs.delovoy2.id }}" id="tariff_{{ payment_form.tariffs.delovoy2.id }}" data-sum="2000">
+                    <label for="tariff_{{ payment_form.tariffs.delovoy2.id }}"></label>
+                </div>
+                <p>Объекты: <strong>50</strong> в день</p>
+            </div>
+            <div class="col">
+                <div class="check">
+                    <input type="radio" name="tariff" value="{{ payment_form.tariffs.delovoy3.id }}" id="tariff_{{ payment_form.tariffs.delovoy3.id }}" data-sum="2000">
+                    <label for="tariff_{{ payment_form.tariffs.delovoy3.id }}"></label>
+                </div>
+                <p>Клиенты: <strong>15</strong> в день</p>
+            </div>
+        </div>
+    </div>
+    <div class="tariff">
+        <div class="desc base">
+            <div class="title">Базовый</div>
+            <p>Базовый доступ</p>
+            <div class="sum"><strong>1000</strong> рублей/месяц</div>
+        </div>
+        <div class="content">
+            <div class="col">
+                <div class="check">
+                    <input type="radio" name="tariff" value="{{ payment_form.tariffs.base1.id }}" id="tariff_{{ payment_form.tariffs.base1.id }}" data-sum="1000">
+                    <label for="tariff_{{ payment_form.tariffs.base1.id }}"></label>
+                </div>
+                <p>Объекты: <strong>15</strong> в день</p>
+                <p>Клиенты: <strong>5</strong> в день</p>
+            </div>
+            <div class="col">
+                <div class="check">
+                    <input type="radio" name="tariff" value="{{ payment_form.tariffs.base2.id }}" id="tariff_{{ payment_form.tariffs.base2.id }}" data-sum="1000">
+                    <label for="tariff_{{ payment_form.tariffs.base2.id }}"></label>
+                </div>
+                <p>Объекты: <strong>25</strong> в день</p>
+            </div>
+            <div class="col">
+                <div class="check">
+                    <input type="radio" name="tariff" value="{{ payment_form.tariffs.base3.id }}" id="tariff_{{ payment_form.tariffs.base3.id }}" data-sum="1000">
+                    <label for="tariff_{{ payment_form.tariffs.base3.id }}"></label>
+                </div>
+                <p>Клиенты: <strong>10</strong> в день</p>
+            </div>
+        </div>
+    </div>
+    <div class="tariff">
+        <div class="desc vk">
+            <div class="title">ВКонтакте</div>
+            <p>Доступ к базе объявлений ВКонтакте</p>
+            <div class="sum"><strong>500</strong> рублей/месяц</div>
+        </div>
+        <div class="content">
+            <div class="col">
+                <div class="check">
+                    <input type="radio" name="tariff" value="{{ payment_form.tariffs.vk.id }}" id="tariff_{{ payment_form.tariffs.vk.id }}" data-sum="500">
+                    <label for="tariff_{{ payment_form.tariffs.vk.id }}"></label>
+                </div>
+                <p>Безлимитный доступ в базе объявлений ВКонтакте</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="months">
+        <div class="desc">
+            <div class="title">Срок подключения</div>
+            <p>Выберите срок подключения</p>
+
+            <div class="calc">
+                <div class="total">
+                    <p><strong>Сумма:</strong> <span id="total_sum"></span></p>
+                    <p><strong>Скидка:</strong> <span id="total_discount"></span></p>
+                    <p><strong>Итого:</strong> <span id="total_total"></span></p>
+                </div>
+            </div>
+
+        </div>
+        <div class="content">
+            <div class="col">
+                <div class="check">
+                    <input type="radio" name="months" value="1" id="months_1" checked>
+                    <label for="months_1"></label>
+                </div>
+                <p>1 месяц</p>
+                <p>Без скидки</p>
+            </div>
+            <div class="col">
+                <div class="check">
+                    <input type="radio" name="months" value="2" id="months_2">
+                    <label for="months_2"></label>
+                </div>
+                <p>2 месяца</p>
+                <p>Скидка 10%</p>
+            </div>
+            <div class="col">
+                <div class="check">
+                    <input type="radio" name="months" value="3" id="months_3">
+                    <label for="months_3"></label>
+                </div>
+                <p>3 месяца</p>
+                <p>Скидка 15%</p>
+            </div>
+            <div class="col">
+                <div class="check">
+                    <input type="radio" name="months" value="6" id="months_6">
+                    <label for="months_6"></label>
+                </div>
+                <p>6 месяцев</p>
+                <p>Скидка 20%</p>
+            </div>
+            <div class="col">
+                <div class="check">
+                    <input type="radio" name="months" value="9" id="months_9">
+                    <label for="months_9"></label>
+                </div>
+                <p>9 месяцев</p>
+                <p>Скидка 25%</p>
+            </div>
+            <div class="col">
+                <div class="check">
+                    <input type="radio" name="months" value="12" id="months_12">
+                    <label for="months_12"></label>
+                </div>
+                <p>12 месяцев</p>
+                <p>Скидка 30%</p>
+            </div>
+            <div></div>
+
+            <button type="submit" class="btn btn-lg btn-flt3 btn-payment-order-create">Подключить</button>
+        </div>
+    </div>
+
+{#    <a href="{% url 'client:payment:history' %}">История платежей</a>#}
+</form>
+
+<script type="text/javascript">
+    function calcTotal() {
+        var sum = 0;
+        var checkboxes = jQuery('#payment-order-form .tariff input[type="radio"]:checked');
+        for (var i=0; i<checkboxes.length; i++) {
+            sum = sum + Number(jQuery(checkboxes[i]).data('sum'));
+        }
+        var months = Number(jQuery('input[name="months"]:checked').val());
+        var total_sum = sum*months;
+        var discount = 0;
+        switch (months) {
+            case 2:
+                discount = 0.1;
+                break;
+            case 3:
+                discount = 0.15;
+                break;
+            case 6:
+                discount = 0.2;
+                break;
+            case 9:
+                discount = 0.25;
+                break;
+            case 12:
+                discount = 0.3;
+                break;
+        }
+        var total_discount = total_sum * discount;
+        var total = total_sum - total_discount;
+        jQuery('#total_sum').html((total_sum) + ' р.');
+        jQuery('#total_discount').html((total_discount) + ' р.');
+        jQuery('#total_total').html((total) + ' р.');
+    }
+
+    calcTotal();
+
+    jQuery('#payment-order-form .tariff input[type="radio"]').change(calcTotal);
+    jQuery('.months input[type="radio"]').change(calcTotal);
+</script>

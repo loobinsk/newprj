@@ -1,0 +1,21 @@
+{% extends 'page-client-center.html' %}
+
+{% load main_tags %}
+{% load bootstrap_pagination %}
+
+{% block title %}Подключенные услуги {{ agent.get_full_name }} &middot; {{ block.super }}{% endblock %}
+
+{% block center %}
+    <h1 class="page-title">{{ agent.get_full_name }}</h1>
+
+    {% include 'main/client/user/tabs.html' %}
+
+    <button class="btn-service-create btn btn-flt3" data-user='{{ agent.id }}'>Подключить услугу</button>
+
+    {% include 'main/client/service/list.html' %}
+
+    {% if not service_list %}
+        <div class="alert alert-info no-services">Подключенных услуг нет</div>
+    {% endif %}
+
+{% endblock %}

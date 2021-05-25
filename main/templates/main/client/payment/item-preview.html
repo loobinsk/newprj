@@ -1,0 +1,18 @@
+{% load main_tags %}
+{% load cache %}
+{% load uvideo_tags %}
+{% load uimg_tags %}
+
+<div class='payment-item payment-item-preview payment-item-{{ item.id }}'>
+    <h2 class='title'>{{ item }}</h2>
+{#    <div class="sum">{{ item.total|fmt_price }} р.</div>#}
+    {% if item.paytype == 'T' %}
+        <div class="quantity">{{ item.quantity }} месяцев</div>
+        <div class="price">{{ item.tariff.price|fmt_price }} р.</div>
+    {% endif %}
+    {% if item.paytype == 'B' %}
+        <div class="quantity">{{ item.quantity }} шт.</div>
+        <div class="price">{{ item.price|fmt_price }} р.</div>
+    {% endif %}
+</div>
+

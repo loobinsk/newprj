@@ -1,0 +1,58 @@
+<div class="block visible-lg-block col-lg-12">
+    <h3>Мы ВКонтакте</h3>
+    <!-- VK Widget -->
+    <div id="vk_groups"></div>
+    {% if current_town.slug == 'moskva' %}
+        <script type="text/javascript">
+        VK.Widgets.Group("vk_groups", {mode: 0, width: "235", height: "350", color1: '', color2: '', color3: ''}, 27921854);
+        </script>
+    {% elif current_town.slug == 'sankt-peterburg' %}
+        <script type="text/javascript">
+            VK.Widgets.Group("vk_groups", {mode: 0, width: "235", height: "350", color1: '', color2: '', color3: ''}, 23108006);
+        </script>
+    {% elif current_town.slug == 'ekaterinburg' %}
+        <script type="text/javascript">
+        VK.Widgets.Group("vk_groups", {mode: 0, width: "235", height: "350", color1: '', color2: '', color3: ''}, 35859869);
+        </script>
+    {% elif current_town.slug == 'novosibirsk' %}
+        <script type="text/javascript">
+        VK.Widgets.Group("vk_groups", {mode: 0, width: "235", height: "350", color1: '', color2: '', color3: ''}, 35840256);
+        </script>
+    {% elif current_town.slug == 'kazan' %}
+        <script type="text/javascript">
+        VK.Widgets.Group("vk_groups", {mode: 0, width: "235", height: "350", color1: '', color2: '', color3: ''}, 23108006);
+        </script>
+    {% elif current_town.slug == 'rostov-na-donu' %}
+        <script type="text/javascript">
+        VK.Widgets.Group("vk_groups", {mode: 0, width: "235", height: "350", color1: '', color2: '', color3: ''}, 23108006);
+        </script>
+    {% elif current_town.slug == 'krasnoyarsk' %}
+        <script type="text/javascript">
+        VK.Widgets.Group("vk_groups", {mode: 0, width: "235", height: "350", color1: '', color2: '', color3: ''}, 23108006);
+        </script>
+    {% elif current_town.slug == 'samara' %}
+        <script type="text/javascript">
+        VK.Widgets.Group("vk_groups", {mode: 0, width: "235", height: "350", color1: '', color2: '', color3: ''}, 23108006);
+        </script>
+    {% elif current_town.slug == 'voronezh' %}
+        <script type="text/javascript">
+        VK.Widgets.Group("vk_groups", {mode: 0, width: "235", height: "350", color1: '', color2: '', color3: ''}, 23108006);
+        </script>
+    {% elif current_town.slug == 'omsk' %}
+        <script type="text/javascript">
+        VK.Widgets.Group("vk_groups", {mode: 0, width: "235", height: "350", color1: '', color2: '', color3: ''}, 23108006);
+        </script>
+    {% elif current_town.slug == 'chelyabinsk' %}
+        <script type="text/javascript">
+        VK.Widgets.Group("vk_groups", {mode: 0, width: "235", height: "350", color1: '', color2: '', color3: ''}, 23108006);
+        </script>
+    {% elif current_town.slug == 'sochi' %}
+        <script type="text/javascript">
+        VK.Widgets.Group("vk_groups", {mode: 0, width: "235", height: "350", color1: '', color2: '', color3: ''}, 23108006);
+        </script>
+    {% elif current_town.slug == 'ufa' %}
+        <script type="text/javascript">
+        VK.Widgets.Group("vk_groups", {mode: 0, width: "235", height: "350", color1: '', color2: '', color3: ''}, 23108006);
+        </script>
+    {% endif %}
+</div>

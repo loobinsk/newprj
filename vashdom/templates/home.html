@@ -1,0 +1,161 @@
+{% extends 'page.html' %}
+
+{% load main_tags %}
+
+{% block content %}
+    <div class="home">
+        <div class="home__town" style='background-image: url("{{ STATIC_URL }}img/{{ current_town.slug }}.jpg")'>
+            <h1 class='home__title'>
+                Снять жилье от собственников 
+                <a href="/{{current_town.slug}}/" title="Перейти к объявлениям">База недвижимости</a>
+            </h1>
+            <div class="home__town-title">{{ current_town.title }}</div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <div class="home__txt-l">
+                    <div class="home__counter">
+                        <h2 class='home__counter-title'>За последние 24 часа подано в {{ current_town.title_d }}</h2>
+                        <div class="home__counter-row">
+                            {% comment %} {% if advert_count %} {% endcomment %}
+                            <div class="home__counter-col">
+                                <div class="count"><a href="/{{current_town.slug}}/" title="Перейти к объявлениям в базе Ваш Дом">{{ advert_count }}</a></div>
+                                <div class="count_title"><a href="/{{current_town.slug}}/" title="Перейти к объявлениям в базе Ваш Дом">объявлений от собственников</a></div>
+                            </div>
+                            {% comment %} {% endif %}
+                            {% if vkadvert_count %} {% endcomment %}
+                                <div class="home__counter-col">
+                                    <div class="count"><a href="/vk/{{current_town.slug}}/" title="Перейти к объявлениям в базе ВКонтакте">{{ vkadvert_count }}</a></div>
+                                    <div class="count_title"><a href="/vk/{{current_town.slug}}/" title="Перейти к объявлениям в базе ВКонтакте">объявлений Вконтакте</a></div>
+                                </div>
+                            {% comment %} {% endif %} {% endcomment %}
+                        </div>
+    
+{#                        <div class="home__vkont">#}
+{#                            <script type="text/javascript">document.write(VK.Share.button({url: "https://bazavashdom.ru"}, {#}
+{#                                type: "round",#}
+{#                                text: "Я против Агентов"#}
+{#                            }));</script>#}
+{#                        </div>#}
+                    </div>
+    
+                    <h2 class="title">Преимущества базы аренды недвижимости:</h2>
+                    <ul class="benefits">
+                        <li><span class="glyphicon glyphicon-ok" aria-hidden="true"></span>В нашей базе ТОЛЬКО ПРЯМЫЕ
+                            СОБСТВЕННИКИ.
+                        </li>
+                        <li><span class="glyphicon glyphicon-ok" aria-hidden="true"></span>Мы единственные, кто дает <a href="/guarantee/">гарантию</a>, что Вы найдете жилье.
+                        </li>
+                        <li><span class="glyphicon glyphicon-ok" aria-hidden="true"></span>Объявления проходят проверку и 
+                            прозваниваются вручную нашими операторами.
+                        </li>
+                        <li><span class="glyphicon glyphicon-ok" aria-hidden="true"></span>Информация актуальна на 100% в день
+                            размещения на сайте.
+                        </li>
+                        <li><span class="glyphicon glyphicon-ok" aria-hidden="true"></span>КРУГЛОСУТОЧНАЯ поддержка онлайн.
+                        </li>
+                        <li><span class="glyphicon glyphicon-ok" aria-hidden="true"></span>За 8 лет работы черный список агентов, 
+                        мошенников и недобросовестных собственников составляет более 96000 контактов.
+                        </li>
+                        <li><span class="glyphicon glyphicon-ok" aria-hidden="true"></span>Вы экономите время с поиска, деньги с агентов
+                        и нервы от всего процесса аренды жилья без посредников.
+                        </li>
+                        <li><span class="glyphicon glyphicon-ok" aria-hidden="true"></span>Мы также предлагаем  <a href="/vk/{{current_town.slug}}/" title="Открыть базу ВКонтакте"> дополнительную базу объявлений</a> собственников из сети ВКонтакте.
+                        </li>
+                    </ul>
+                </div>
+    
+                <div class="home__txt-r">
+                    <!-- VK Widget -->
+                    <div class="home__vkgroup">
+                        <div id="vk_groups"></div>
+                        {% if current_town.slug == 'moskva' %}
+                            <script type="text/javascript">
+                            VK.Widgets.Group("vk_groups", {mode: 0, width: "445", height: "350", color1: '', color2: '', color3: ''}, 27921854);
+                            </script>
+                        {% elif current_town.slug == 'sankt-peterburg' %}
+                            <script type="text/javascript">
+                                VK.Widgets.Group("vk_groups", {mode: 0, width: "445", height: "350", color1: '', color2: '', color3: ''}, 23108006);
+                            </script>
+                        {% elif current_town.slug == 'ekaterinburg' %}
+                            <script type="text/javascript">
+                            VK.Widgets.Group("vk_groups", {mode: 0, width: "445", height: "350", color1: '', color2: '', color3: ''}, 23108006);
+                            </script>
+                        {% elif current_town.slug == 'novosibirsk' %}
+                            <script type="text/javascript">
+                            VK.Widgets.Group("vk_groups", {mode: 0, width: "445", height: "350", color1: '', color2: '', color3: ''}, 23108006);
+                            </script>
+                        {% elif current_town.slug == 'kazan' %}
+                            <script type="text/javascript">
+                            VK.Widgets.Group("vk_groups", {mode: 0, width: "445", height: "350", color1: '', color2: '', color3: ''}, 23108006);
+                            </script>
+                        {% elif current_town.slug == 'rostov-na-donu' %}
+                            <script type="text/javascript">
+                            VK.Widgets.Group("vk_groups", {mode: 0, width: "445", height: "350", color1: '', color2: '', color3: ''}, 23108006);
+                            </script>
+                        {% elif current_town.slug == 'krasnoyarsk' %}
+                            <script type="text/javascript">
+                            VK.Widgets.Group("vk_groups", {mode: 0, width: "445", height: "350", color1: '', color2: '', color3: ''}, 23108006);
+                            </script>
+                        {% elif current_town.slug == 'samara' %}
+                            <script type="text/javascript">
+                            VK.Widgets.Group("vk_groups", {mode: 0, width: "445", height: "350", color1: '', color2: '', color3: ''}, 23108006);
+                            </script>
+                        {% elif current_town.slug == 'voronezh' %}
+                            <script type="text/javascript">
+                            VK.Widgets.Group("vk_groups", {mode: 0, width: "445", height: "350", color1: '', color2: '', color3: ''}, 23108006);
+                            </script>
+                        {% elif current_town.slug == 'omsk' %}
+                            <script type="text/javascript">
+                            VK.Widgets.Group("vk_groups", {mode: 0, width: "445", height: "350", color1: '', color2: '', color3: ''}, 23108006);
+                            </script>
+                        {% elif current_town.slug == 'chelyabinsk' %}
+                            <script type="text/javascript">
+                            VK.Widgets.Group("vk_groups", {mode: 0, width: "445", height: "350", color1: '', color2: '', color3: ''}, 23108006);
+                            </script>
+                        {% elif current_town.slug == 'sochi' %}
+                            <script type="text/javascript">
+                            VK.Widgets.Group("vk_groups", {mode: 0, width: "445", height: "350", color1: '', color2: '', color3: ''}, 23108006);
+                            </script>
+                        {% elif current_town.slug == 'ufa' %}
+                            <script type="text/javascript">
+                            VK.Widgets.Group("vk_groups", {mode: 0, width: "445", height: "350", color1: '', color2: '', color3: ''}, 23108006);
+                            </script>
+                        {% endif %}
+                    </div>
+    
+                    <h2>Хотите быстро сдать ваше жилье?</h2>
+    
+                    <p>Разместите Ваше объявление у нас в Базе собственников и получайте сразу звонки от прямых соискателей
+                        жилья.
+                    </p>
+    
+                    <p class="text-center">
+                        <a href="{% url 'advert:create' %}" class="btn btn-secondary btn-lg" title="Бесплатно подать объявление">Разместить объявление</a>
+                    </p>
+    
+                    <hr/>
+    
+                    <h2>Хотите быстро снять жилье?</h2>
+                    
+                    <p>Подпишитесь на рассылку, задайте нужные параметры поиска и получайте самые свежие объявления от собственников максимально оперативно. 
+                    
+                    </p>
+    
+                    <p class="text-center">
+                        <a href="{% url 'search-request:create' %}" class="btn btn-secondary btn-lg" title="Оформить подписку бесплатно">Подписаться на рассылку</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+         
+
+            
+
+{#        <div id="vk_comments" class="col-lg-12"></div>#}
+{#        <script type="text/javascript">#}
+{#        VK.Widgets.Comments("vk_comments", {limit: 10, width: "100%", attach: "*"});#}
+{#        </script>#}
+    </div>
+{% endblock %}

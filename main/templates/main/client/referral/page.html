@@ -1,0 +1,21 @@
+{% extends 'page-client-center.html' %}
+
+{% load bootstrap_pagination %}
+{% load main_tags %}
+
+{% block title %}Реферальные ссылки &middot; {{ block.super }}{% endblock %}
+
+{% block center %}
+        <a href='#' class='btn-referral-create btn btn-primary pull-right'><span class="glyphicon glyphicon-pencil"></span> Создать ссылку</a>
+
+        <h1 class="page-title">
+            Реферальные ссылки
+        </h1>
+
+        {% if referral_list %}
+            {% include 'main/client/referral/list.html' %}
+            {% bootstrap_paginate page_obj alignment='left' range=6 show_first_last='true'%}
+        {% else %}
+            <div class="alert alert-info">Нет ссылок</div>
+        {% endif %}
+{% endblock %}

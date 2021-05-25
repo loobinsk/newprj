@@ -1,0 +1,41 @@
+{% load main_tags %}
+{% load thumbnail %}
+
+<div class="user-preview partner user-item-{{ object.id }} editable-content">
+    <div class="preview-image">
+        {% thumbnail object.image "50x50" crop='center' as img %}
+            <img src='{{ img.url }}'>
+        {% empty %}
+            <img src='{{ STATIC_URL }}img/noavatar.png'>
+        {% endthumbnail %}
+    </div>
+
+    <div class="content">
+        <h2>{{ object.get_full_name }}</h2>
+
+        <div class="tel">{{ object.tel|fmt_tel|default_if_none:'' }} {{ object.email|default_if_none:'' }}</div>
+        {% if object.independent %}
+            <div class="independent">Независимый агент</div>
+        {% endif %}
+
+        <div class="sections">
+            {% if not object.independent and object.company.owner != object %}
+                <a href="{% url 'client:company:user-perms' object.id %}" class="btn-perms" data-toggle="tooltip" data-placement="bottom" title="Ограничения доступа">Ограничения доступа</a>
+            {% endif %}
+
+            {% with active_perms=object.get_active_perms %}
+                {% if active_perms %}
+                    <ul class="active-perms">
+                        {% for p in active_perms %}
+                            <li>{{ p.title }}</li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <span class="text-danger">Нет подключенных разделов</span>
+                {% endif %}
+            {% endwith %}
+        </div>
+
+
+    </div>
+</div>

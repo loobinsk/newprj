@@ -1,0 +1,29 @@
+@import '../imports.less';
+
+.attention-block, .documents-block, .subscribe-block {
+    img {
+        float: left;
+    }
+
+    h3, p {
+        margin-left: 65px !important;
+    }
+
+    a {
+        color: lighten(@primarycolor, 50%);
+        border-bottom: 1px dashed lighten(@primarycolor, 50%);
+
+        &:hover {
+            color: #fff;
+            border-color: #fff;
+            text-decoration: none;
+        }
+    }
+}
+
+.subscribe-block {
+    a {
+        border: none;
+        color: #fff !important;
+    }
+}

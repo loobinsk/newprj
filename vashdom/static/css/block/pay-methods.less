@@ -1,0 +1,44 @@
+@import '../imports.less';
+
+.pay-methods {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+
+    &__item {
+        display: flex;
+        margin-bottom: 15px;
+
+        .sm-block({
+            flex-wrap: wrap;
+        });
+    }
+
+    &__image {
+        width: 130px;
+        height: 130px;
+        border: 1px solid #f0f0f0;
+        background-color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 15px;
+
+        .sm-block({
+            width: 100%;
+            height: 50px;
+        });
+    }
+
+    &__title {
+        font-size: 18px;
+        text-transform: uppercase;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+
+    &__phone {
+        font-size: 18px;
+        margin: 10px 0;
+    }
+}

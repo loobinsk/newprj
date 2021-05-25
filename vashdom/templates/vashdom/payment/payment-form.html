@@ -1,0 +1,11 @@
+<form action="{{ robokassa_form.target }}" method="POST">
+{# <h2 class="paytitle">Выберите удобный способ оплаты:</h2>#} 
+    {{ robokassa_form }}
+    <button type="submit" class="btn btn-block btn-secondary">Оплатить</button>
+    <br> 
+    <div align="right">
+    <p>Если браузер не поддерживает переадресацию, скопируйте прямую ссылку на Ваш счет</p>
+    <input type="text" id="robokassa_url" value="{{ robokassa_form.get_redirect_url }}">
+    <button type="button" class="btn_copy" data-clipboard-target="#robokassa_url">Копировать</button>
+    </div>
+</form>

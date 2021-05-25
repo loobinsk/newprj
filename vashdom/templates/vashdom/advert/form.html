@@ -1,0 +1,217 @@
+{% load uimg_tags %}
+{% load main_tags %}
+
+<form method="POST" action="{{ action }}" id="catalog-form" class="form">
+    {% csrf_token %}
+
+
+
+{#    <div class='type'>#}
+{#        {{ form.type }}#}
+{#        {{ form.limit }}#}
+{#    </div>#}
+
+    <div class="for_room for_flat for_country hidden">
+        <label>Я хочу сдать</label>{{ form.rooms_ext }}
+    </div>
+
+    <div class="address">
+        <label>Адрес</label>
+       <div hidden>{{ form.town }}</div> {{ form.address }}
+    </div>
+
+    {{ form.latitude }}
+    {{ form.longitude }}
+    <div class="metro">
+        {{ form.metro.label_tag }}
+        {{ form.metro }}
+    </div>
+    <div class="district">
+        {{ form.district.label_tag }}
+        {{ form.district }}
+    </div>
+
+    <div class="square for_room for_flat for_country for_commercial for_territory hidden">
+        <label>Площадь, м<sup>2</sup></label>
+        <div class="for_room for_flat for_country for_commercial for_territory hidden">
+            {{ form.square }}
+        </div>
+        <div class="for_room for_flat for_country hidden">
+            {{ form.living_square }}
+        </div>
+        <div class="for_room for_flat for_country hidden">
+            {{ form.kitchen_square }}
+        </div>
+    </div>
+
+<div class="comfort for_room for_flat hidden">
+        <div>{{ form.refrigerator }}{{ form.refrigerator.label_tag }}</div>
+        <div>{{ form.tv}}{{ form.tv.label_tag }}</div>
+        <div>{{ form.washer }}{{ form.washer.label_tag }}</div>
+        <div>{{ form.phone }}{{ form.phone.label_tag }}</div>
+        <div>{{ form.internet }}{{ form.internet.label_tag }}</div>
+        <div>{{ form.conditioner }}{{ form.conditioner.label_tag }}</div>
+        <div>{{ form.furniture }}{{ form.furniture.label_tag }}</div>
+        <div>{{ form.separate_wc }}{{ form.separate_wc.label_tag }}</div>
+        <div>{{ form.balcony }}{{ form.balcony.label_tag }}</div>
+        <div>{{ form.euroremont }}{{ form.euroremont.label_tag }}</div>
+        <div>{{ form.redecoration }}{{ form.redecoration.label_tag }}</div>
+        <div>{{ form.parking }}{{ form.parking.label_tag }}</div>
+        <div>{{ form.no_remont }}{{ form.no_remont.label_tag }}</div>
+        <div>{{ form.need_remont }}{{ form.need_remont.label_tag }}</div>
+        <div>{{ form.lift }}{{ form.lift.label_tag }}</div>
+        <div>{{ form.parking }}{{ form.parking.label_tag }}</div>
+        <div>{{ form.concierge }}{{ form.concierge.label_tag }}</div>
+        <div>{{ form.guard }}{{ form.guard.label_tag }}</div>
+        <div>{{ form.live_one }}{{ form.live_one.label_tag }}</div>
+        <div>{{ form.live_two }}{{ form.live_two.label_tag }}</div>
+        <div>{{ form.live_pare }}{{ form.live_pare.label_tag }}</div>
+        <div>{{ form.live_more }}{{ form.live_more.label_tag }}</div>
+        <div>{{ form.live_girl }}{{ form.live_girl.label_tag }}</div>
+        <div>{{ form.live_man }}{{ form.live_man.label_tag }}</div>
+        <div>{{ form.live_child }}{{ form.live_child.label_tag }}</div>
+        <div>{{ form.live_animal }}{{ form.live_animal.label_tag }}</div>
+</div> 
+  
+
+    <div class="body">
+        <label>Описание объекта</label>
+        {{ form.body }}
+    </div>
+
+    <div class="price">
+        <label>Цена в рублях:</label>
+        {{ form.price }}
+    </div>
+
+     <div class="fio">
+        <label>Ваше имя</label>
+        {{ form.owner_name }}
+    </div>
+    <div class="tel">
+        <label>Ваш телефон</label>
+        {{ form.owner_tel }}
+    </div>
+    <div class="email">
+        <label>E-mail</label>
+        {{ form.owner_email }}
+    </div>
+
+    <div class="agree">
+        {{ form.agree }} <label for="id_agree">Я согласен(на) и принимаю
+        <a href="/agreement/" target="_blank" class="btn-agreement" data-id='#id_agree'>условия работы сервиса и размещения объявлений</a></label>
+    </div>
+
+    {{ form.images }} 
+
+</form>
+
+{% image_upload_multiple form.images %}
+
+<script type="text/javascript">
+    var addressMap;
+    var need = 'need_sale';
+    var live = 'flat';
+    var towns = {{ towns|jsonify }};
+
+    jQuery('#id_price').mask('999999999');
+    jQuery('#id_square').mask('999999999');
+    jQuery('#id_living_square').mask('999999999');
+    jQuery('#id_kitchen_square').mask('999999999');
+
+    function show_catalog_estate() {
+        var new_live = 'flat';
+
+        switch(jQuery('#catalog-form input[name="live"]:checked').val()) {
+            case 'R':
+                new_live = 'room';
+                break;
+            case 'F':
+                new_live = 'flat';
+                break;
+        }
+
+
+        jQuery('#catalog-form .for_'+live).addClass('hidden');
+        live = new_live;
+        jQuery('#catalog-form .for_'+live).removeClass('hidden');
+    }
+
+    show_catalog_estate();
+
+    jQuery('#id_address').change(function(e){
+        var town_title = jQuery('#id_town :selected').text();
+        var town_id = jQuery('#id_town :selected').val();
+        var address_string = 'Россия, ' + town_title + ', '+ jQuery(this).val();
+        var myGeocoder = ymaps.geocode(address_string);
+        myGeocoder.then(
+                function (res) {
+                    var placemark = res.geoObjects.get(0);
+                    if (placemark) {
+                        var coord = placemark.geometry.getCoordinates();
+
+                        jQuery('#id_latitude').val(coord[0]);
+                        jQuery('#id_longitude').val(coord[1]);
+
+                        //определение станции метро
+                        ymaps.geocode(coord, {
+                            kind: 'metro',
+                            results: 4
+                        }).then(function(res) {
+                                    if (res.geoObjects.getLength() > 0) {
+                                        var m = res.geoObjects.get(0);
+                                        var metro_name = m.properties.get('name').replace('метро', '');
+                                        jQuery.get('/metro/typehead', {query: metro_name, town: town_id}, function(data) {
+                                            if (data.length > 0) {
+                                                jQuery('#id_metro input[type="hidden"]').val(data[0].id);
+                                                jQuery('#id_metro .bfh-selectbox-option').html(data[0].title);
+                                            }
+                                        }, 'json');
+                                    }
+                                });
+
+                        //определение района
+                        ymaps.geocode(coord, {
+                            kind: 'district',
+                            results: 4
+                        }).then(function(res) {
+                                    if (res.geoObjects.getLength() > 0) {
+                                        var m = res.geoObjects.get(0);
+                                        var district_name = m.properties.get('name').replace('район', '');
+                                        jQuery.get('/district/typehead', {query: district_name, town: town_id}, function(data) {
+                                            if (data.length > 0) {
+                                                jQuery('#id_district input[type="hidden"]').val(data[0].id);
+                                                jQuery('#id_district .bfh-selectbox-option').html(data[0].title);
+                                            }
+                                        }, 'json');
+                                    }
+                                });
+                    }
+
+                },
+                function (err) {
+                    // обработка ошибки
+                }
+        );
+    });
+
+    jQuery('#id_town').change(function(e){
+        var town_id = jQuery('#id_town :selected').val();
+        for(var t=0; t<towns.length; t++) {
+            if (town_id == towns[t].id) {
+                jQuery('#id_metro .bfh-selectbox-options ul li').remove();
+                jQuery('#id_metro .bfh-selectbox-options ul').append('<li><a tabindex="-1" href="#" data-option="">---------</a></li>');
+                for (var m=0; m<towns[t].metro.length; m++) {
+                    jQuery('#id_metro .bfh-selectbox-options ul').append('<li><a tabindex="-1" href="#" data-option="' + towns[t].metro[m].id + '">' + towns[t].metro[m].name + '</a></li>');
+                }
+
+                jQuery('#id_district .bfh-selectbox-options ul li').remove();
+                jQuery('#id_district .bfh-selectbox-options ul').append('<li><a tabindex="-1" href="#" data-option="">---------</a></li>');
+                for (var m=0; m<towns[t].district.length; m++) {
+                    jQuery('#id_district .bfh-selectbox-options ul').append('<li><a tabindex="-1" href="#" data-option="' + towns[t].district[m].id + '">' + towns[t].district[m].name + '</a></li>');
+                }
+            }
+        }
+    });
+</script>
+

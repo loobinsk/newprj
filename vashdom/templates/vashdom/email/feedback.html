@@ -1,0 +1,12 @@
+{% extends 'vashdom/email/base-plain.html' %}
+
+{% block content %}
+Новый вопрос с сайта БазаВашДом
+
+ГОРОД: {{ town.title }}
+ИМЯ: {{ name }}
+EMAIL: {{ email }}
+ТЕЛЕФОН: {{ tel }}
+
+{{ body }}
+{% endblock %}

@@ -1,0 +1,5 @@
+<div class='checkbox-list'>
+    {% for choice in choices %}
+        <input type="radio" id="{{ id }}_{{ forloop.counter0 }}" name="{{ name }}" value="{{ choice.0 }}" {% if choice.0 == value %}checked{% endif %}><label for="{{ id }}_{{ forloop.counter0 }}">{{ choice.1 }}</label>
+    {% endfor %}
+</div>

@@ -1,0 +1,27 @@
+{% load main_tags %}
+{% load cache %}
+{% load uvideo_tags %}
+{% load uimg_tags %}
+
+<div class='item news-preview news-item-{{ news.id }} editable-content'>
+    {% if news.video %}
+        {% video_preview news.video news.get_client_url %}
+    {% else %}
+        {% image_preview news.images.all news.get_client_url %}
+    {% endif %}
+
+    <div class='content'>
+        <h2 class='title'><a href="{% url 'client:news:detail' news.id %}">{{ news.title }}</a></h2>
+
+        {{ news.body|news_preview|safe }}
+    </div>
+
+    <div class='item-footer'>
+{#        <div class='date'>#}
+{#            {{ news.date|fmt_date }}#}
+{#        </div>#}
+        {% include 'main/client/news/edit-buttons.html' %}
+    </div>
+
+</div>
+

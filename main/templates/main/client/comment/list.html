@@ -1,0 +1,7 @@
+<div class='comments' id="comments">
+    <div class="comment-list">
+        {% for comment in comment_list %}
+            {% include 'main/client/comment/preview.html' %}
+        {% endfor %}
+    </div>
+</div>

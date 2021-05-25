@@ -1,0 +1,8 @@
+<form method="POST" action="{{ action }}" id="district-form">
+    {% csrf_token %}
+    {{ form.town }}
+    <dl>
+        <dt>{{ form.title.label_tag }}</dt>
+        <dd>{{ form.title }}</dd>
+    </dl>
+</form>

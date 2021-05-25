@@ -1,0 +1,36 @@
+{% load uimg_tags %}
+{% load uvideo_tags %}
+
+<form method="POST" action="{{ action }}" id="company-form">
+    {% csrf_token %}
+    <dl>
+        <dt>{{ form.title.label_tag }}</dt>
+        <dd>{{ form.title }}</dd>
+        <dt>{{ form.tel.label_tag }}</dt>
+        <dd>{{ form.tel }}</dd>
+        <dt>{{ form.email.label_tag }}</dt>
+        <dd>{{ form.email }}</dd>
+        <dt>{{ form.town.label_tag }}</dt>
+        <dd>{{ form.town }}</dd>
+        <dt>{{ form.address.label_tag }}</dt>
+        <dd>{{ form.address }}</dd>
+        <dt>{{ form.inn.label_tag }}</dt>
+        <dd>{{ form.inn }}</dd>
+        <dt>{{ form.ogrn.label_tag }}</dt>
+        <dd>{{ form.ogrn }}</dd>
+        <dt>{{ form.owner.label_tag }}</dt>
+        <dd>{{ form.owner }}</dd>
+        <dd>
+            <label></label>{{ form.is_real }}{{ form.is_real.label_tag }}
+        </dd>
+        <dd>
+            <label></label>{{ form.hidden }}{{ form.hidden.label_tag }}
+        </dd>
+        <dt>{{ form.desc.label_tag }}</dt>
+        <dd>{{ form.desc }}</dd>
+    </dl>
+</form>
+
+<script type="text/javascript">
+    jQuery('#company-form #id_tel').mask('+7(999) 999-9999');
+</script>

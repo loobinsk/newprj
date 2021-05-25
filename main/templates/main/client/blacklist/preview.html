@@ -1,0 +1,9 @@
+{% load main_tags %}
+
+<tr class="blacklist-preview blacklist blacklist-item-{{ blacklist.id }}">
+        <td>{{ blacklist.tel|fmt_tel }}</td>
+        <td>{{ blacklist.body|linebreaksbr|truncatewords_html:30|default_if_none:'&nbsp;' }}</td>
+        <td>
+            {% include 'main/client/blacklist/edit-buttons.html' %}
+        </td>
+</tr>

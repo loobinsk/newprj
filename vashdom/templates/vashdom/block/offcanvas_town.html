@@ -1,0 +1,22 @@
+<ul class="offcanvas__menu offcanvas__menu_town">
+    {% for town in town_list|slice:':4' %}
+        <li class="offcanvas__item">
+            <a class='offcanvas__link {% if town.id == current_town.id %}offcanvas__link_active{% endif %}' href="/{{town.slug}}/">
+                {{ town.title }}
+            </a>
+        </li>
+    {% endfor %}
+    <li class="offcanvas__item">
+        <a class='offcanvas__link offcanvas__link_alltowns' href="#">
+            Все города <i class="fa fa-angle-down"></i>
+        </a>
+    </li>
+
+    {% for town in town_list|slice:'4:' %}
+        <li class="offcanvas__item offcanvas__item_town offcanvas__item_additional">
+            <a class='offcanvas__link {% if town.id == current_town.id %}offcanvas__link_active{% endif %}' href="/{{town.slug}}/">
+                {{ town.title }}
+            </a>
+        </li>
+    {% endfor %}
+</ul>

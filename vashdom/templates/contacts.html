@@ -1,0 +1,87 @@
+{% extends 'page.html' %}
+
+{% block title %}Контакты &middot; {{ block.super }}{% endblock %}
+
+{% block content %}
+<div class="contacts-page">
+    <div class="container">
+        <div class="row">
+            <div class="contacts-page__content">
+                <h1 class="contacts-page__title">
+                    {% if metatag.page_title %}
+                        {{metatag.page_title}}
+                    {% else %}
+                        Контакты в г. {{ current_town.title }}
+                    {% endif %}
+                </h1>
+
+                {% if current_town.slug == 'moskva' %}
+                    <p class="address"><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span> г. Москва, м. Новослободская,
+                    ул. Краснопролетарская, д.16</p>
+                    <p class="tel"><span class="glyphicon glyphicon-earphone" aria-hidden="true"></span> +7 (812) 507-67-47</p>
+                    <p class="email"><span class="glyphicon glyphicon-comment" aria-hidden="true"></span> msk@bazavashdom.ru</p>
+                {% elif current_town.slug == 'sankt-peterburg' %}
+                    <p class="address"><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span> г. Санкт-Петербург, м. Василеостровская,
+                    ул.18-я линия В.О., д.29, БЦ "Сенатор"</p>
+                    <p class="tel"><span class="glyphicon glyphicon-earphone" aria-hidden="true"></span> +7 (812) 507-67-47</p>
+                    <p class="email"><span class="glyphicon glyphicon-comment" aria-hidden="true"></span> spb@bazavashdom.ru</p>
+                {% elif current_town.slug == 'ekaterinburg' %}
+                    <p class="address"><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span> г. Екатеринбург, ул. Сакко и Ванцетти,
+                    д.61, БЦ "Венский дом"</p>
+                    <p class="tel"><span class="glyphicon glyphicon-earphone" aria-hidden="true"></span> +7 (343) 226-03-32</p>
+                    <p class="email"><span class="glyphicon glyphicon-comment" aria-hidden="true"></span> ekb@bazavashdom.ru</p>
+                {% elif current_town.slug == 'novosibirsk' %}
+                    <p class="address"><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span> г. Новосибирск, м. Площадь Гарина-Михайловского,
+                    ул.Красноярская, д.35, БЦ "Гринвич"</p>
+                    <p class="tel"><span class="glyphicon glyphicon-earphone" aria-hidden="true"></span> +7 (383) 207-82-33</p>
+                    <p class="email"><span class="glyphicon glyphicon-comment" aria-hidden="true"></span> nsk@bazavashdom.ru</p>
+                {% endif %}
+        
+                <form id="contacts-form" class="form" method="post" action="{% url 'contacts' %}">
+                    {% csrf_token %}
+                    <div class="town">
+                        <label>{{ form.town.label }}*</label>
+                        {{ form.town }}
+                    </div>
+                    <div class="name">
+                        <label>{{ form.name.label }}*</label>
+                        {{ form.name }}
+                    </div>
+                    <div class="name">
+                        <label>{{ form.tel.label }}</label>
+                        {{ form.tel }}
+                    </div>
+                    <div class="name">
+                        <label>{{ form.email.label }}*</label>
+                        {{ form.email }}
+                    </div>
+                    <div class="name">
+                        <label>{{ form.body.label }}*</label>
+                        {{ form.body }}
+                    </div>
+                    <div class="submit">
+                        <button class="btn btn-secondary btn-lg">Задать вопрос</button>
+                    </div>
+        
+                </form>
+            </div>
+            <div class="contacts-page__sidebar">
+                {% if current_town.slug == 'moskva' %}
+                    <img src="{{ STATIC_URL }}img/moscow.jpg" class="town-img">
+                    <script type="text/javascript" charset="utf-8" src="https://api-maps.yandex.ru/services/constructor/1.0/js/?sid=l0IFny1QZftf6Ot77GK7cR2Rr7SGvt9n&width=100%&height=300"></script>
+                {% elif current_town.slug == 'sankt-peterburg' %}
+                    <img src="{{ STATIC_URL }}img/piter.jpg" class="town-img">
+                    <script type="text/javascript" charset="utf-8" src="https://api-maps.yandex.ru/services/constructor/1.0/js/?sid=OpUzy-vmLXKRv1sdXaG6NajsDZBDH-A6&width=100%&height=300"></script>
+                {% elif current_town.slug == 'ekaterinburg' %}
+                    <img src="{{ STATIC_URL }}img/ekb.jpg" class="town-img">
+                    <script type="text/javascript" charset="utf-8" src="https://api-maps.yandex.ru/services/constructor/1.0/js/?sid=UJKKbjeqUkZVkZrpP1Ode0qgQC_4e58B&width=100%&height=300"></script>
+                {% elif current_town.slug == 'novosibirsk' %}
+                    <img src="{{ STATIC_URL }}img/nsk.jpg" class="town-img">
+                    <script type="text/javascript" charset="utf-8" src="https://api-maps.yandex.ru/services/constructor/1.0/js/?sid=3XKog_1IYEzrXig_qY-zQtjFtZbBEVK6&width=100%&height=300"></script>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

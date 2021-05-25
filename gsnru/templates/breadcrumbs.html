@@ -1,0 +1,15 @@
+{% if request.breadcrumbs.all|length > 1 %}
+    <ol class='breadcrumb'>
+        {% for breadcrumb in request.breadcrumbs %}
+            <li>
+                <a href="{{ breadcrumb.url }}">
+                    {% if forloop.first %}
+                        <span class="glyphicon glyphicon-home"></span>
+                    {% else %}
+                        {{ breadcrumb.name }}
+                    {% endif %}
+                </a>
+            </li>
+        {% endfor %}
+    </ol>
+{% endif %}

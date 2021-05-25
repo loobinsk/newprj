@@ -1,0 +1,14 @@
+<table class="blacklist-list table table-bordered">
+    <thead>
+        <tr>
+            <th>VKID</th>
+            <th>Описание</th>
+            <th>Действия</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for blacklist in blacklist_list %}
+            {% include 'main/client/vkblacklist/preview.html' %}
+        {% endfor %}
+    </tbody>
+</table>

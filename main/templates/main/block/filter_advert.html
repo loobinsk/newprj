@@ -1,0 +1,183 @@
+<div class="catalog-filter" id="catalog-filter">
+    <form method="post" action="{{ url }}">
+        {{ form.map }}
+        <div class="header blue-gr">
+            <a href="#" class='choose-town btn-flt1'>{{ current_town.title }} <span class="caret"></span></a>
+
+            {{ form.type }}
+
+            <a href="{% if user.is_authenticated and user.company.status == 'a' %}{% url 'client:advert:create' %}{% else %}{% url 'advert:create' %}{% endif %}" class='btn btn-flt4 pull-right'><strong>БЕСПЛАТНО</strong> разместить объявление</a>
+        </div>
+
+        <div class="content">
+            <div class="row">
+                <div>
+                    {{ form.estate }}
+                </div>
+                <div class="for_flat">
+                    {{ form.rooms }}
+                </div>
+                <div class="for_country hidden">
+                    {{ form.country }}
+                </div>
+                <div class="for_commercial hidden" style="width: 600px;">
+                    {{ form.commercial }}
+                </div>
+                <div class="for_territory hidden">
+                    {{ form.territory }}
+                </div>
+                <div class="metro pull-left">
+                    {{ form.metro }}
+                </div>
+                <div class="district pull-left">
+                    {{ form.district }}
+                </div>
+                <div class="date pull-left">
+                    {{ form.date }}
+                </div>
+                <div class="pull-left caption">
+                    Цена, руб.
+                </div>
+                <div class="min-price pull-left">
+                    {{ form.min_price }}
+                </div>
+                <div class="min-price pull-left">
+                    {{ form.max_price }}
+                </div>
+                <div class="pull-left caption">
+                    Площадь, м<sup>2</sup>
+                </div>
+                <div class="min-square pull-left">
+                    {{ form.min_square }}
+                </div>
+                <div class="min-square pull-left">
+                    {{ form.max_square }}
+                </div>
+            </div>
+
+            <button class="btn btn-flt3 btn-search">Подобрать</button>
+
+            <button class="btn btn-flt4 btn-reset" type="reset" data-toggle='tooltip' title="Очистить параметры поиска"><span class="glyphicon glyphicon-remove"></span></button>
+
+            {% include 'main/block/request.html' %}
+
+            <div class="sections hidden">
+                <div class="col">
+                    <h3>Жилая недвижимость</h3>
+                    <ul>
+                        <li><a href="{% url 'advert:list' %}?type=S&estate=F">Продажа жилья</a></li>
+                        <li><a href="{% url 'advert:list' %}?type=L&estate=F">Аренда жилья длительно</a></li>
+                        <li><a href="{% url 'advert:list' %}?type=L&estate=F&limit=on">Аренда жилья посуточно</a></li>
+                    </ul>
+                </div>
+                <div class="col">
+                    <h3>Загородная недвижимость</h3>
+                    <ul>
+                        <li><a href="{% url 'advert:list' %}?type=S&estate=H">Продажа коттеджей</a></li>
+                        <li><a href="{% url 'advert:list' %}?type=L&estate=H">Аренда коттеджей длительно</a></li>
+                        <li><a href="{% url 'advert:list' %}?type=L&estate=H&limit=on">Аренда коттеджей посуточно</a></li>
+                        <li><a href="{% url 'advert:list' %}?estate=T">Земельные участки</a></li>
+                    </ul>
+                </div>
+                <div class="col">
+                    <h3>Коммерческая недвижимость</h3>
+                    <ul>
+                        <li><a href="{% url 'advert:list' %}?type=S&estate=C">Продажа коммерческой недвижимости</a></li>
+                        <li><a href="{% url 'advert:list' %}?type=L&estate=C">Аренда коммерческой недвижимости</a></li>
+                    </ul>
+                </div>
+                <div class="col">
+                    <h3>Информация</h3>
+                    <ul>
+                        <li><a href="{% url 'news:list' %}">Новости</a></li>
+                        <li><a href="/about/">О компании</a></li>
+                        <li><a href="{% url 'registration_register' %}">Агентствам недвижимости</a></li>
+                        <li><a href="{% url 'reclame' %}">Реклама на сайте</a></li>
+                        <li><a href="{% url 'contacts' %}">Контакты</a></li>
+                        <li><a href="{% url 'company:list' %}">Реестр агентств</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <a href="#" class='btn-show-sections'>
+                <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> Все разделы</a>
+        </div>
+    </form>
+</div>
+
+<script type="text/javascript">
+    var filter_estate = 'flat';
+    var filter_adtype = 'lease';
+    var filter_limit = 'long';
+
+    function filter_show_estate() {
+        var new_estate = 'flat';
+
+        switch(jQuery('.catalog-filter input[name="estate"]:checked').val()) {
+            case 'F':
+                new_estate = 'flat';
+                break;
+            case 'H':
+                new_estate = 'country';
+                break;
+            case 'C':
+                new_estate = 'commercial';
+                break;
+            case 'T':
+                new_estate = 'territory';
+                break;
+            default:
+                new_estate = filter_estate;
+        }
+
+        jQuery('.catalog-filter .for_'+filter_estate).addClass('hidden');
+        filter_estate = new_estate;
+        jQuery('.catalog-filter .for_'+filter_estate).removeClass('hidden');
+
+        var new_adtype = 'lease';
+        switch(jQuery('.catalog-filter input[name="type"]:checked').val()) {
+            case 'L':
+                new_adtype = 'lease';
+                break;
+            case 'S':
+                new_adtype = 'sale';
+                break;
+            case 'LP':
+                new_adtype = 'lease';
+                break;
+            default:
+                new_adtype = filter_adtype;
+        }
+
+        jQuery('.catalog-filter .for_'+filter_adtype).addClass('hidden');
+        filter_adtype = new_adtype;
+        jQuery('.catalog-filter .for_'+filter_adtype).removeClass('hidden');
+
+        var new_limit = 'long';
+        if (jQuery('.catalog-filter input[name="type"]:checked').val() == 'LP') {
+            new_limit = 'day';
+        }
+        jQuery('.catalog-filter .for_'+filter_limit).addClass('hidden');
+        filter_limit = new_limit;
+        jQuery('.catalog-filter .for_'+filter_limit).removeClass('hidden');
+    }
+
+    filter_show_estate();
+
+    jQuery('input[name="estate"]').change(filter_show_estate);
+    jQuery('input[name="type"]').change(filter_show_estate);
+
+    jQuery('.btn-show-sections').click(function(e){
+        jQuery(this).toggleClass('active');
+        if (jQuery(this).hasClass('active')) {
+            jQuery('.catalog-filter .sections').css({height: 0})
+                    .removeClass('hidden')
+                    .animate({height: 179});
+        } else {
+            jQuery('.catalog-filter .sections')
+                    .animate({height: 0}, function(){
+                        $(this).addClass('hidden');
+                    });
+        }
+    })
+</script>

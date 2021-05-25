@@ -1,0 +1,109 @@
+{% extends 'page-client-center.html' %}
+
+{% block center %}
+    {% include 'main/client/stat/tabs.html' %}
+
+    <form method="GET" action="{% url 'client:stat:parser' %}" id="parser-stat-form" class="row">
+        <div class="col-xs-3">
+            <div>
+                <label>{{ form.start_date.label }}</label>
+                {{ form.start_date }}
+            </div>
+        </div>
+        <div class="col-xs-3">
+            <div>
+                <label>{{ form.end_date.label }}</label>
+                {{ form.end_date }}
+            </div>
+        </div>
+        <div class="col-xs-3 text-right pull-right">
+            <input type="submit" class="btn btn-flt3" value="Посчитать">
+        </div>
+    </form>
+
+    <h2>Отчет по источникам объявлений</h2>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Источник</th>
+                <th>Собрано</th>
+                <th>Размещено</th>
+                <th>Не берет трубку</th>
+                <th>Удалено</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for parser in parser_list %}
+                <tr>
+                    <td><strong>{{ parser.desc }}</strong></td>
+                    <td>{{ parser.count_parsed }}</td>
+                    <td>{{ parser.count_view }}</td>
+                    <td>{{ parser.count_na }}</td>
+                    <td>{{ parser.count_blocked }}</td>
+                </tr>
+            {% endfor %}
+            {% for parser in vk_parser %}
+                <tr>
+                    <td><strong>{{ parser.desc }}</strong></td>
+                    <td>{{ parser.count_parsed }}</td>
+                    <td>{{ parser.count_view }}</td>
+                    <td>0</td>
+                    <td>{{ parser.count_blocked }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h2>Отчет по городам</h2>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Город</th>
+                <th>Собрано</th>
+                <th>Размещено</th>
+                <th>Не берет трубку</th>
+                <th>Удалено</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for town in towns %}
+            <tr>
+                <td><strong>{{ town.title }}</strong></td>
+                <td>{{ town.count_parsed }}</td>
+                <td>{{ town.count_view }}</td>
+                <td>{{ town.count_na }}</td>
+                <td>{{ town.count_blocked }}</td>
+            </tr>
+        {% endfor %}
+        {% for town in towns_vk %}
+            <tr>
+                <td><strong>{{ town.title }}</strong><br>Вконтакте</td>
+                <td>{{ town.count_parsed }}</td>
+                <td>{{ town.count_view }}</td>
+                <td>0</td>
+                <td>{{ town.count_blocked }}</td>
+            </tr>
+        {% endfor %}
+        {% for town in towns_public %}
+            <tr>
+                <td><strong>{{ town.title }}</strong><br>Подано через сайт</td>
+                <td>{{ town.count_parsed }}</td>
+                <td>{{ town.count_view }}</td>
+                <td>{{ town.count_na }}</td>
+                <td>{{ town.count_blocked }}</td>
+            </tr>
+        {% endfor %}
+        {% for town in towns_request %}
+            <tr>
+                <td><strong>{{ town.title }}</strong><br>Заявки специалисту</td>
+                <td>{{ town.count_parsed }}</td>
+                <td>{{ town.count_view }}</td>
+                <td>{{ town.count_na }}</td>
+                <td>{{ town.count_blocked }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

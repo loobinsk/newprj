@@ -1,0 +1,19 @@
+{% extends 'page.html' %}
+
+{% load bootstrap_pagination %}
+{% load main_tags %}
+
+{% block title %}Переходы &middot; {{ block.super }}{% endblock %}
+
+{% block content %}
+        <h1 class="page-title">
+            Переходы по реферальной ссылке {{ referral.link }}
+        </h1>
+
+        {% if referer_list %}
+            {% include 'vashdom/referral/referer_list.html' %}
+            {% bootstrap_paginate page_obj alignment='left' range=6 show_first_last='true' %}
+        {% else %}
+            <div class="alert alert-info">Нет переходов</div>
+        {% endif %}
+{% endblock %}

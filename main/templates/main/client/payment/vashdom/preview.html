@@ -1,0 +1,21 @@
+{% load main_tags %}
+{% load paysto_tags %}
+
+<div class="payment-preview payment-{{ payment.id }}">
+    <h2>Платеж #{{ payment.id }}</h2>
+
+    <div class="content">
+        <div class="total">{{ payment.total|fmt_price }} р.</div>
+        <div class="status">{{ payment.status|payment_status }}</div>
+        <div class="tariff">{{ payment.tariff.title }} - {{ payment.town.title }}</div>
+        <div class="date">{{ payment.created|fmt_date }}</div>
+        {% if is_moder %}
+            <div class="tel">{{ payment.tel|fmt_tel }}</div>
+            {% if payment.user %}
+                <div class="user">{{ payment.user.get_full_name }}
+                    (<a href='{% url 'client:user:detail' payment.user.id %}'>{{ payment.user.username }}</a>)
+                </div>
+            {% endif %}
+        {% endif %}
+    </div>
+</div>

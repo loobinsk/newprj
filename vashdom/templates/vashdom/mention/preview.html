@@ -1,0 +1,31 @@
+{% load main_tags %}
+{% load cache %}
+{% load thumbnail %}
+
+<div class="mention-preview mention-{{ mention.id }}">
+    {% cache 3600 mention_preview mention.id %}
+        <div class="photo">
+            {% if mention.user.image %}
+                {% thumbnail mention.user.image "60x60" crop='center' as img %}
+                    <img src="{{ img.url }}">
+                {% empty %}
+                    <img src="{{ STATIC_URL }}img/noavatar.png">
+                {% endthumbnail %}
+            {% else %}
+                <img src="{{ STATIC_URL }}img/noavatar.png">
+            {% endif %}
+        </div>
+        <div class="content">
+            <div class="name">
+                {% if mention.user.get_vkontakte_link %}
+                    <a href="{{ mention.user.get_vkontakte_link }}" rel="nofollow" target="_blank">{{ mention.user.get_full_name }}</a>
+                {% else %}
+                    {{ mention.user.get_full_name }}
+                {% endif %}
+            </div>
+            <div class="body">{{ mention.body|linebreaksbr }}</div>
+{#            <div class="date">{{ mention.date|fmt_date }}</div>#}
+        </div>
+    {% endcache %}
+</div>
+

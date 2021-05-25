@@ -1,0 +1,14 @@
+{% extends 'block.html' %}
+
+{%  block title %}Профиль{% endblock %}
+
+{% block content %}
+    <ul class="menu-list">
+        <li><a href="{% url 'company:conf:my-companies' %}">Мои сайты</a></li>
+        <li><a href="{% url 'order:list' %}">Мои заказы</a></li>
+        {% if not user.is_social %}
+            <li><a href="{% url 'password_change' %}">Смена пароля</a></li>
+        {% endif %}
+        <li><a href="{% url 'auth_logout' %}">Выход</a></li>
+    </ul>
+{% endblock %}

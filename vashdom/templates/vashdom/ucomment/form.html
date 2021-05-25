@@ -1,0 +1,34 @@
+{% load uprofile_tags %}
+
+<div class="comment-form {% if parent %}comment-form-{{ parent.id }}{% endif %}">
+    {% user_avatar user %}
+    <form method="POST" action="{% url 'comment:create' %}">
+        {% csrf_token %}
+        {{ form.key }}
+        {{ form.parent }}
+        {{ form.url }}
+
+        {{ form.text }}
+
+        <div class="comment-footer">
+            {% if need_auth %}
+                <div class="pull-right">Авторизоваться через
+                    <a href="{% url 'socialauth_begin' 'vk-oauth' %}" class=""><img src="/static/img/vkontakte.png" title="Вконтакте"></a>
+                    <a href="{% url 'socialauth_begin' 'google-oauth2' %}" class=""><img src="/static/img/google-plus.png" title="Google+"></a>
+                </div>
+                <div class="need_auth">Для того, чтобы оставить отзыв, необходимо <a href="{% url 'auth_login' %}">авторизоваться</a> 
+                    или <a href="{% url 'registration_register' %}">зарегистрироваться</a></div>
+            {% else %}
+                <button class="btn btn-flt3 btn-comment-add pull-right">Написать</button>
+                {% if user.is_authenticated %}
+                    <div class="username">Написать от имени <strong>{{ user.get_full_name }}</strong></div>
+                {% else %}
+                    <div class="name">
+                        {{ form.name.label_tag }}{{ form.name }}
+                    </div>
+                    <div class="captcha-form">{{ form.captcha }}</div>
+                {% endif %}
+            {% endif %}
+        </div>
+    </form>
+</div>

@@ -1,0 +1,99 @@
+{% extends 'page-sidebar2.html' %}
+
+{% load main_tags %}
+
+{% block title %}{{ flatpage.title }} &middot; {{ block.super }}{% endblock %}
+
+{% block sidebar %}
+    {% include 'vashdom/block/info-block.html' %}
+{% endblock %}
+
+{% block content %}
+    <h1 class="page-sidebar__title">
+        {% if metatag.page_title %}
+            {{metatag.page_title}}
+        {% else %}
+            {{ flatpage.title }} 
+        {% endif %}
+        {% if user.is_staff %}<a href='/adminpanel/flatpages/flatpage/{{ flatpage.id }}/' target="_blank"><small>Редактировать</small></a>{% endif %}
+    </h1>
+
+    {{ flatpage.content|safe }}
+{% endblock %}
+
+{% block offcanvas_content %}
+    <ul class="offcanvas__menu">
+        <li class="offcanvas__item">
+            <a class='offcanvas__link' href="/{{current_town.slug}}/" title="Смотреть объявления каталога Ваш Дом">База Ваш Дом</a>
+        </li>
+        <li class="offcanvas__item">
+            <a class='offcanvas__link' href="/vk/{{current_town.slug}}/" title="Смотреть объявления каталога ВКонтакте">База ВК</a>
+        </li>
+        <li class="offcanvas__item {% nav_active request 'advert:create' %}">
+            <a class='offcanvas__link' href="{% url 'advert:create' %}" title="Сдать квартиру за 3 дня">Добавить</a>
+        </li>
+        <li class="offcanvas__item {% nav_active request 'tariff' %}">
+            <a class='offcanvas__link' href="{% url 'tariff' %}" title="Тарифы на доступ">Оплата</a>
+        </li>
+        <li class="offcanvas__item {% if request|nav_url:'/poisk' %}active{% endif %}">
+            <a class='offcanvas__link' href="/poisk" title="Поиск жилья под Ваши требования">Поиск</a>
+        </li>
+        <li class="offcanvas__item{% if request|nav_url:'/guarantee' %}active{% endif %}">
+            <a class='offcanvas__link' href="/guarantee" title="Наша гарантия">Гарантия</a>
+        </li>
+
+        {% if user.is_authenticated %}
+            <li class="offcanvas__item">
+                <a href="{% url 'profile:my' %}" class="offcanvas__link">Мой профиль</a>
+            </li>
+            <li class="offcanvas__item">
+                <a href="{% url 'auth_logout' %}" class="offcanvas__link">Выход</a>
+            </li>
+        {% else %}
+            <li class="offcanvas__item">
+                <a href="{% url 'registration_register' %}" class="offcanvas__link">
+                    Регистрация
+                </a>
+            </li>
+            <li class="offcanvas__item">
+                <a href="{% url 'auth_login' %}" class="offcanvas__link">
+                    Авторизация
+                </a>
+            </li>
+        {% endif %}
+
+        <li class="offcanvas__item">
+            <a href="/news/" class="offcanvas__link" title="Новости в сфере аренды и акции проекта">Новости и акции</a>
+        </li>
+        <li class="offcanvas__item">
+            <a href="/node/5" class="offcanvas__link" title="Ответы на наиболее распространенные вопросы о сервисе">Вопросы и Ответы</a>
+        </li>
+        <li class="offcanvas__item">
+            <a href="/guarantee/" class="offcanvas__link" title="Наша гарантия">Гарантия</a>
+        </li>
+        <li class="offcanvas__item">
+            <a href="/poisk/" class="offcanvas__link" title="Поиск жилья под Ваши требования">
+        </li>
+        <li class="offcanvas__item">
+            <a href="/doc/"  class="offcanvas__link" title="Форма договора аренды">Договор найма жилья</a>
+        </li>
+        <li class="offcanvas__item">
+            <a href="/node/8043" class="offcanvas__link" title="Разница между авансом, задатком и залогом">Аванс или задаток?</a>
+        </li>
+        <li class="offcanvas__item">
+            <a href="/node/8045" class="offcanvas__link" title="Прописные истины при съеме жилья">Как безопасно снять?</a>
+        </li>
+        <li class="offcanvas__item">
+            <a href="/node/8046" class="offcanvas__link" title="Нюансы безопасной сдачи жилья в аренду">Правила сдачи жилья</a>
+        </li>
+        <li class="offcanvas__item">
+            <a href="/node/8044" class="offcanvas__link" title="Выборка законов, рекомендованных к изучению">Законы аренды жилья</a>
+        </li>
+        <li class="offcanvas__item">
+            <a href="/node/8047" class="offcanvas__link" title="Доверительное управление имуществом">Доверительное управление</a>
+        </li>
+        <li class="offcanvas__item">
+            <a href="/node/8048"  class="offcanvas__link" title="Как не попасть в наиболее распространенные ловушки">Полезная информация о мошенниках</a>
+        </li>
+    </ul>
+{% endblock offcanvas_content %}

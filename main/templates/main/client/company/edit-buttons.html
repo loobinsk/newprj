@@ -1,0 +1,10 @@
+{% if can_edit %}
+    <ul class="actions">
+        <li><a href="#" class="btn-company-edit text-primary"  data-id="{{ company.id }}">Изменить</a></li>
+        {% if perms.main.change_company %}
+            <li><a href="#" class="btn-company-status text-warning"  data-id="{{ company.id }}" data-status='a' data-name="{{ company.title }}">Сделать активной</a></li>
+            <li><a href="#" class="btn-company-status text-warning"  data-id="{{ company.id }}" data-status='m' data-name="{{ company.title }}">Отправить на модерацию</a></li>
+            <li><a href="#" class="btn-company-status text-danger"  data-id="{{ company.id }}" data-status='b' data-name="{{ company.title }}">Заблокировать</a></li>
+        {% endif %}
+    </ul>
+{% endif %}

@@ -1,0 +1,8 @@
+{% extends 'vashdom/email/base-plain.html' %}
+
+{% block content %}
+Вы подали объявление № {{ advert.id }} {{ advert.date }} .
+{{ advert.title }} - {{ advert.price }} руб.
+Объявление отправлено на модерацию. 
+Если не хотите ждать очереди - напишите в онлайн-помощник внизу справа.
+{% endblock %}

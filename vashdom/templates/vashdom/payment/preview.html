@@ -1,0 +1,11 @@
+{% load main_tags %}
+{% load paysto_tags %}
+
+<div class="payment-preview payment-{{ payment.id }}">
+    <h2><a href="{% url 'payment:detail' payment.id %}">Заказ #{{ payment.id }}</a></h2>
+
+    <div class="town">{{ payment.town.title }}</div>
+    <div class="date">{{ payment.created|fmt_date }}</div>
+    <div class="total">{{ payment.total|fmt_price }} р.</div>
+    <div class="status">{{ payment.status|payment_status }}</div>
+</div>

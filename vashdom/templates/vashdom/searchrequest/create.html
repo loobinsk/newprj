@@ -1,0 +1,58 @@
+{% extends 'page-sidebar2.html' %}
+
+{% load main_tags %}
+
+{% block title %}Подписаться на объявления &middot; {{ block.super }}{% endblock %}
+
+{% block description %}Подписаться на рассылку объявлений по аренде жилой недвижимости{% endblock %}
+
+{% block sidebar %}
+    <div class="block visible-lg-block">
+        <p>Выберите параметры для поиска объявлений, которые удовлетворяют вашим запросам и вы будете получать самые
+            свежие объявления на ваш почтовый ящик</p>
+    </div>
+    
+    <div class="block visible-lg-block">
+ <h2>Нет времени ждать?</h2>
+	<p>Мы предлагаем приоритетный поиск объявлений под Ваши требования</p>
+				
+    <p class="text-center">
+        <a href=/poisk style="color:#FFFFFF;" class="btn btn-secondary btn-lg" title="Условия приоритетного поиска">Надо срочно</a>
+    </p>
+ </div>
+{% endblock %}
+
+{% block content %}
+    <div class="sr-create">
+        <h1 class="page-title">Подписаться на объявления от собственников</h1>
+
+        {% if advert %}
+            <p class="similar">Выставлены параметры, похожие на объявление №{{ advert.id }} "{{ advert.title }}"</p>
+        {% endif %}
+
+        {% include 'vashdom/searchrequest/form.html' %}
+        <div class="">
+            <button class="btn btn-secondary btn-lg btn-sr-create" data-loading-text="Сохранение подписки..." title="Оформить подписку">Подписаться на рассылку</button>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        $('.btn-sr-create').click(function(e) {
+            $('.btn-sr-create').button('loading');
+            $('#sr-form').ajaxSubmit({
+                dataType: 'json',
+                success: function(data) {
+                    $('.btn-sr-create').button('reset');
+                    bootbox.hideAll();
+                    bootbox.alert(data.object.message, function(){
+                        window.location = data.object.url;
+                    });
+                },
+                error: function(e) {
+                    $('.btn-sr-create').button('reset');
+                    failFunction(e);
+                }
+            });
+        });
+    </script>
+{% endblock %}

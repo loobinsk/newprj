@@ -1,0 +1,104 @@
+{% load thumbnail %}
+{% load main_tags %}
+
+<div class="user-profile">
+        <div class='photo'>
+            {% thumbnail user.image "150x150" crop="center" as image %}
+                <img src='{{ image.url }}'>
+            {% empty %}
+                <img src='{{ STATIC_URL }}img/noavatar.png'>
+            {% endthumbnail %}
+            <a href="#" class='btn-change-avatar hidden'>Нажмите, чтобы изменить фото</a>
+            <form id="avatar-form" method="POST" action="{% url 'profile:change_avatar' %}" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ avatar_form }}
+            </form>
+        </div>
+
+        <form method="POST" action="{% url 'profile:my' %}" id="profile-form" class="form">
+            {% csrf_token %}
+                <div>
+                    <label>Логин</label>
+                    <strong>{{ user.username }}</strong>
+                </div>
+                <div>
+                    <label>Имя</label>
+                    {{ form.first_name }}
+                </div>
+                <div>
+                    <label>Фамилия</label>
+                    {{ form.last_name }}
+                </div>
+                <div>
+                    <label>Телефон</label>
+                    {{ form.tel|add_class:' masked-phone' }}
+                </div>
+                <div>
+                    <label>Email</label>
+                    {{ form.email }}
+                </div>
+                <div>
+                    {{ form.independent }}<label for="id_independent">Я независимый агент <div class="help-text">{{ form.independent.help_text }}</div></label>
+
+                </div>
+                {% if not user.email %}
+                    <p class="alert alert-info">Заполните адрес электронной почты, чтобы получать уведомления</p>
+                {% endif %}
+                <div>
+                    <button class="btn btn-flt3" id="profile-form-submit">Сохранить</button>
+                    <a class="btn btn-link pull-right" href="{% url 'password_change' %}">Изменить пароль</a>
+                </div>
+        </form>
+</div>
+
+<script type="text/javascript">
+        (function($) {
+            $(document).ready(function() {
+
+                function failFunction(e) {
+                    var data = jQuery.parseJSON(e.responseText);
+                    $('.bottom-left').notify({
+                        message: { html: data.message },
+                        type: 'bangTidy',
+                        closable: true
+                    }).show();
+                }
+
+                $('#profile-form-submit').click(function(e){
+                    $('#profile-form').ajaxSubmit({
+                        dataType: 'json',
+                        success: function(data) {
+                            $('.bottom-left').notify({
+                                message: { html: 'Информация сохранена' },
+                                closable: true
+                            }).show();
+                            window.location.reload();
+                        },
+                        error: failFunction
+                    });
+                    e.preventDefault();
+                    return false;
+                });
+
+                $('.user-profile .photo').hover(function() {
+                    $('.btn-change-avatar').toggleClass('hidden');
+                });
+
+                $('.btn-change-avatar').click(function() {
+                    $('#id_image').click();
+                });
+
+                $('#id_image').change(function(e) {
+                    $('#avatar-form').ajaxSubmit({
+                        target: '#tab',
+                        dataType: 'json',
+                        success: function(data) {
+                            jQuery('.user-profile .photo img').attr('src', data.object);
+{#                            window.location.reload();#}
+                        },
+                        error: failFunction
+                    });
+                });
+            });
+        })(jQuery);
+</script>

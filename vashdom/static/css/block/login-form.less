@@ -1,0 +1,51 @@
+@import '../imports.less';
+
+// LOGIN FORM
+.login-form {
+    margin: 15px auto;
+    width: 400px;
+    padding-bottom: 30px;
+    .sm(width, 100%);
+    padding: 15px;
+
+    h1 {
+
+        a {
+            font-size: 14px;
+            font-weight: normal;
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+            margin-top: 5px;
+        }
+
+        &.page-title {
+            background: transparent;
+            border:none;
+        }
+    }
+
+    .content {
+        .name {
+            margin-bottom: 15px;
+        }
+    }
+
+    .credentials {
+        .form-control {
+            display: inline-block;
+            width: 270px;
+        }
+
+        label {
+            display: inline-block;
+            width: 100px;
+        }
+
+        >div {
+            margin-bottom: 7px;
+        }
+
+        .btn-login {
+            margin-top: 15px;
+        }
+    }
+}

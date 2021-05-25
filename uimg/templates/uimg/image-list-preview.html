@@ -1,0 +1,16 @@
+{% load thumbnail %}
+
+{% if image_list|length > 0 %}
+    <div class='image-list preview'>
+        {% with image=image_list|first %}
+            {% if image.is_animated %}
+                <a href="{{ url }}" class=""><img src='{{ image.image.url }}'></a>
+            {% else %}
+                {% thumbnail image.image "300x200" crop='center' as img_small %}
+                    <a href="{{ url }}" class=""><img src='{{ img_small.url }}'></a>
+                {% endthumbnail %}
+            {% endif %}
+        {% endwith %}
+{#        <div class="count">{{ image_list|length }} фото</div>#}
+    </div>
+{% endif %}

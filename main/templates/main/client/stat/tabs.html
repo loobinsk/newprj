@@ -1,0 +1,6 @@
+{% load main_tags %}
+
+<ul class="nav nav-tabs">
+    <li class="{% nav_active request 'client:stat:moderator' %}"><a href="{% url 'client:stat:moderator' %}">Статистика модераторов</a></li>
+    <li class="{% nav_active request 'client:stat:parser' %}"><a href="{% url 'client:stat:parser' %}">Статистика парсеров</a></li>
+</ul>

@@ -1,0 +1,67 @@
+<div class="get-access">
+    <div class="credential">
+        <div class="anonymous {% if can_fast %}hidden{% endif %}">
+            <label>Введите пароль из смс</label>
+            <input type="text" class="form-control" id="password">
+           <button class="btn btn-secondary {% if base == 'vk' %}btn-open-vktel{% else %}btn-open-tel{% endif %}" data-id="{{ advert.id }}" title="Показать номер телефона собственника">Открыть телефон</button>
+        </div>
+        <div class="password-tel"></div>
+        <div class="password-vkid"></div>
+
+        <button class="btn btn-link btn-open-order" title="У меня нет пароля">Получить пароль за 2 минуты</button>
+<script>
+var show;
+function hidetxt(type){
+ param=document.getElementById(type);
+ if(param.style.display == "none") {
+ if(show) show.style.display = "none";
+ param.style.display = "block";
+ show = param;
+ }else param.style.display = "none"
+}
+</script>
+
+<button class="btn btn-link" onclick="hidetxt('div2'); return true;" rel="nofollow" title="Вы защищены гарантией">Гарантия</button>
+<div style="display:none;" id="div2">
+<br/>
+		{% include 'vashdom/guarantee.html' %}
+</div>
+
+
+    </div>
+
+    <div class="order hidden">
+        {% include 'vashdom/payment/fast-order.html' %}
+    </div>
+
+</div>
+
+<script type="text/javascript">
+    jQuery('.btn-open-order').click(function(e){
+        jQuery('.order').toggleClass('hidden')
+    });
+
+    jQuery('#payment-fastorder-form').ajaxForm({
+            dataType: 'json',
+            form: this,
+            success: function(data, status, xhr, form) {
+                if (data.object.type == 'payment')
+                    window.location = data.object.url;
+                if (data.object.type == 'free') {
+                    bootbox.hideAll();
+                    bootbox.alert(data.object.message);
+                }
+            },
+            error: failFunction
+        });
+        
+    jQuery('#id_tel').mask('+7(999) 999-9999');
+
+    {% if can_fast %}
+        {% if base == 'vk' %}
+            jQuery('.btn-open-vktel').click();
+        {% else %}
+            jQuery('.btn-open-tel').click();
+        {% endif %}
+    {% endif %}
+</script>

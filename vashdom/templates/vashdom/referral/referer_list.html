@@ -1,0 +1,13 @@
+<table class="table table-bordered referer-list">
+    <thead>
+        <tr>
+            <th>Дата</th>
+            <th>Откуда</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for referer in referer_list %}
+            {% include 'vashdom/referral/referer_preview.html' %}
+        {% endfor %}
+    </tbody>
+</table>

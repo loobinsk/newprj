@@ -1,0 +1,66 @@
+{% load main_tags %}
+{% load thumbnail %}
+
+<div class="user-preview user-item-{{ object.id }} editable-content">
+    <div class="preview-image">
+        {% thumbnail object.image "50x50" crop='center' as img %}
+            <img src='{{ img.url }}'>
+        {% empty %}
+            <img src='{{ STATIC_URL }}img/noavatar.png'>
+        {% endthumbnail %}
+    </div>
+
+    <div class="content">
+        <h2><a href="{% url 'client:user:detail' object.id %}">{{ object.get_full_name }}</a></h2>
+        {% if object.company %}
+            <div class="company">
+                {% if perms.main.view_company %}
+                    <a href="{% url 'client:company:detail' object.company.id %}">Агентство: {{ object.company.title }}</a>
+                {% else %}
+                    <strong>Агентство:</strong> {{ object.company.title }}
+                {% endif %}
+            </div>
+        {% endif %}
+        {% with company=object.owner.all|first %}
+            {% if company %}
+                <div class="company">Управляет агенством
+                    {% if perms.main.view_company %}
+                        <a href="{% url 'client:company:detail' company.id %}">{{ company.title }}</a>
+                    {% else %}
+                        {{ company.title }}
+                    {% endif %}
+                </div>
+            {% endif %}
+        {% endwith %}
+        {% if object.tel %}
+            <div class="tel"><strong>Тел.: </strong>{{ object.tel|fmt_tel|default_if_none:'' }}</div>
+        {% endif %}
+        {% if object.email or object.agent_email %}
+            <div class="email"><strong>E-mail: </strong> {{ object.email|default_if_none:'' }} {{ object.agent_email|default_if_none:'' }}</div>
+        {% endif %}
+        {% if object.get_vkontakte_link %}
+            <div class="vkpage"><strong>Вконтакте: </strong><a href="{{ object.get_vkontakte_link }}" rel="'nofollow" target="_blank">{{ object.get_vkontakte_link }}</a></div>
+        {% endif %}
+    </div>
+
+    {% if object.is_active %}
+        {% if object.status == 'a' %}
+            <span class="status label label-success">{{ object.status|user_status }}</span>
+        {% endif %}
+        {% if object.status == 'm' %}
+            <span class="status label label-info">{{ object.status|user_status }}</span>
+        {% endif %}
+        {% if object.status == 'b' %}
+            <span class="status label label-danger">{{ object.status|user_status }}</span>
+        {% endif %}
+    {% else %}
+        <span class="status label label-danger">Не активирован</span>
+    {% endif %}
+    {% if object.is_online %}
+        <span class="online label label-info">Онлайн</span>
+    {% endif %}
+
+    {% block actions %}
+        {% include 'main/client/user/edit-buttons.html' %}
+    {% endblock %}
+</div>

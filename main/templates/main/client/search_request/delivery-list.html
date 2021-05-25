@@ -1,0 +1,15 @@
+<table class="delivery-list table table-bordered">
+    <thead>
+    <tr>
+        <th>Дата</th>
+        <th>Пользователь</th>
+        <th>Email</th>
+        <th>Сайт</th>
+        <th>Найдено вариантов</th>
+        <th>&nbsp;</th>
+    </tr>
+    </thead>
+    {% for sr in sr_list %}
+        {% include 'main/client/search_request/delivery-preview.html' %}
+    {% endfor %}
+</table>

@@ -1,0 +1,53 @@
+{% load main_tags %}
+<div class="tariff-stats">
+    <div class="stat animated active">
+        <div class="value">{{ user.buys }}</div>
+        <div class="desc">
+            У ВАС<br>{{ user.buys|fmt_buys_declination }}<br>
+            <a href="{% url 'client:company:my' %}#buy-order-form">Подключить</a>
+        </div>
+
+    </div>
+
+    <div class="stat animated hidden">
+        <div class="value small">{{ service_objects }}</div>
+        <div class="desc">
+            Просмотр<br>объектов<br>
+            <a href="{% url 'client:company:my' %}">Подключить</a>
+        </div>
+    </div>
+
+    <div class="stat animated hidden">
+        <div class="value small">{{ service_clients }}</div>
+        <div class="desc">
+            Просмотр<br>клиентов<br>
+            <a href="{% url 'client:company:my' %}">Подключить</a>
+        </div>
+    </div>
+
+    <div class="stat animated hidden">
+        <div class="value small">{{ service_vk }}</div>
+        <div class="desc">
+            База<br>Вконтакте<br>
+            <a href="{% url 'client:company:my' %}">Подключить</a>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    jQuery(document).ready(function(){
+        var timerId = window.setInterval(function(){
+            var animated = jQuery('.tariff-stats .stat.active');
+            var next = null;
+            if (animated.length > 0) {
+                next = animated[0].nextElementSibling;
+            }
+            if (!next) {
+                next = jQuery('.tariff-stats .stat')[0];
+            }
+            animated.removeClass('active fadeInDown').addClass('fadeOutDown');
+            jQuery(next).removeClass('hidden fadeOutDown').addClass('active fadeInDown');
+        }, 10000);
+    });
+</script>

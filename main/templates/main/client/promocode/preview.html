@@ -1,0 +1,8 @@
+{% load main_tags %}
+
+<tr class="promocode-preview promocode-item-{{ promocode.id }} editable-content">
+    <td>{{ promocode.code }} {% if promocode.activated %}(погашен){% endif %}</td>
+    <td>{{ promocode.promotion.title }}</td>
+    <td>{{ promocode.user.get_full_name }}</td>
+    <td>{% include 'main/client/promocode/edit-buttons.html' %}</td>
+</tr>

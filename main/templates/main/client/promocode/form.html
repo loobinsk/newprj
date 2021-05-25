@@ -1,0 +1,13 @@
+<form method="POST" action="{{ action }}" id="promocode-form">
+    {% csrf_token %}
+    <div>
+        {{ form.promotion.label_tag }}{{ form.promotion }}
+    </div>
+    <div>
+        {{ form.code.label_tag }}{{ form.code }}
+        <p>Если поле не заполнять, то код сгенеруется автоматически</p>
+    </div>
+    <div>
+        {{ form.user.label_tag }}{{ form.user }}
+    </div>
+</form>

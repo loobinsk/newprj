@@ -1,0 +1,27 @@
+{% extends 'page-sidebar.html' %}
+
+{% block title %}Регистрация завершена  &middot; {{ block.super }}{% endblock %}
+
+{% block sidebar %}
+    {% include 'vashdom/block/vkontakte-group.html' %}
+{% endblock %}
+
+{% block content %}
+    <h1 class="page-title">Регистрация завершена</h1>
+    <p class="">Спасибо за регистрацию.<br>На ваш e-mail отправлен
+    код подтверждения. Необходимо подтвердить регистрацию,
+    просто кликнув по указанной ссылке.</p>
+    {% if mail_server %}
+        <p class="">
+            <a href="{{ mail_server.2 }}" class="btn btn-secondary btn-lg" rel='nofollow' target="_blank">{{ mail_server.1 }}</a>
+        </p>
+    {% endif %}
+    <p>Если вам не пришло письмо, проверьте папку СПАМ, может быть письмо случайно попало туда.
+        Или напишите администратору сайта через <a href="{% url 'contacts' %}">контактную форму</a></p>
+
+    {% if payment %}
+        <hr>
+        <p class="alert alert-info">Вы можете оплатить ваш заказ сейчас и ваш аккаунт автоматически активируется</p>
+        {% include 'vashdom/payment/detail-ajax.html' %}
+    {% endif %}
+{% endblock %}

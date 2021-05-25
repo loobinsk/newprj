@@ -1,0 +1,15 @@
+{% load thumbnail %}
+
+{% if user.is_authenticated %}
+    <div class='user-avatar' data-toggle="tooltip" data-placement="bottom" title="{{ user.get_short_name }}">
+        {% thumbnail user.image "40x40" crop="center" as image %}
+            <img src='{{ image.url }}'>
+        {% empty %}
+            <img src='/static/img/noavatar40.png'>
+        {% endthumbnail %}
+    </div>
+{% else %}
+    <div class='user-avatar' data-toggle="tooltip" data-placement="bottom" title="Анонимный">
+        <img src='/static/img/noavatar40.png'>
+    </div>
+{% endif %}

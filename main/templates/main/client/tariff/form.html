@@ -1,0 +1,20 @@
+<form method="POST" action="{{ action }}" id="tariff-form">
+    {% csrf_token %}
+    <p>
+        {{ form.title.label_tag }}
+        {{ form.title }}
+    </p>
+    <p>
+        {{ form.price.label_tag }}
+        {{ form.price }}
+    </p>
+    <p>
+        {{ form.desc.label_tag }}
+        {{ form.desc }}
+    </p>
+    <p>
+        {{ form.perms.label_tag }}
+        {{ form.perms }}
+    </p>
+
+</form>

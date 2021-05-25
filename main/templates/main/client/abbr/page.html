@@ -1,0 +1,17 @@
+{% extends 'page-client-center.html' %}
+
+{% load bootstrap_pagination %}
+{% load main_tags %}
+
+{% block title %}Сокращения &middot; {{ block.super }}{% endblock %}
+
+{% block center %}
+        <h1 class="page-title">Сокращения</h1>
+
+        {% include 'main/client/abbr/form.html' %}
+
+        <div class="abbr-page">
+            {% include 'main/client/abbr/list.html' %}
+            {% bootstrap_paginate page_obj alignment='left' range=6 show_first_last='true'%}
+        </div>
+{% endblock %}

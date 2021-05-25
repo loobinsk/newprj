@@ -1,0 +1,50 @@
+{% load main_tags %}
+
+<div class="dropdown metro-dropdown keep-open">
+    <div style="display: none;">
+        {{ tmpl }}
+    </div>
+    <button data-toggle="dropdown" class="btn">
+        {% if metro_list %}
+            Метро{% if value %} ({{ value|length }}){% endif %}
+        {% else %}
+            Отсутствует
+        {% endif %}
+    </button>
+    {% if metro_list %}
+        <div class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+            <div class="background">
+                <div class="title">
+                    Карта станций метро г. {{ town.title }}
+                    <a href="#" class="close btn btn-secondary">Закрыть карту</a>
+                    <a href="#" class="clearmap btn btn-secondary">Очистить</a>
+                </div>
+                <div class="metro-list">
+                    <input type="text" class="form-control metro-filter" placeholder="Поиск метро...">
+                    <div class="wrapper">
+                        {% for metro in metro_list %}
+                            <a href="#" data-value="{{ metro.id }}" class='{% if metro.id|to_str in value %}active{% endif %} color {{ metro.color }}'>{{ metro.title }}</a>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="metro-map">
+
+                    <div class="move">
+                        <img src='/static/img/metro_map_{{ town.id }}.png'>
+                        {% for metro in metro_list %}
+                            {% if metro.x1 and metro.y1 %}
+                                <a href="#" class="point {{ metro.color }} {% if metro.id|to_str in value %}active{% endif %}" data-value='{{ metro.id }}' style="top:{{ metro.y1|add:'-4' }}px; left: {{ metro.x1|add:'-3' }}px;"></a>
+                            {% endif %}
+                            {% if metro.x2 and metro.y2 %}
+                                <a href="#" class="point {{ metro.color }} {% if metro.id|to_str in value %}active{% endif %}" data-value='{{ metro.id }}' style="top:{{ metro.y2|add:'-4' }}px; left: {{ metro.x2|add:'-3' }}px;"></a>
+                            {% endif %}
+                            {% if metro.x3 and metro.y3 %}
+                                <a href="#" class="point {{ metro.color }} {% if metro.id|to_str in value %}active{% endif %}" data-value='{{ metro.id }}' style="top:{{ metro.y3|add:'-4' }}px; left: {{ metro.x3|add:'-3' }}px;"></a>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+</div>

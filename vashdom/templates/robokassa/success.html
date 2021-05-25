@@ -1,0 +1,15 @@
+{% extends 'page.html' %}
+
+{% load vashdom_tags %}
+
+{% block title %}Платеж успешно завершен{% endblock %}
+
+{% block content %}
+    <h1 class="page-title">Платеж успешно завершен</h1>
+
+    {% vashdom_payment_by_id InvId %}
+
+{#    <p>#}
+{#        <a href="{% url 'payment:history' %}" class="btn btn-secondary">Перейти в список заказов</a>#}
+{#    </p>#}
+{% endblock %}

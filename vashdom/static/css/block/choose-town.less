@@ -1,0 +1,69 @@
+@import '../imports.less';
+
+.choose-town {
+    margin-right: 5px;
+    display: inline-block;
+    position: static;
+
+    & > a {
+        display: block;
+        padding: 15px 10px;
+        text-transform: uppercase;
+        font-weight: bold;
+    }
+
+    &.open > a {
+        color: #fff;
+        background: darken(@primarycolor, 3%);
+    }
+
+    .dropdown-menu {
+        margin-top: 0;
+        .rounded(0);
+        padding: 20px;
+        box-shadow: none;
+        color: #fff;
+        background: darken(@primarycolor, 3%);
+        border: none;
+        top: auto;
+        left: 0;
+        right: 0;
+        .drop-shadow(0, 5px, 5px, 30%);
+    }
+
+    &__list {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-wrap: wrap;
+
+        &&_big {
+            a {
+                font-size: 16px;
+                font-weight: bold;
+                padding: 5px 0;
+            }
+        }
+
+        li {
+            width: 20%;
+            .md(width, 25%);
+            .sm(width, 50%);
+            .xs(width, 100%);
+        }
+
+        a {
+            display: block;
+            padding: 3px 0;
+            font-size: 14px;
+            text-transform: uppercase;
+            color: #fff;
+        }
+    }
+
+    &__col {
+        .col();
+        .size(12);
+    }
+}

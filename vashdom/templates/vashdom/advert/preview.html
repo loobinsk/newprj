@@ -1,0 +1,57 @@
+{% load main_tags %}
+{% load cache %}
+{% load vashdom_tags %}
+
+
+<div class="catalog-preview catalog-item-{{ advert.id }}" data-id="{{ advert.id }}">
+    {% cache 3600 vashdom_catalog_preview advert.id using='redis' %}
+        <div class="catalog-preview__images">
+            {% vashdom_image_preview advert %}
+        </div>
+        
+        <div class="catalog-preview__content">
+            <a href="{{ advert.get_absolute_url }}" class="catalog-preview__title">
+                {{ advert.title }}
+                {% if advert.square %}
+                    {{advert.square}} м<sup>2</sup>
+                {% endif %}
+            </a>
+            {% if advert.town.get_metro_count > 0 %}
+                {% if advert.metro %}
+                    <div class="catalog-preview__metro"><a href="{{advert.metro.vashdom_main_url}}"> м.&nbsp;{{ advert.metro.title }}</a></div>
+                {% endif %}
+            {% else %}
+                {% if advert.district %}
+                    <div class="catalog-preview__district"><a href="{{advert.district.vashdom_main_url}}">{{ advert.district.title }}</a></div>
+                {% endif %}
+            {% endif %}
+            <div class="catalog-preview__address">{{ advert.address }}</div>
+
+
+            <div class="catalog-preview__date">Размещено: <span>{{ advert|fmt_vashdom_date }}</span></div>
+            <ul class="icon-list check-list catalog-preview__tags">
+                {% for field in advert.comfort_list %}
+                    {% if field.1 %}<li>{{ field.2 }}</li>{% endif %}
+                {% endfor %}
+            </ul>
+        </div>
+    {% endcache %}
+
+        <div class="catalog-preview__sidebar">
+            <div class="catalog-preview__price">
+                <strong>{{ advert.price|fmt_price }}</strong>&nbsp;р.
+                {% if advert.limit == 'd' %}
+                    <span>сутки</span>
+                {% else %}
+                    <span>в месяц</span>
+                {% endif %}
+            </div>
+            <a href="{{ advert.get_absolute_url }}" class="btn btn-secondary catalog-preview__more">
+                Подробно
+            </a>
+    
+            {% if user.is_authenticated %}
+                {% include 'vashdom/advert/complain.html' %}
+            {% endif %}
+        </div>
+</div>

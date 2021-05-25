@@ -1,0 +1,85 @@
+{% load main_tags %}
+{% load thumbnail %}
+
+<div class="user-detail user-item-{{ object.id }} editable-content">
+    <h1 class="page-title">Профиль пользователя {{ object.get_full_name }}</h1>
+
+    {% with agent=object %}
+        {% include 'main/client/user/tabs.html' %}
+    {% endwith %}
+
+    <div class="preview-image">
+        {% thumbnail object.image "100x100" crop='center' as img %}
+            <img src='{{ img.url }}'>
+        {% empty %}
+            <img src='{{ STATIC_URL }}img/noavatar.png'>
+        {% endthumbnail %}
+    </div>
+
+    <div class="content">
+        <h2>{{ object.get_full_name }}</h2>
+        <table class="table">
+            <tbody>
+            {% if agent or not object.is_active %}
+                <tr>
+                    <td colspan="2">
+                        {% if agent %}
+                            <span class="label label-info">Агент</span>
+                        {% endif %}
+                        {% if not object.is_active %}
+                            <span class="label label-danger">Заблокирован</span>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endif %}
+            <tr class="status">
+                <td>Статус</td>
+                <td>{{ object.status|user_status }}</td>
+            </tr>
+            <tr class="tel">
+                <td>Телефоны</td>
+                <td>{{ object.tel|fmt_tel|default_if_none:'' }}</td>
+            </tr>
+            <tr class="email">
+                <td>Email</td>
+                <td>{{ object.email|default_if_none:'' }}</td>
+            </tr>
+            {% if object.company %}
+                <tr class="company">
+                    <td>Агентство</td>
+                    <td>
+                        {% if perms.main.view_company %}
+                            <a href="{% url 'client:company:detail' object.company.id %}">{{ object.company.title }}</a>
+                        {% else %}
+                            {{ object.company.title }}
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endif %}
+            {% with company=object.owner.all|first %}
+                {% if company %}
+                    <tr>
+                        <td>Управляет агенством</td>
+                        <td>
+                            {% if perms.main.view_company %}
+                                <a href="{% url 'client:company:detail' company.id %}">{{ company.title }}</a>
+                            {% else %}
+                                {{ company.title }}
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endif %}
+            {% endwith %}
+            <tr>
+                <td>Объявлений</td>
+                <td>{{ count_adverts }}</td>
+            </tr>
+            <tr>
+                <td>С изображениями</td>
+                <td>{{ count_adverts_images }}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    {% include 'main/client/user/edit-buttons.html' %}
+</div>

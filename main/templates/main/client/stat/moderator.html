@@ -1,0 +1,46 @@
+{% extends 'page-client-center.html' %}
+
+{% block center %}
+    {% include 'main/client/stat/tabs.html' %}
+
+    <form method="GET" action="{% url 'client:stat:moderator' %}" id="moderator-stat-form" class="row">
+        <div class="col-xs-3">
+            <div>
+                <label>{{ form.start_date.label }}</label>
+                {{ form.start_date }}
+            </div>
+        </div>
+        <div class="col-xs-3">
+            <div>
+                <label>{{ form.end_date.label }}</label>
+                {{ form.end_date }}
+            </div>
+        </div>
+        <div class="col-xs-3 text-right pull-right">
+            <input type="submit" class="btn btn-flt3" value="Посчитать">
+        </div>
+    </form>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Модератор</th>
+                <th>Кол-во объявлений размещено</th>
+                <th>С картинками</th>
+                <th>Не берет трубку</th>
+                <th>Заблокировано</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for moder in moderator_list %}
+                <tr>
+                    <td><strong>{{ moder.get_full_name }}</strong></td>
+                    <td>{{ moder.count_view }}</td>
+                    <td>{{ moder.count_view_images }}</td>
+                    <td>{{ moder.count_na }}</td>
+                    <td>{{ moder.count_agent }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

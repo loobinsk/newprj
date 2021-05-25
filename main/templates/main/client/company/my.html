@@ -1,0 +1,106 @@
+{% extends 'page-client-center.html' %}
+
+{% load main_tags %}
+
+{% block title %}{{ company.title }} &middot; {{ block.super }}{% endblock %}
+
+{% block center %}
+    <div class="sidebar">
+        {% client_feedback_block %}
+
+{#        {% include 'main/client/block/sectioninfo.html' %}#}
+    </div>
+
+    <div class="my-company-page with-sidebar">
+
+        <ul class="nav nav-tabs" role="tablist">
+            <li role="presentation"><a href="#tab-profile" aria-controls="tab-profile" role="tab" data-toggle="tab">Мой профиль</a></li>
+            <li role="presentation" class="active"><a href="#tab-main" aria-controls="tab-main" role="tab" data-toggle="tab">Оплата</a></li>
+            <li role="presentation"><a href="#tab-company" aria-controls="tab-company" role="tab" data-toggle="tab">Мое агентство</a></li>
+        </ul>
+
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane" id="tab-profile">
+{#                <h2 class="page-title">Мой профиль</h2>#}
+                {% with form=profile_form %}
+                    {% include 'uprofile/profile-form.html' %}
+                {% endwith %}
+            </div>
+            <div role="tabpanel" class="tab-pane active" id="tab-main">
+
+                <h2 class="page-title">Подключенные услуги</h2>
+                <div class="user-service-list">
+                    <div class="user-service">
+                        <div class="elapsed">{{ user.buys }} выкупов</div>
+                        <div class="title">Выкупы</div>
+                    </div>
+                    {% for service in service_list %}
+                        <div class="user-service">
+                            <div class="elapsed">{{ service.elapsed_time }}</div>
+                            <div class="title">{{ service.perm.title }}</div>
+                        </div>
+                    {% endfor %}
+                </div>
+
+                <h2 class="page-title">Открытые объявления за сегодня</h2>
+                <div class="user-service-list">
+                    <div class="user-service">
+                        <div class="elapsed">{{ open_count_owner }}</div>
+                        <div class="title">Открыто объявлений собственников</div>
+                    </div>
+                    <div class="user-service">
+                        <div class="elapsed">{{ open_count_client }}</div>
+                        <div class="title">Открыто объявлений клиентов</div>
+                    </div>
+                </div>
+
+                <div class="pro">
+                    <div class="desc">
+                        <div class="title"><span>PRO</span> Аккаунт</div>
+                        <div class="sum">Бесплатно</div>
+                    </div>
+                    <div class="content">
+                        <ul>
+                            <li>Размещение объявлений (бесплатно безлимитное размещение объявлений)</li>
+                            <li>Автопоиск (рассылка подходящих объектов клиентам с контактами агентства недвижимости)</li>
+                            <li>Система удаленного доступа "Агент-Клиент" ГСН24</li>
+                            <li>Управление отзывами</li>
+                        </ul>
+                    </div>
+                </div>
+
+                {% if user.company.owner == user or user.independent %}
+                    {% include 'main/client/payment/order.html' %}
+                {% endif %}
+
+                {% include 'main/client/payment/order-buy.html' %}
+
+                <div class="alert">
+                    {% include 'main/client/block/payinfo.html' %}
+                </div>
+
+                <div class="alert">
+                    {% include 'main/client/block/buyesinfo.html' %}
+                </div>
+
+            </div>
+            <div role="tabpanel" class="tab-pane" id="tab-company">
+                {% include 'main/client/company/my-ajax.html' %}
+
+                {% if user.company.owner == user %}
+                    <h2 class="page-title">Агенты</h2>
+
+                    {% if company.owner == request.user %}
+                        <button class="btn btn-flt3 disabled">Добавить агента</button>
+                    {% endif %}
+
+                    {% include 'main/client/user/partner/list.html' %}
+
+                    <div class="alert">
+                        {% include 'main/client/block/agentinfo.html' %}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

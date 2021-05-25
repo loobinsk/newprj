@@ -1,0 +1,35 @@
+{% extends 'page-moder.html' %}
+
+{% load thumbnail %}
+{% load main_tags %}
+
+{% block title %}Авторизация  &middot; {{ block.super }}{% endblock %}
+
+{% block content %}
+    <form action="{% url 'auth_login' %}" method="post" class="login-container login-form" id="login-container">
+        {% csrf_token %}
+        <div class="avatar">
+            {% if user.is_authenticated %}
+                {% thumbnail user.image "100x100" crop='center' as img %}
+                    <img src='{{ img.url }}'>
+                {% empty %}
+                    <img src='{{ STATIC_URL }}img/noavatar.png'>
+                {% endthumbnail %}
+            {% else %}
+                <img src="{{ STATIC_URL }}img/noavatar.png">
+            {% endif %}
+        </div>
+        <div class="name">{% if user.is_authenticated %}{{ user.get_full_name }}{% endif %}</div>
+        <div class="company">{% if user.is_authenticated %}{{ user.company.title }}{% endif %}</div>
+        <div class="form-box on-anonymous {% if user.is_authenticated %}hidden{% endif %}">
+                {{ form.username }}
+                {{ form.password }}
+                <button class="btn btn-flt3 btn-block btn-login" type="submit" data-loading-text="Вход...">Вход</button>
+        </div>
+        <p class="action-buttons on-auth {% if not user.is_authenticated %}hidden{% endif %}">
+            <a href="{% url "client:news:list" %}" class="btn btn-primary btn-block">Перейти в каталог</a><br>
+{#            <a href="{% url "profile:my" %}" class="btn btn-primary btn-block">Перейти в профиль</a><br>#}
+            <a href="{% url 'auth_logout' %}" class="btn btn-danger btn-block">Выйти</a>
+        </p>
+    </form>
+{% endblock %}

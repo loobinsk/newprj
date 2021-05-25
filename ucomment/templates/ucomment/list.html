@@ -1,0 +1,21 @@
+{% load mptt_tags %}
+
+<div class='comments' id="comments" data-key='{{ key }}'>
+    <div class="comment-list">
+        {% for c in comment_list %}
+            {% recursetree c %}
+                {% with comment=node %}
+                    {% include 'ucomment/preview.html' %}
+                {% endwith %}
+            {% endrecursetree %}
+        {% endfor %}
+
+        {% if comment_list|length >= 20 %}
+            <button class="btn-comment-else btn btn-block"
+                    data-page="{% if page_obj %}{{ page_obj.next_page_number }}{% else %}2{% endif %}"
+                    data-key="{{ key }}">
+                Показать еще...</button>
+        {% endif %}
+    </div>
+    {% include 'ucomment/form.html' %}
+</div>

@@ -1,0 +1,86 @@
+<form id="buy-order-form" method="POST" action="{% url 'client:payment:buy' %}">
+    {% csrf_token %}
+
+    <div class="months">
+        <div class="desc">
+            <div class="title">Выкупы<sup> <a href="#buyes-info">что это?</a></sup></div>
+            <p>Выберите количество выкупов</p>
+
+            <div class="calc">
+                <div class="total">
+                    <p><strong>Цена:</strong> <span id="total2_price"></span></p>
+                    <p><strong>Итого:</strong> <span id="total2_sum"></span></p>
+                </div>
+            </div>
+
+        </div>
+        <div class="content">
+            <div class="col">
+                <div class="check">
+                    <input type="radio" name="count" value="5" id="count_5" checked>
+                    <label for="count_5"></label>
+                </div>
+                <p>5 выкупов</p>
+                <p>150 руб./выкуп</p>
+            </div>
+            <div class="col">
+                <div class="check">
+                    <input type="radio" name="count" value="10" id="count_10">
+                    <label for="count_10"></label>
+                </div>
+                <p>10 выкупов</p>
+                <p>130 руб./выкуп</p>
+            </div>
+            <div class="col">
+                <div class="check">
+                    <input type="radio" name="count" value="20" id="count_20">
+                    <label for="count_20"></label>
+                </div>
+                <p>20 выкупов</p>
+                <p>100 руб./выкуп</p>
+            </div>
+            <div class="col">
+                <div class="check">
+                    <input type="radio" name="count" value="50" id="count_50">
+                    <label for="count_50"></label>
+                </div>
+                <p>50 выкупов</p>
+                <p>80 руб./выкуп</p>
+            </div>
+            <div></div>
+
+            <button type="submit" class="btn btn-lg btn-flt3 btn-buy-order-create">Подключить</button>
+        </div>
+    </div>
+</form>
+
+<script type="text/javascript">
+        function calcBuyes() {
+            var radio = jQuery('#buy-order-form input[type="radio"]:checked');
+            var count = 0;
+            if (radio.length > 0) {
+                count = Number(radio.val())
+            }
+            var price = 150;
+            switch (count) {
+                case 10:
+                    price = 130;
+                    break;
+                case 20:
+                    price = 100;
+                    break;
+                case 50:
+                    price = 80;
+                    break;
+            }
+            var total_sum = price*count;
+            var total_discount = 0;
+
+            jQuery('#total2_sum').html((total_sum) + ' р.');
+            jQuery('#total2_price').html((price) + ' р.');
+        }
+
+        calcBuyes();
+
+        jQuery('#buy-order-form input[type="radio"]').change(calcBuyes);
+</script>

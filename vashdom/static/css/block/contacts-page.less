@@ -1,0 +1,28 @@
+@import '../imports.less';
+
+.contacts-page {
+    &__content {
+        .col();
+        .size(8);
+        .size-sm(12);
+        padding-bottom: 30px;
+    }
+
+    &__sidebar {
+        .col();
+        .size(4);
+        .sm(display, none);
+        padding-bottom: 30px;
+    }
+
+    &__title {
+        padding: 0 0 15px 0;
+        margin: 0 0 15px 0;
+        border-bottom: 1px solid #ddd;
+        font-weight: bold;
+        color: #555;
+        display: flex;
+        align-items: center;
+        .md(flex-wrap, wrap);
+    }
+}

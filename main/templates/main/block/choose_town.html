@@ -1,0 +1,5 @@
+<ul class="choose-town-list">
+    {% for town in town_list %}
+        <li><a href="#" data-id='{{ town.id }}'>{{ town.title }}</a></li>
+    {% endfor %}
+</ul>

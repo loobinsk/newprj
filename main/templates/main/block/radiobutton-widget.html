@@ -1,0 +1,7 @@
+<div class="btn-group" data-toggle="buttons" id='{{ attrs.id }}'>
+    {% for choice in choices %}
+        <label class="btn btn-flt5 {% if value == choice.0 %}active{% endif %}">
+            <input type="radio" name="{{ id }}" value="{{ choice.0 }}" {% if value == choice.0 %}checked{% endif %}> {{ choice.1 }}
+        </label>
+    {% endfor %}
+</div>

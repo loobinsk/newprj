@@ -1,0 +1,7 @@
+<div class="input-group">
+    <input type="text" name="{{ id }}" id="{{ id }}" value="{{ value|default_if_none:'' }}" class="form-control masked-phone">
+    <span class="input-group-btn">
+{#        <button class="btn btn-danger btn-blacklist-add-input" type="button" data-input='{{ id }}' title='Добавить телефон в черный список' data-placement="bottom"><span class="glyphicon glyphicon-plus"></span></button>#}
+        <button class="btn btn-default btn-catalog-check" type="button" data-input='{{ id }}' title='Проверить, есть ли телефон в черном списке' data-placement="right">Проверка</button>
+    </span>
+</div>

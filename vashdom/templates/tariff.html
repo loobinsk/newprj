@@ -1,0 +1,44 @@
+{% extends 'page-sidebar2.html' %}
+
+{% load main_tags %}
+{% load vashdom_tags %}
+
+{% block title %}Способы оплаты и цены &middot; {{ block.super }}{% endblock %}
+
+{% block sidebar %}
+    {% include 'vashdom/block/payment-block.html' %}
+    {% include 'vashdom/block/vkontakte-group.html' %}
+{% endblock %}
+
+{% block content %}
+<div class="tariff-page">
+    <h1 class="page-sidebar__title tariff-page__title1">
+        {% if metatag.page_title %}
+            {{metatag.page_title}}
+        {% else %}
+            Способы оплаты и цены
+        {% endif %}
+    </h1>
+
+    <h2 class='tariff-page__title2'>Оплата КРУГЛОСУТОЧНО:</h2>
+
+    {% include 'vashdom/payment/fast-order.html' %}
+
+<hr>
+    <h4>Если у Вас возникают вопросы по оплате, наша служба поддержки всегда поможет.</h4>
+<br>        
+
+            <div class="right" id="pay">
+
+                <div id="rates">
+                </div>
+                <p></p>
+                <!--money-->
+            </div>
+        <div id="buy_alert"><a class="btn btn-secondary" title="А также, если смс с паролем не пришло спустя 10 минут" href="/buy_alert">Сообщить о платеже</a></div>
+<br>
+
+        <h4>Мы единственные, кто дает <a href="/guarantee/" title="Наша гарантия">гарантию</a>, что Вы найдете жилье.</h4>
+    
+</div>
+{% endblock %}

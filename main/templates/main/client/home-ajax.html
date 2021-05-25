@@ -1,0 +1,16 @@
+{% load main_tags %}
+
+{% if page_obj.number > 1 %}
+    <div class="page-delimiter">
+        <span class="page">Страница {{ page_obj.number }}</span>
+    </div>
+{% endif %}
+
+{% include 'main/client/advert/list.html' %}
+
+{#{% bootstrap_paginate page_obj range=6 show_first_last='true' %}#}
+{% pagination page_obj %}
+
+<script type="text/javascript">
+    $('#count-find').html('Найдено {{ page_obj.paginator.count }} объявлений в г.{{ current_town.title }}');
+</script>

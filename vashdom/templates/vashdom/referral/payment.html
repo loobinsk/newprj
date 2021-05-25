@@ -1,0 +1,36 @@
+{% extends 'page.html' %}
+
+{% load bootstrap_pagination %}
+{% load main_tags %}
+
+{% block title %}Привлеченные платежи &middot; {{ block.super }}{% endblock %}
+
+{% block content %}
+        <h1 class="page-title">
+            Привлеченные платежи по реферальной ссылке {{ referral.link }}
+        </h1>
+
+        {% if payment_list %}
+            <table class='table'>
+                <thead>
+                <tr>
+                    <th>Номер</th>
+                    <th>Дата</th>
+                    <th>Тариф</th>
+                    <th>Сумма</th>
+                    <th>Статус</th>
+                </tr>
+                </thead>
+                <tbody>
+                    {% for item in payment_list %}
+                        {% with payment=item.payment %}
+                            {% include 'vashdom/referral/payment_preview.html' %}
+                        {% endwith %}
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% bootstrap_paginate page_obj alignment='left' range=6 show_first_last='true' %}
+        {% else %}
+            <div class="alert alert-info">Нет платежей</div>
+        {% endif %}
+{% endblock %}

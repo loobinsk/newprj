@@ -1,0 +1,320 @@
+#header {
+    .company {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        right: 10px;
+        .image {
+            overflow: hidden;
+            position: relative;
+            width: 60px;
+            height: 60px;
+            float: left;
+            margin-right: 15px;
+            img {
+                max-width: 60px;
+                max-height: 60px;
+            }
+        }
+        .title {
+            font-size: 20px;
+        }
+    }
+    .instructions {
+        position: absolute;
+        top: 10px;
+        right: 275px;
+        text-align: right;
+        font-style: italic;
+    }
+}
+#footer {
+    padding: 20px 0;
+    .company {
+        .image {
+            overflow: hidden;
+            position: relative;
+            width: 80px;
+            height: 80px;
+            float: left;
+            margin-right: 15px;
+            img {
+                max-width: 80px;
+                max-height: 80px;
+            }
+        }
+        .title {
+            font-size: 20px;
+            color: #009ad2;
+        }
+    }
+    .credits {
+        .title {
+            color: #009ad2;
+            font-size: 20px;
+            font-weight: bold;
+        }
+    }
+}
+#footer .company .user,
+#footer .company .user-tel {
+    color: #fff;
+}
+.agent24-form {
+    text-align: center;
+    padding-top: 0;
+    margin-top: 0;
+    input {
+        font-size: 24px;
+        text-align: center;
+    }
+    label {
+        font-weight: normal;
+    }
+    .help-text {
+        margin-top: 15px;
+    }
+}
+.agent24-enter {
+    padding-top: 100px;
+}
+.agent24logo {
+    margin-bottom: 15px;
+}
+.catalog-preview {
+    .col-desc {
+        width: auto;
+    }
+}
+.catalog-detail {
+    .body {
+        text-align: justify;
+    }
+    .col1 {
+        float: left;
+        width: 300px;
+        .tab-pane {
+            padding: 0;
+            margin-bottom: 15px;
+        }
+    }
+    .col2 {
+        margin-left: 320px;
+        min-height: 440px;
+    }
+    .date {
+        span {
+            font-size: 12px;
+            background: #0094da;
+            padding: 2px 7px;
+            color: #fff;
+            &.archive {
+                background: #8bc43f;
+            }
+        }
+    }
+    .price {
+        span {
+            font-size: 30px;
+            color: #2b353d;
+            padding: 10px;
+            background: #ffc134;
+            display: inline-block;
+            margin: 20px 0;
+        }
+    }
+    .please-text {
+        margin: 15px 0;
+        border: 2px solid #0094da;
+        padding: 10px;
+        border-radius: 10px;
+    }
+    .item-footer {
+        margin: 15px 0;
+        border: 1px solid #c1c1c1;
+        border-radius: 10px;
+        position: relative;
+        .social {
+            position: absolute;
+            top: 7px;
+            right: 15px;
+        }
+        .complain {
+            position: absolute;
+            top: 0;
+            left: 135px;
+        }
+    }
+    .nav-tabs {
+        border: none;
+        & > li {
+            & > a {
+                border: none !important;
+                border-radius: 0;
+            }
+        }
+    }
+    .tab-content {
+        margin: 0;
+    }
+    .tab-pane {
+        padding: 15px;
+    }
+    .owner {
+        margin: 10px;
+    }
+    .views {
+        float: right;
+        color: #999;
+        span {
+            color: #111;
+        }
+    }
+    #btn-send-friend {
+        border-radius: 10px 0 0 10px;
+    }
+    .complain {
+        & > a {
+            font-size: 12px;
+            padding: 11px 15px;
+            display: block;
+        }
+        &.open {
+            & > a {
+                border: 1px #bbb;
+                border-style: solid solid none solid;
+                background: #fff;
+                position: relative;
+                z-index: 11;
+            }
+        }
+        .dropdown-menu {
+            margin-top: -1px;
+            border-radius: 0 4px 4px 4px;
+            z-index: 10;
+        }
+    }
+    .view-style {
+        list-style-type: none;
+        padding: 0;
+        margin: 0 0 15px 0;
+        li {
+            display: inline-block;
+            margin-right: 15px;
+        }
+        a {
+            color: #03a3df;
+            text-decoration: underline;
+        }
+        .active {
+            a {
+                color: #111;
+                text-decoration: none;
+            }
+        }
+    }
+    .noimage {
+        display: block;
+        height: 200px;
+        background: url('../img/noimage.png') no-repeat center bottom;
+        border: 1px solid #ddd;
+    }
+    #address-map {
+        height: 300px;
+        margin-top: 10px;
+    }
+}
+ul {
+    &.prop-list {
+        margin: 0;
+        padding: 0;
+        list-style-type: none;
+        overflow: hidden;
+        li {
+            padding: 10px 0;
+            border-bottom: 1px solid #d9d9d9;
+            font-weight: bold;
+            strong {
+                font-weight: normal;
+                width: 150px;
+                display: inline-block;
+            }
+        }
+    }
+    &.check-list {
+        margin: 0;
+        padding: 0;
+        list-style-type: none;
+        overflow: hidden;
+        li {
+            float: left;
+            width: 200px;
+            padding: 5px;
+            color: #111;
+        }
+    }
+}
+#filter {
+    .catalog-filter-agent24 {
+        .col1 {
+            left: 0;
+        }
+        .col3 {
+            left: 140px;
+        }
+        .col4 {
+            left: 280px;
+        }
+        .col5 {
+            left: 420px;
+        }
+        .col6 {
+            left: 560px;
+        }
+        .col9 {
+            left: 980px;
+        }
+    }
+}
+#filter .catalog-filter-agent24 .col7, #filter .col8.as_7 {
+    left: 700px;
+}
+#filter .catalog-filter-agent24 .col8, #filter .col9.as_8 {
+    left: 840px;
+}
+.navbar-brand {
+    padding: 10px 15px;
+    img {
+        height: 30px;
+    }
+}
+.navbar-agent24 {
+    background: #fff;
+    border: none;
+    box-shadow: 0 0 10px #ddd;
+}
+.agent24-stats {
+    width: 300px;
+    margin: 0 auto;
+}
+.agent-connection {
+    position: fixed;
+    right: 5px;
+    bottom: 5px;
+}
+.agent-cutaway {
+    width: 300px;
+    margin: 30px auto;
+    .preview-image {
+        width: 150px;
+        margin: 10px auto 10px;
+    }
+    .title {
+        text-transform: uppercase;
+        font-size: 20px;
+    }
+    .fio {
+        font-size: 16px;
+        font-style: italic;
+    }
+}

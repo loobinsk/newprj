@@ -1,0 +1,124 @@
+@import '../imports.less';
+
+.catalog-preview {
+    padding: 15px;
+    border-bottom: 1px solid @grey300;
+    position: relative;
+    min-height: 155px;
+    display: flex;
+    background: #fff;
+    .xs(flex-wrap, wrap);
+    .xs(padding, 30px 15px); 
+
+    &:hover {
+        .drop-shadow(0, 0, 15px, 20%);
+    }
+
+    &__images {
+        width: 225px;
+        position: relative;
+        .xs(width, 100%);
+    }
+
+    .image-preview {
+        width: 225px;
+        .xs(width, 100%);
+        a {
+            display: block;
+        }
+
+        img {
+            width: 100%;
+        }
+    }
+
+    &__content {
+        flex-grow: 1;
+        margin: 0 15px;
+        .xs-block({
+            width: 100%;
+            margin: 10px 0;
+        });
+    }
+
+    &__sidebar {
+        .xs-block({
+            width: 100%;
+        });
+    }
+
+    &__title {
+        font-size: 22px;
+        line-height: 1.5em;
+        color: #666;
+        border-bottom: 1px dashed #666;
+
+        .md-block({
+            font-size: 18px;
+        });
+
+        &:hover {
+            color: #333;
+            border-bottom: 1px dashed #333;
+            text-decoration: none;
+        }
+    }
+
+    &__price {
+        font-size: 16px;
+        .xs(margin, 0 0 10px 0);
+
+        strong {
+            font-size: 30px;
+            line-height: 30px;
+            font-weight: normal;
+            .sm(font-size, 25px);
+        }
+
+        span {
+            display: block;
+            .xs(display, inline-block);
+        }
+    }
+
+    &__more {
+        .sm(display, none);
+    }
+
+    .complain {
+        position: absolute;
+        bottom: 0;
+        right: 15px;
+        width: 133px;
+    }
+
+    &__date {
+        color: #1A86AE;
+        margin: 3px 0;
+        .xs(display, none);
+
+        .value {
+            display: inline-block;
+            padding: 0 5px;
+            background: #00b6eb;
+            color: #fff;
+            .rounded(4px);
+
+            &.red {
+                background: @secondcolor;
+            }
+
+            &.archive {
+                background: #fff;
+                color: #555;
+                border: 1px solid #999
+            }
+        }
+    }
+
+    &__tags {
+        .sm-block({
+            display: none !important;
+        })
+    }
+}

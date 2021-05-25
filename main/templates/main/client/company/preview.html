@@ -1,0 +1,30 @@
+{% load main_tags %}
+{% load thumbnail %}
+
+<div class="company-preview company-item-{{ company.id }} editable-content">
+    <div class="preview-image">
+        {% thumbnail company.image '50x50' as img %}
+            <img src='{{ img.url }}'>
+        {% empty %}
+            <img src='{{ STATIC_URL }}img/noavatar.png'>
+        {% endthumbnail %}
+    </div>
+
+    <div class="content">
+        <h2><a href="{% url 'client:company:detail' company.id %}">{{ company.title }}</a></h2>
+        <div class="town">{{ company.town.title }}</div>
+        <div class="status">
+            {% if company.status == 'm' %}<span class="label label-info">На модерации</span> {% endif %}
+            {% if company.status == 'b' %}<span class="label label-danger">Заблокирован</span> {% endif %}
+            {% if company.is_real %}
+                <span class="label label-success">Подключенное</span>
+            {% else %}
+                <span class="label label-default">Не подключенное</span>
+            {% endif %}
+        </div>
+        <div class="tel">Тел.: {{ company.tel|fmt_tel }}</div>
+        <div class="email">E-mail: {{ company.email|default_if_none:'' }}</div>
+    </div>
+
+    {% include 'main/client/company/edit-buttons.html' %}
+</div>

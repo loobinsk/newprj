@@ -1,0 +1,13 @@
+{% extends 'page.html' %}
+
+{% load vashdom_tags %}
+
+{% block body_class %}map {{ block.super }}{% endblock %}
+
+{% block content %}
+    {% vashdom_filter_advert_map_block %}
+
+    <div id="map-content">
+        {% include 'vashdom/advert/map-ajax.html' %}
+    </div>
+{% endblock %}

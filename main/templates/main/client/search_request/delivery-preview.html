@@ -1,0 +1,11 @@
+{% load main_tags %}
+<tr>
+    <td>{{ sr.date|fmt_date }}</td>
+    <td>{% if sr.user %}<a href="{% url 'client:user:detail' sr.user.id %}">{{ sr.user.get_full_name }}</a> ({{ sr.user.username }}){% else %}Анонимный{% endif %}</td>
+    <td>{{ sr.owner_email }}</td>
+    <td>{{ sr.site.domain }}</td>
+    <td>{{ sr.count_clients }}</td>
+    <td>
+        <a href="{% url 'client:search-request:edit' sr.id %}">Изменить</a>
+    </td>
+</tr>

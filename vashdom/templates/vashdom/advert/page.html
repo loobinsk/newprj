@@ -1,0 +1,94 @@
+{% extends 'page.html' %}
+
+{% load vashdom_tags %}
+
+{% block meta %}
+    {{ block.super }}
+    <link rel='canonical' href="{{canonical_url}}">
+{% endblock %}
+
+{% block body_class %}catalog{% endblock %}
+
+{% block title %}{{ kwargs|vashdom_catalog_title:request }} - {{ block.super }}{% endblock %}
+{% block description %}{{ kwargs|vashdom_catalog_title:request }}{% endblock %}
+
+{% block content %}
+<div class="catalog-page">
+    <div class="container">
+        <div class="row">
+
+            <div class="catalog-page__sidebar">
+                {% vashdom_filter_advert_block kwargs=kwargs %}
+                {% include 'vashdom/block/subscribe-block.html' %}
+                {% include 'vashdom/block/attention-block.html' %}
+                {% include 'vashdom/block/document-block.html' %}
+                {% include 'vashdom/block/vkontakte-group.html' %}
+            </div>
+
+            <div class="catalog-page__content">
+                {% block page_title %}
+                    <h1 class="catalog-page__title">
+                        {% if metatag.page_title %}
+                            {{metatag.page_title}}
+                        {% else %}
+                            {{ kwargs|vashdom_catalog_title:request }} без посредников
+                        {% endif %}
+                    </h1>
+                {% endblock page_title %}
+                <button id='catalog-filter-btn' class="btn btn-default catalog-page__filter">Фильтр объявлений</button>
+                
+                {% include 'vashdom/advert/list.html' %}
+            
+                {% vashdom_pagination page %} 
+            
+                <div class="ext-links">
+                    <ul class='ext-links__col'>
+                        {% for link in ext_links2 %}
+                            <li><a href="{{ link.0 }}">{{ link.1 }}</a></li>
+                        {% endfor %}
+                    </ul>
+            
+                    <ul class='ext-links__col'>
+                        {% for link in ext_links %}
+                            <li><a href="{{ link.0 }}">{{ link.1 }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                
+                {% if metatag.seotext %}
+                    <div class="seotext">
+                        {{metatag.seotext|safe}}
+                    </div>
+                {% else %}
+                    <div class="seotext">    
+                        <h2>Хотите снять квартиру или комнату без комиссии на длительный срок от хозяина {{ ext_town }}?</h2>
+                
+                        <p>Наш сервис содержит огромное количество уникальных предложений по долгосрочной аренде жилья без комиссии и ежедневно пополняется новыми. 
+                        Объявления проходят предварительную проверку перед публикацией, что позволяет Вам видеть контакты прямых собственников.</p>
+                    
+                        <p>Вы получаете информацию из первых рук — арендодатели самостоятельно размещают здесь объявления о сдаче внаем своего жилья. 
+                            Договаривайтесь с ними напрямую без агентов и заезжайте уже сегодня!</p>
+                
+                        {% if ext_town %}
+                            <p>В нашем каталоге размещены множество объявлений {{ ext_town }} {{ ext_metro }} {{ ext_district }} о сдаче {{ ext_room }} недорого и без риелторов.</p>
+                        {% endif %}
+                
+                        <p>Если Вам надо срочно снять квартиру без агентов, мы всегда рады помочь <a href="/poisk/" title="Подбор жилья под Ваши требования">ускорить поиски</a>.</p>
+                
+                        <p>Мы заботимся о Вас и даем <a href="https://bazavashdom.ru/guarantee" title="Гарантия">гарантию</a>, что Вы снимете квартиру без переплат от собственника.</p>
+                        
+                    </div>
+                {% endif %}
+            </div>
+
+        </div>
+    </div>
+</div>
+    
+<div class="offcanvas-filter">
+    <div class="offcanvas-filter__bar">
+        {% vashdom_filter_advert_block kwargs=kwargs %}
+    </div>
+    <div class="offcanvas-filter__close"></div>
+</div>
+{% endblock %}

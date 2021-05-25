@@ -1,0 +1,33 @@
+@import '../imports.less';
+
+.user-block {
+    display: flex;
+    align-items: flex-start;
+
+    &__photo {
+        margin-right: 10px;
+
+        img {
+            .rounded(100%);
+            width: 60px;
+            height: 60px;
+        }
+    }
+    
+
+    &__auth, &__register {
+        color: #fff;
+        display: block;
+        padding: 5px 15px;
+        text-transform: uppercase;
+        .xs(display, none);
+
+        &-title {
+            .sm(display, none);
+        }
+        &-icon {
+            display: none;
+            .sm(display, block);
+        }
+    }
+}

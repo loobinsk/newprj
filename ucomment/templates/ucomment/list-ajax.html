@@ -1,0 +1,16 @@
+{% load mptt_tags %}
+
+{% for c in comment_list %}
+    {% recursetree c %}
+        {% with comment=node %}
+            {% include 'ucomment/preview.html' %}
+        {% endwith %}
+    {% endrecursetree %}
+{% endfor %}
+
+{% if page_obj.has_next %}
+    <button class="btn-comment-else btn btn-block"
+                data-page="{{ page_obj.next_page_number }}"
+                data-key="{{ key }}">
+            Показать еще...</button>
+{% endif %}

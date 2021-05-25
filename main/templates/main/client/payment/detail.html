@@ -1,0 +1,7 @@
+{% extends 'page-client-center.html' %}
+
+{% block title %}Заказ #{{ payment.id }} &middot; {{ block.super }}{% endblock %}
+
+{% block center %}
+    {% include 'main/client/payment/detail-ajax.html' %}
+{% endblock %}

@@ -1,0 +1,42 @@
+{% load main_tags %}
+
+<div class="dropdown metro-dropdown keep-open">
+    <div style="display: none;">
+        {{ tmpl }}
+    </div>
+    <button data-toggle="dropdown" class="btn btn-default">Метро{% if value %} ({{ value|length }}){% endif %}</button>
+    <div class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+        <a href="#" class="close btn btn-flt3">Закрыть карту</a>
+        <a href="#" class="clearmap btn btn-flt4">Очистить</a>
+        <div class="title">Карта станций метро г. {{ town.title }}</div>
+        <div class="background">
+            <div class="metro-list">
+                <input type="text" class="form-control metro-filter" placeholder="Поиск метро...">
+                <div class="wrapper">
+                    {% for metro in metro_list %}
+                        <a href="#" data-value="{{ metro.id }}" {% if metro.id|to_str in value %}class='active'{% endif %}>{{ metro.title }}<span class="color {{ metro.color }}"></span> </a>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="metro-map">
+
+                <div class="move">
+                    <img src='/static/img/metro_map_{{ town.id }}.png'>
+                    {% for metro in metro_list %}
+                        {% if metro.x and metro.y %}
+                            <a href="#" class="point {{ metro.color }} {% if metro.id|to_str in value %}active{% endif %}" data-value='{{ metro.id }}' style="top:{{ metro.y|add:'-11' }}px; left: {{ metro.x|add:'-11' }}px;"></a>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="legend">Карту можно перетаскивать мышью</div>
+            <div class="selected">
+                {% for metro in metro_list %}
+                    {% if metro.id|to_str in value %}
+                        <div class='item' data-value="{{ metro.id }}">{{ metro.title }}<span class="deselect">&times;</span></div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>

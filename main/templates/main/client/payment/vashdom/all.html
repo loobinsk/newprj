@@ -1,0 +1,24 @@
+{% extends 'page-client-center.html' %}
+
+{% load bootstrap_pagination %}
+{% load main_tags %}
+
+{% block title %}Платежи БазаВашДом &middot; {{ block.super }}{% endblock %}
+
+{% block center %}
+        <h1 class="page-title">
+            Платежи БазаВашДом
+        </h1>
+
+        <ul class="nav nav-tabs company-tabs" role="tablist">
+            <li><a href="{% url 'client:payment:all' %}">ВСЕ</a></li>
+            <li class="active"><a href="{% url 'client:payment:all-vashdom' %}">БазаВашДом</a></li>
+        </ul>
+
+        {% if payment_list %}
+            {% include 'main/client/payment/vashdom/list.html' %}
+            {% bootstrap_paginate page_obj alignment='left' range=6 show_first_last='true'%}
+        {% else %}
+            <div class="alert alert-info">Нет платежей</div>
+        {% endif %}
+{% endblock %}

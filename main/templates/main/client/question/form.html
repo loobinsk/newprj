@@ -1,0 +1,9 @@
+<form method="POST" action="{{ action }}" id="question-form">
+    {% csrf_token %}
+    <dl>
+        <dt>{{ form.body.label_tag }}</dt>
+        <dd>{{ form.body }}</dd>
+        <dt>{{ form.answer.label_tag }}</dt>
+        <dd>{{ form.answer }}</dd>
+    </dl>
+</form>

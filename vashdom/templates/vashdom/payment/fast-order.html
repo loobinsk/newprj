@@ -1,0 +1,93 @@
+{% load main_tags %}
+
+<form id="payment-fastorder-form" class="order-form" method="POST" action="{% url 'payment:order' %}">
+    {% csrf_token %}
+
+{#    {% if base == 'vk' %}#}
+{#        <div class="free">#}
+{#            <a href="{% url 'free' %}" class="btn btn-secondary btn-block">Получить бесплатный доступ</a>#}
+{#        </div>#}
+{#    {% endif %}#}
+
+    <h2>{{ form.town }}</h2>
+
+    <table class="table table-tariff">
+        <tbody>
+            {% for tariff in tariff_list %}
+                <tr class="tariff-choose-btn {% if forloop.first %}selected{% endif %} {% if tariff.main_base %}need_main_base{% endif %} {% if tariff.vk_base %} need_vk_base{% endif %}
+                                {% if tariff.main_base and not current_town.main_base %} hidden{% endif %}
+                                {% if tariff.vk_base and not current_town.vk_base %} hidden{% endif %}
+                                city city-{{ tariff.town_id }} {% if tariff.town_id != current_town.id %}city-hidden{% endif %}">
+                    <td>
+                        {% comment %} {% if tariff.main_base and tariff.vk_base %}
+                            <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
+                        {% endif %} {% endcomment %}
+                        <strong>{{ tariff.title }}</strong><br>{{ tariff.desc }}
+                    </td>
+                    <td>
+                        {% if tariff.tariff_type == 'c' %}
+                            {{ form.count }}
+                        {% else %}
+                            {% if tariff.price == 0 %}
+                                Бесплатно
+                            {% else %}
+                                {{ tariff.price|fmt_price }} р.
+                            {% endif %}
+                        {% endif %}
+                    </td>
+                    <td>
+                        <input type="radio" name="tariff" value="{{ tariff.id }}" id="id_tariff_{{ tariff.id }}" {% if forloop.first %}checked="checked"{% endif %}>
+                        <label for="id_tariff_{{ tariff.id }}">Выбрать</label>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+
+
+
+{#    <div class="show-password"> #}
+{#        <input type="checkbox" id='id_show_password'> #}
+{#        <label for="id_show_password">Показать пароль после оплаты на сайте</label> #}
+{#    </div> #}
+
+    <div class="buttons">
+        <button class="btn btn-primary btn-block" title="Далее">Оплатить</button>
+    </div>
+ 
+<p>После оплаты Ваш пароль будет сразу показан на сайте.</p>    
+
+{#<p>**(По желанию) Рассылка поста о поиске жилья по сотне топовых профильных сообществ ВКонтакте <a href="/rassylkaVK/" onclick="return !window.open(this.href)" title="Услуга рассылки">подробнее..</a></p>#}
+<hr>
+<p>*Индивидуальный подбор жилья по вашим требованиям <a href="/poisk/" onclick="return !window.open(this.href)" title="Подбор жилья под Ваши требования">подробнее..</a></p>
+<p>Если хотите получить этот же пароль доступа по смс или на почту - заполните соответствующие поля:</p>
+ 
+    <div class="tel">
+        {# <label>Ваш номер телефона:</label>#}
+         {# (для получения смс с паролем)#}
+        {{ form.tel }}<br>
+        (для получения смс с паролем)
+    </div>
+
+    <div class="email">
+        {# <label>Ваш электронный ящик:</label>#}
+        {{ form.email }}<br>
+        (для получения письма с паролем)
+    </div>
+    
+
+
+    <div class="order-desc">
+        <p>
+            <strong>Примерное время до получения смс с паролем: 1:50 сек.</strong>
+        </p>
+        <p>
+            <a class="colorbox" href="/static/img/all1.jpg" rel="image-list" title="Выбор тарифа"> <img src="/static/img/1disp.jpg" /> </a> 
+        </p>
+
+        <p>Оплата через нашего надежного партнера <strong>Robokassa</strong></p>
+
+        <img alt="Принимаемые варианты оплаты" title="Способы оплаты" src="/static/img/picons.jpg">
+    </div>
+</form>

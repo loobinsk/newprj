@@ -1,0 +1,8 @@
+<li data-id="{{ image.id }}">
+    <div class="content">
+        <img src='{{ image.image.url }}'>
+{#        <div class="caption">{{ image.desc|default:'Нет описания' }}</div>#}
+    </div>
+    <button class="close" aria-hidden="true" data-id='{{ image.id }}'>&times;</button>
+{#    <button class="description-edit"  data-id='{{ image.id }}'><span class="glyphicon glyphicon-cog"></span></button>#}
+</li>

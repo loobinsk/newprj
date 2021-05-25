@@ -1,0 +1,39 @@
+{% load main_tags %}
+
+<div class="catalog-filter catalog-filter_{{random_id}} block col-sm-12 col-lg-12" id="catalog-filter">
+    <form method="post" action="{{ url }}">
+        <div class="content">
+            <div class="col rooms">
+                <h3>Я хочу снять</h3>
+                {{ form.rooms }}
+            </div>
+            <div class="col metro">
+                <h3>Метро</h3>
+                {{ form.metro }}
+            </div>
+            <div class="col price price-inputs-{{random_id}}">
+                <h3>Цена от {{ form.min_price }} до {{ form.max_price }}</h3>
+                <div class="">
+                    <input id="price-slider-{{random_id}}" type="text" class="slider" value="" data-slider-min="0"
+                           data-slider-max="100000" data-slider-step="1000"
+                           data-slider-value="[{{ form.min_price.value|default:'0' }},{{ form.max_price.value|default:'200000' }}]"
+                           data-slider-orientation="horizontal" data-slider-selection="after">
+
+                </div>
+            </div>
+
+
+            <button class="btn btn-secondary btn-search btn-block" title="Найти подходящие">Найти</button>
+        </div>
+    </form>
+</div>
+
+<script type="text/javascript">
+    jQuery(document).ready(function(){
+        jQuery('#price-slider-{{random_id}}').slider()
+            .on('slide', function(e){
+                jQuery('.price-inputs-{{random_id}} input[name="min_price"]').val(e.value[0]);
+                jQuery('.price-inputs-{{random_id}} input[name="max_price"]').val(e.value[1]);
+            });
+    });
+</script>

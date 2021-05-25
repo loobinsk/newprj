@@ -1,0 +1,45 @@
+<form action="{% url 'payment:promocode' %}" method="POST" id="promocode-form">
+    {% csrf_token %}
+    {{ form.payment }}
+
+
+<script>
+var show;
+function hidetxt(type){
+ param=document.getElementById(type);
+ if(param.style.display == "none") {
+ if(show) show.style.display = "none";
+ param.style.display = "block";
+ show = param;
+ }else param.style.display = "none"
+}
+</script>
+
+
+<div align="right">
+{#<a onclick="hidetxt('div1'); return false;" href="#" rel="nofollow" title="Получить скидку"><font size="+1">У меня есть промокод</font></a>#}
+<div style="display:none;" id="div1">
+<br />
+
+<p>Введите ПРОМОКОД и нажмите кнопку <i>АКТИВИРОВАТЬ ПРОМОКОД</i></p>
+
+    <div>
+        {{ form.code }}
+    </div>
+
+    <button type="submit" class="btn btn-secondary btn-promocode-activate" data-loading-text="Подождите..." title="Получить скидку">Активировать промокод</button>
+</form>
+
+</div>
+</div>
+<script type="text/javascript">
+    jQuery(document).ready(function(){
+        jQuery('#promocode-form').ajaxForm({
+            dataType: 'json',
+            success: function(data, status, xhr, form) {
+                window.location.reload();
+            },
+            error: failFunction
+        })
+    });
+</script>

@@ -1,0 +1,46 @@
+@import '../imports.less';
+
+
+.page-sidebar {
+    &__content {
+        .col();
+        .size(9);
+        .size-lg(8);
+        .size-md(12);
+        padding-bottom: 30px;
+    }
+
+    &__sidebar {
+        .col();
+        .size(3);
+        .size-lg(4);
+        .md(display, none);
+        background: #1a88ae;
+
+        .block {
+            .rounded(4px);
+            margin-bottom: 15px;
+            padding: 15px;
+            color: #fff;
+            background: #1a88ae;
+    
+            h3 {
+                font-size: 16px;
+                margin: 0 0 10px 0;
+                padding: 0;
+            }
+    
+            p a {
+                color: lighten(@primarycolor, 50%);
+            }
+        }
+    }
+
+    &__title {
+        padding: 0 0 15px 0;
+        margin: 0 0 15px 0;
+        border-bottom: 1px solid #ddd;
+        font-weight: bold;
+        color: #555;
+    }
+}

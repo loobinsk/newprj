@@ -1,0 +1,48 @@
+{% extends 'page-client-center.html' %}
+
+{% load bootstrap_pagination %}
+
+{% block title %}Агентства &middot; {{ block.super }}{% endblock %}
+
+{% block center %}
+    <h1 class="page-title">Агентства (найдено {{ page_obj.paginator.count }})</h1>
+
+    <form method="GET" action="{% url 'client:company:list' %}" id="company-filter-form" class="row">
+        <div class="col-xs-3">
+            <div>
+                <label>{{ form.title.label }}</label>
+                {{ form.title }}
+            </div>
+            <div>
+                {{ form.is_real }}<label for="id_flt_is_real">{{ form.is_real.label }}</label>
+            </div>
+        </div>
+        <div class="col-xs-3">
+            <div>
+                <label>{{ form.email.label }}</label>
+                {{ form.email }}
+            </div>
+            <div>
+                <label>{{ form.tel.label }}</label>
+                {{ form.tel }}
+            </div>
+        </div>
+        <div class="col-xs-3">
+            <div>
+                <label>{{ form.town.label }}</label>
+                {{ form.town }}
+            </div>
+            <div>
+                <label>{{ form.status.label }}</label>
+                {{ form.status }}
+            </div>
+        </div>
+        <div class="col-xs-3 text-right">
+            <input type="submit" class="btn btn-flt3" value="Поиск">
+        </div>
+    </form>
+
+    {% include 'main/client/company/list.html' %}
+
+    {% bootstrap_paginate page_obj range=6 show_first_last='true' %}
+{% endblock %}

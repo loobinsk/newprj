@@ -1,0 +1,17 @@
+{% load thumbnail %}
+{% load main_tags %}
+
+{% if user %}
+    <div class="agent-profile">
+        <div class="preview-image">
+            {% thumbnail user.image '100x100' as img %}
+                <img src='{{ img.url }}'>
+            {% empty %}
+                <img src="{{ STATIC_URL }}img/noavatar.png">
+            {% endthumbnail %}
+        </div>
+        <div class="title"><a href="{% url 'client:user:detail' user.id %}">{{ user.get_full_name }}</a></div>
+        <div class="tel">{{ user.tel|fmt_tel|default_if_none:'' }}</div>
+        <div class="email">{{ user.email|default_if_none:'' }}</div>
+    </div>
+{% endif %}

@@ -1,0 +1,128 @@
+{% extends 'page.html' %}
+
+{% load thumbnail %}
+{% load main_tags %}
+
+{% block title %}Личный кабинет  &middot; {{ block.super }}{% endblock %}
+
+{% block content %}
+    <div class="user-profile">
+        <div class="container">
+            <div class="row">
+                <div class="user-profile__profile">
+                    <h2 class="user-profile__title">Личный кабинет</h2>
+                    <div class='photo'>
+                        {% thumbnail user.image "150x150" crop="center" as image %}
+                            <img src='{{ image.url }}'>
+                        {% empty %}
+                            <img src='{{ STATIC_URL }}img/noavatar.png'>
+                        {% endthumbnail %}
+                        <div class='btn-change-avatar'><span class="glyphicon glyphicon-camera" aria-hidden="true"></span></div>
+                        <form id="avatar-form" method="POST" action="{% url 'change_avatar' %}" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            {{ avatar_form }}
+                        </form>
+                    </div>
+        
+                    <form method="POST" action="{% url 'profile:my' %}" id="profile-form" class="form">
+                        {% csrf_token %}
+                            <div>
+                                <label>Имя</label>
+                                {{ form.first_name }}
+                            </div>
+                            <div>
+                                <label>Фамилия</label>
+                                {{ form.last_name }}
+                            </div>
+                            <div>
+                                <label>Телефон</label>
+                                {{ form.tel|add_class:' masked-phone' }}
+                            </div>
+                            <div>
+                                <label>Email</label>
+                                {{ form.email }}
+                            </div>
+                            <div>
+                                <button class="btn btn-secondary" id="profile-form-submit">Сохранить</button>
+                                <a class="btn btn-link pull-right" href="{% url 'password_change' %}">Изменить пароль</a>
+                            </div>
+                    </form>
+        
+                    {% if password_list %}
+                        <div class="service-list">
+                            <h2 class="page-title">Подключенные услуги</h2>
+                            {% for password in password_list %}
+                                <div class="service-preview">
+                                    <div class="title">{{ password.password }}</div>
+                                    <div class="date">{{ password.elapsed_time }}</div>
+                                    <div class="base">
+                                        {% if password.main_base %}База ВАШДОМ{% endif %}&nbsp;
+                                        {% if password.vk_base %}База ВКОНТАКТЕ{% endif %}
+                                    </div>
+                                <div class="town">{{ password.town.title }}</div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+        
+                    <div class="user-profile__referral-program">
+                        <h2 class="user-profile__referral-program-title">ПАРТНЕРСКАЯ ПРОГРАММА БазаВашДом.РУ</h2>
+                        <p>Примите участие в партнерской программе и начните зарабатывать уже сейчас
+                        до 50% от платежей привлеченных Вами пользователей. Узнайте подробнее сейчас!</p>
+                        <a href="{% url 'referral:page' %}" class="btn btn-primary btn-lg user-profile__referral-program-btn">Принять участие в реферальной программе</a>
+                    </div>
+                </div>
+
+                <div class="user-profile__sidebar">
+                    <h2 class="user-profile__title">Тарифы</h2>
+                    {% with form=payment_form %}
+                        {% include 'vashdom/payment/fast-order.html' %}
+                    {% endwith %}
+                </div>
+
+            </div>
+        </div>
+        
+       
+    </div>
+
+    <script type="text/javascript">
+            (function($) {
+                $(document).ready(function() {
+
+                    function failFunction(e) {
+                        var data = jQuery.parseJSON(e.responseText);
+                        $('.bottom-left').notify({
+                            message: { html: data.message },
+                            type: 'bangTidy',
+                            closable: true
+                        }).show();
+                    }
+
+                    $('#profile-form-submit').click(function(e){
+                        $('#profile-form').ajaxSubmit({
+                            dataType: 'json',
+                            success: function(data) {
+                                window.location.reload();
+                            },
+                            error: failFunction
+                        });
+                        e.preventDefault();
+                        return false;
+                    });
+
+                    $('#id_image').change(function(e) {
+                        $('#avatar-form').ajaxSubmit({
+                            target: '#tab',
+                            dataType: 'json',
+                            success: function(data) {
+                                jQuery('.user-profile .photo img').attr('src', data.object.url);
+                            },
+                            error: failFunction
+                        });
+                    });
+
+                });
+            })(jQuery);
+    </script>
+{% endblock %}

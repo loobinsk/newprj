@@ -1,0 +1,7 @@
+{% if can_edit %}
+    <div class="edit-buttons">
+        <a href="#" class="btn-user-edit-by-user" data-id="{{ object.id }}" data-name='{{ object.get_full_name }}'>Изменить</a>
+        &nbsp;&nbsp;&nbsp;
+        <a href="#" class="btn-user-del-by-user text-danger" data-id="{{ object.id }}" data-name='{{ object.get_full_name }}'>Удалить</a>
+    </div>
+{% endif %}

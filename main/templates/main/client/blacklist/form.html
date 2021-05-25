@@ -1,0 +1,13 @@
+<form method="POST" action="{{ action }}" id="blacklist-form">
+    {% csrf_token %}
+    <dl>
+        <dt>{{ form.tel.label_tag }}</dt>
+        <dd>{{ form.tel }}</dd>
+        <dt>{{ form.body.label_tag }}</dt>
+        <dd>{{ form.body }}</dd>
+    </dl>
+</form>
+
+<script type="text/javascript">
+    jQuery('#id_tel').mask('+7(999) 999-9999');
+</script>

@@ -1,0 +1,45 @@
+{% extends 'page.html' %}
+
+{% load main_tags %}
+
+{% block title %}Получите бесплатный доступ к базе ВашДом  &middot; {{ block.super }}{% endblock %}
+
+{% block content %}
+    <h1 class="page-title">Как получить бесплатный доступ к нашей базе</h1>
+    <div id="register-form" class="form long">
+        {% csrf_token %}
+
+        {% if need_auth %}
+            <h2 class="page-title"><span class="circle">1</span>Авторизуйтесь</h2>
+            <a href="{% url 'socialauth_begin' 'vk-oauth' %}?next={% url 'free' %}" class="btn btn-vk" style="margin: 15px 0;">Вход через <img src="{{ STATIC_URL }}img/vklogo.png"></a>
+        {% else %}
+            <h1 class="page-title"><span class="circle open">1</span>Авторизуйтесь</h1>
+            <p>Вы уже авторизованы</p>
+        {% endif %}
+        <br>
+
+        <h2 class="page-title"><span class="circle {% if free_access.active %}open{% endif %}">2</span>Вступите в группу Вконтакте</h2>
+
+        {% include 'vashdom/block/vkontakte-group.html' %}
+        <br>
+
+        <h2 class="page-title"><span class="circle {% if free_access.active %}open{% endif %}">3</span>Поставьте лайк и сделайте репост записи</h2>
+
+        <div id="vk_post_-93330023_21"></div>
+        <script type="text/javascript">
+          (function(d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (d.getElementById(id)) return; js = d.createElement(s); js.id = id; js.src = "//vk.com/js/api/openapi.js?116"; fjs.parentNode.insertBefore(js, fjs); }(document, 'script', 'vk_openapi_js'));
+          (function() {
+            if (!window.VK || !VK.Widgets || !VK.Widgets.Post || !VK.Widgets.Post("vk_post_-93330023_21", -93330023, 21, '3T_JFd_sMFgdv6WTMySeQ8saAn0', {width: 500})) setTimeout(arguments.callee, 50);
+          }());
+        </script>
+        <br>
+
+        <h2 class="page-title"><span class="circle {% if free_access.active %}open{% endif %}">4</span>Получите бесплатный доступ на 3 дня</h2>
+
+        {% if free_access.active %}
+            <p>Вам был дан бесплатный доступ к нашей базе объявлений Вконтакте</p>
+        {% else %}
+            <p>Через 5 минут вы получите бесплатный доступ к нашей базе объявлений Вконтакте</p>
+        {% endif %}
+    </div>
+{% endblock %}

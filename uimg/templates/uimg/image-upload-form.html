@@ -1,0 +1,21 @@
+{% load main_tags %}
+
+<form id="user-image-form" class='image-upload-form multiple' method="POST" action='{% url 'img:create_multi' %}' enctype="multipart/form-data" data-id='{{ id }}'>
+    {% csrf_token %}
+
+    <div class='file-upload'>
+        <input type="file" class="multiple-image-input" multiple="true" name="images">
+        <button class="btn btn-lg file-upload-choose">Добавить фото</button>
+    </div>
+
+    <div class="progress hidden">
+        <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0;">
+        </div>
+    </div>
+
+    <ul class="upload-image-list">
+        {% for image in image_list %}
+            {% include 'uimg/preview.html' %}
+        {% endfor %}
+    </ul>
+</form>

@@ -1,0 +1,21 @@
+{% extends 'page-client-center.html' %}
+
+{% load bootstrap_pagination %}
+{% load main_tags %}
+
+{% block title %}Промокоды &middot; {{ block.super }}{% endblock %}
+
+{% block center %}
+        <a href='#' class='btn-promocode-create btn btn-primary pull-right'><span class="glyphicon glyphicon-pencil"></span> Создать промокод</a>
+
+        <h1 class="page-title">
+            Промокоды {% if promotion %}{{ promotion.title }}{% endif %}
+        </h1>
+
+        {% if promocode_list %}
+            {% include 'main/client/promocode/list.html' %}
+            {% bootstrap_paginate page_obj alignment='left' range=6 show_first_last='true'%}
+        {% else %}
+            <div class="alert alert-info">Нет промокодов</div>
+        {% endif %}
+{% endblock %}

@@ -1,0 +1,45 @@
+{% load thumbnail %}
+
+<form action="{% url 'auth_login' %}" method="post" class="login-form">
+    {% csrf_token %}
+    <div class="avatar">
+        {% if user.is_authenticated %}
+            {% thumbnail user.image "100x100" crop='center' as img %}
+                <img src='{{ img.url }}'>
+            {% empty %}
+                <img src='{{ STATIC_URL }}img/noavatar.png'>
+            {% endthumbnail %}
+        {% else %}
+            <img src="{{ STATIC_URL }}img/noavatar.png">
+        {% endif %}
+    </div>
+    <div class="name">{% if user.is_authenticated %}{{ user.get_full_name }}{% endif %}</div>
+    <div class="company">{% if user.is_authenticated %}{{ user.company.title }}{% endif %}</div>
+    {% if user.is_anonymous %}
+        <div class="form-box on-anonymous">
+            <label>Логин (e-mail)</label>
+            {{ form.username }}
+            <label>Пароль</label>
+            {{ form.password }}
+            <button class="btn btn-flt4 btn-block btn-login" type="submit" data-loading-text="Вход...">Вход</button>
+            <a href="{% url 'auth_password_reset' %}">Забыли пароль?</a>
+        </div>
+    {% endif %}
+
+    <p class="action-buttons on-auth {% if user.is_anonymous %}hidden{% endif %}">
+        <a href="{% url 'auth_logout' %}" class="btn btn-flt4 btn-block">Выйти</a>
+    </p>
+
+    {% if not is_moder %}
+        <ul class="links">
+{#            <li><a href="{% url "registration_register" %}">Тарифы на подключение</a></li>#}
+            <li><a href="{% url "registration_register" %}">Порядок работы</a></li>
+        </ul>
+
+        {% if user.is_anonymous %}
+            <ul class="links on-anonymous">
+                <li><a href="{% url 'registration_register' %}#register-form">Регистрация</a></li>
+            </ul>
+        {% endif %}
+    {% endif %}
+</form>

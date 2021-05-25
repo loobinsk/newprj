@@ -1,0 +1,25 @@
+{% extends 'page-client.html' %}
+
+{% load main_tags %}
+
+{% block title %}{{ town.title }} &middot; {{ block.super }}{% endblock %}
+
+{% block content %}
+    {% include 'main/client/town/detail-ajax.html' %}
+
+    <ul class="nav nav-tabs" role="tablist">
+        <li class="active"><a href="#district" role="tab" data-toggle="tab">Районы
+            <button class="btn btn-primary btn-sm btn-district-create" data-town='{{ town.id }}'>+</button>
+        </a></li>
+        <li><a href="#metro" role="tab" data-toggle="tab">Метро <button class="btn btn-primary btn-sm btn-metro-create" data-town='{{ town.id }}'>+</button></a></li>
+    </ul>
+
+    <div class="tab-content">
+        <div class="tab-pane active" id="district">
+            {% include 'main/client/district/list.html' %}
+        </div>
+        <div class="tab-pane" id="metro">
+            {% include 'main/client/metro/list.html' %}
+        </div>
+    </div>
+{% endblock %}

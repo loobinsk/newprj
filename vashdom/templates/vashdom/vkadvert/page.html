@@ -1,0 +1,58 @@
+{% extends 'page.html' %}
+
+{% load vashdom_tags %}
+
+{% block meta %}
+    {{ block.super }}
+    <link rel='canonical' href="{{canonical_url}}">
+{% endblock %}
+
+{% block body_class %}catalog{% endblock %}
+
+{% block title %}{{ kwargs|vashdom_vkcatalog_title:request }} &middot; {{ block.super }}{% endblock %}
+
+{% block description %}{{ kwargs|vashdom_vkcatalog_title:request }} - {{ block.super }}{% endblock %}
+
+
+{% block content %}
+<div class="vk-catalog-page">
+    <div class="container">
+        <div class="row">
+
+            <div class="vk-catalog-page__sidebar">
+                    {% vashdom_filter_vkadvert_block kwargs=kwargs %}
+                    {% include 'vashdom/block/attention-block.html' %}
+                    {% include 'vashdom/block/document-block.html' %}
+                    {% include 'vashdom/block/vkontakte-group.html' %}
+            </div>
+
+            <div class="vk-catalog-page__content">
+                {% block page_title %}
+                    <h1 class="vk-catalog-page__title">
+                        {% if metatag.page_title %}
+                            {{metatag.render_page_title}}
+                        {% else %}
+                            {{ kwargs|vashdom_vkcatalog_title:request }}
+                        {% endif %}
+                    </h1>
+                {% endblock %}
+                <button id='catalog-filter-btn' class="btn btn-default vk-catalog-page__filter">Фильтр объявлений</button>
+                {% include 'vashdom/vkadvert/page-ajax.html' %}
+
+                {% if metatag.seotext %}
+                    <div class="seotext">
+                        {{metatag.seotext|safe}}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="offcanvas-filter">
+    <div class="offcanvas-filter__bar">
+        {% vashdom_filter_vkadvert_block kwargs=kwargs %}
+    </div>
+    <div class="offcanvas-filter__close"></div>
+</div>
+{% endblock %}

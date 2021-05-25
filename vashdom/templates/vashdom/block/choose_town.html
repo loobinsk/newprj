@@ -1,0 +1,12 @@
+<ul class="choose-town__list choose-town__list_big">
+    {% for town in town_list|slice:':2' %}
+        <li><a href="/{{town.slug}}/" data-id='{{ town.id }}' data-slug='{{town.slug}}'
+            {% if town.id == current_town.id %}class="active"{% endif %}>{{ town.title }}</a></li>
+    {% endfor %}
+</ul>
+<ul class="choose-town__list">
+    {% for town in town_list|slice:'2:' %}
+        <li><a href="/{{town.slug}}/" data-id='{{ town.id }}' data-slug='{{town.slug}}'
+            {% if town.id == current_town.id %}class="active"{% endif %}>{{ town.title }}</a></li>
+    {% endfor %}
+</ul>

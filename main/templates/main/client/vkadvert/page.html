@@ -1,0 +1,21 @@
+{% extends 'page-client.html' %}
+
+{% load main_tags %}
+
+{% block body_class %}{{ block.super }} catalog{% endblock %}
+
+{% block filter %}
+    {% if not is_moder or perms.main.view_all_advert %}
+        <div id="filter">
+            {% filter_vkadvert_client_block %}
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block breadcrumbs %}
+    {% include 'main/block/vkcatalog-view-style.html' %}
+{% endblock %}
+
+{% block content %}
+    {% include 'main/client/vkadvert/page-ajax.html' %}
+{% endblock %}

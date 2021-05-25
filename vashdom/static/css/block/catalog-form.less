@@ -1,0 +1,106 @@
+@import '../imports.less';
+
+
+#catalog-form {
+    position: relative;
+
+    > div {
+        margin-bottom: 10px;
+    }
+
+    label {
+    }
+
+    .address {
+        select {
+            width: 130px;
+            margin-right: 5px;
+        }
+
+        input {
+            width: 245px;
+        }
+
+    }
+
+    .metro, .district {
+        .bfh-selectbox {
+            max-width: 350px;
+        }
+    }
+
+    .body textarea {
+        width: 400px;
+        max-width: 400px;
+        .sm(width, 100%);
+    }
+
+    .input-group {
+        width: 379px;
+
+        input {
+            width: 250px;
+        }
+    }
+
+    #id_rooms,
+    #id_square,
+    #id_living_square,
+    #id_kitchen_square
+    {
+        width: 100px;
+    }
+
+
+    .agree label {
+        display: inline-block;
+        width: auto;
+    }
+
+    .comfort {
+        display: flex;
+        flex-wrap: wrap;
+        position: relative;
+
+        > div {
+            width: 50%;
+        }
+
+        .options {
+            display: block;
+            overflow: hidden;
+        }
+
+        label {
+            margin-left: 5px;
+            min-height: 20px;
+        }
+    }
+
+    .price input {
+        width: 200px;
+    }
+
+    .square {
+        > div {
+            display: inline-block;
+            width: 100px;
+        }
+
+        input {
+            margin: 0;
+        }
+    }
+
+    .btn-flt8 {
+        .gradient(@secondcolor, lighten(@secondcolor, 10%), @secondcolor);
+        border: 1px solid darken(@secondcolor, 20%);
+
+        &.active {
+            .gradient(@primarycolor, lighten(@primarycolor, 10%), @primarycolor);
+            border: 1px solid darken(@primarycolor, 10%);
+            color: #fff;
+            text-shadow: 1px 1px 1px #555;
+        }
+    }
+}

@@ -1,0 +1,57 @@
+{% extends "html.html" %}
+
+{% load main_tags %}
+{% load assets %}
+
+{% block styles %}
+    {{ block.super }}
+    {% assets "css_public" %}
+        <link rel="stylesheet" type="text/css" href="{{ ASSET_URL }}">
+    {% endassets %}
+{% endblock %}
+
+{% block page %}
+    <div id="header">
+        <div class='container'>
+            <div class='row'>
+                <a href="/" class="logo"><img src='{{ STATIC_URL }}img/logo.png'></a>
+
+                <a href="{% url 'registration_register' %}#register-form" class="btn btn-flt3 client-register"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Регистрация</a>
+
+                <div class="dropdown client-home auto keep-open">
+                    <a href="{% url 'client:news:list' %}">ЛИЧНЫЙ КАБИНЕТ<br>для профессионалов</a>
+                    <div class="dropdown-menu">
+                        {% login_block %}
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div id='page'>
+        <div class='container'>
+            <div class='row'>
+                <div id="content">
+                    {% filter_advert_block kwargs=kwargs %}
+                    {% include 'breadcrumbs.html' %}
+                    {% block content %}
+
+                    {% endblock %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% block postpage %}
+
+    {% endblock %}
+
+    <div id="footer">
+        {% include 'main/block/footer.html' %}
+    </div>
+
+    <div class="hidden">
+        {% choose_town_block %}
+    </div>
+{% endblock %}

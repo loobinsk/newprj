@@ -1,0 +1,33 @@
+{% extends 'page.html' %}
+
+{% load main_tags %}
+{% load bootstrap_pagination %}
+
+{% block title %}Отзывы пользователей &middot; {{ block.super }}{% endblock %}
+
+{% block description %}Отзывы пользователей - {{ block.super }}{% endblock %}
+
+{% block content %}
+<div class="mention-page">
+    <div class="container">
+        <div class="row">
+            <h1 class="mention-page__title">Отзывы пользователей</h1>
+
+            <div class="mention-page__content">
+                <p>Все отзывы реальные. На любую ссылку вы можете кликнуть, перейти на страницу ВКонтакте этого человека и узнать его мнение о нашем проекте.</p>
+
+                {% include 'vashdom/mention/list.html' %}
+
+                {% bootstrap_paginate page_obj %}
+            </div>
+
+            <div class="mention-oage__sidebar">
+                {% include 'vashdom/block/vkontakte-group.html' %}
+                <br>
+
+                {% include 'vashdom/mention/form.html' %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

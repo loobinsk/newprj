@@ -1,0 +1,13 @@
+<form method="POST" action="{{ action }}" id="town-form">
+    {% csrf_token %}
+    <dl>
+        <dt>{{ form.title.label_tag }}</dt>
+        <dd>{{ form.title }}</dd>
+        <dt>{{ form.latitude.label_tag }}</dt>
+        <dd>{{ form.latitude }}</dd>
+        <dt>{{ form.longitude.label_tag }}</dt>
+        <dd>{{ form.longitude }}</dd>
+        <dt>{{ form.zoom.label_tag }}</dt>
+        <dd>{{ form.zoom }}</dd>
+    </dl>
+</form>

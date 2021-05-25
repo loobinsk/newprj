@@ -1,0 +1,4 @@
+Host:xn--c1aul.xn--p1ai
+User-agent: *
+Disallow: /admin/
+Disallow: /client/

@@ -1,0 +1,142 @@
+@import '../imports.less';
+
+.user-profile {
+
+    &__profile {
+        .col();
+        .size(6);
+        .size-md(12);
+        padding-bottom: 30px;
+
+        .photo {
+            width: 100px;
+            height: 100px;
+            margin: 0 10px 0 0;
+            position: relative;
+            overflow: hidden;
+            .rounded(100%);
+            z-index: 0;
+            float: left;
+
+            .btn-change-avatar {
+                position: absolute;
+                .opacity(0);
+                top: 0;
+                left: 0;
+                bottom: 0;
+                right: 0;
+                padding: 35px 25px 25px 25px;
+                background: rgba(0, 0, 0, 0.5);
+                color: #fff;
+                font-size: 25px;
+                .transition-duration(0.7s);
+                .rounded(4px);
+                text-align: center;
+
+                &:after {
+                    content: ' ';
+                    display: block;
+                    position: absolute;
+                    top: 15px;
+                    left: 15px;
+                    right: 15px;
+                    bottom: 15px;
+                    border: 1px dashed #fff;
+                    .rounded(100%);
+                }
+            }
+
+            &:hover {
+                .btn-change-avatar {
+                    .opacity(1);
+                }
+            }
+
+            #avatar-form {
+                label {
+                    display: none;
+                }
+                input[type='file'] {
+                    position: absolute;
+                    .opacity(0);
+                    top: 0;
+                    left: 0;
+                    bottom: 0;
+                    right: 0;
+                    z-index: 1;
+                    cursor: pointer;
+                }
+            }
+
+        }
+
+        #profile-form {
+            text-align: left;
+            margin-left: 110px;
+        }
+    }
+
+    &__sidebar {
+        .col();
+        .size(6);
+        .size-md(12);
+
+        .plan {
+            padding: 15px;
+            color: #fff;
+            .border-radius(4px, 0, 0, 4px);
+
+            h2 {
+                padding: 0;
+                margin: 0 0 5px 0;
+            }
+
+            strong {
+            }
+
+            .free {
+                padding: 10px;
+                border: 1px dashed #fff;
+                margin-bottom: 10px;
+                .rounded(4px);
+                text-align: center;
+
+                strong {
+                    font-size: 35px;
+                    display: block;
+                }
+
+                .time {
+                    font-size: 18px;
+                }
+            }
+        }
+    }
+
+    &__referral-program {
+        margin: 15px 0;
+
+        &-btn {
+            font-size: 12px;
+        }
+    }
+
+    &__title {
+        padding: 0 0 15px 0;
+        margin: 0 0 15px 0;
+        border-bottom: 1px solid #ddd;
+        font-weight: bold;
+        color: #555;
+    }
+
+    @media (max-width: 990px) {
+        .profile {
+            width: 100%;
+            padding: 15px;
+        }
+        .sidebar {
+            float: none;
+            width: 100%;
+        }
+    }
+}

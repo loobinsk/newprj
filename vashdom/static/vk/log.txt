@@ -1,0 +1,744 @@
+<?xml version="1.0" encoding="utf-8"?>
+<error>
+ <error_code>8</error_code>
+ <error_msg>Invalid request: method is unavailable without access token</error_msg>
+ <request_params list="true">
+  <param>
+   <key>oauth</key>
+   <value>1</value>
+  </param>
+  <param>
+   <key>method</key>
+   <value>wall.get.xml</value>
+  </param>
+  <param>
+   <key>owner_id</key>
+   <value>-1744988</value>
+  </param>
+  <param>
+   <key>count</key>
+   <value>100</value>
+  </param>
+  <param>
+   <key>extended</key>
+   <value>1</value>
+  </param>
+  <param>
+   <key>offset</key>
+   <value>0</value>
+  </param>
+ </request_params>
+</error>
+<?xml version="1.0" encoding="utf-8"?>
+<error>
+ <error_code>8</error_code>
+ <error_msg>Invalid request: method is unavailable without access token</error_msg>
+ <request_params list="true">
+  <param>
+   <key>oauth</key>
+   <value>1</value>
+  </param>
+  <param>
+   <key>method</key>
+   <value>wall.get.xml</value>
+  </param>
+  <param>
+   <key>owner_id</key>
+   <value>-1850339</value>
+  </param>
+  <param>
+   <key>count</key>
+   <value>100</value>
+  </param>
+  <param>
+   <key>extended</key>
+   <value>1</value>
+  </param>
+  <param>
+   <key>offset</key>
+   <value>0</value>
+  </param>
+ </request_params>
+</error>
+<?xml version="1.0" encoding="utf-8"?>
+<error>
+ <error_code>8</error_code>
+ <error_msg>Invalid request: method is unavailable without access token</error_msg>
+ <request_params list="true">
+  <param>
+   <key>oauth</key>
+   <value>1</value>
+  </param>
+  <param>
+   <key>method</key>
+   <value>wall.get.xml</value>
+  </param>
+  <param>
+   <key>owner_id</key>
+   <value>-60082269</value>
+  </param>
+  <param>
+   <key>count</key>
+   <value>100</value>
+  </param>
+  <param>
+   <key>extended</key>
+   <value>1</value>
+  </param>
+  <param>
+   <key>offset</key>
+   <value>0</value>
+  </param>
+ </request_params>
+</error>
+<?xml version="1.0" encoding="utf-8"?>
+<error>
+ <error_code>8</error_code>
+ <error_msg>Invalid request: method is unavailable without access token</error_msg>
+ <request_params list="true">
+  <param>
+   <key>oauth</key>
+   <value>1</value>
+  </param>
+  <param>
+   <key>method</key>
+   <value>wall.get.xml</value>
+  </param>
+  <param>
+   <key>owner_id</key>
+   <value>-42516360</value>
+  </param>
+  <param>
+   <key>count</key>
+   <value>100</value>
+  </param>
+  <param>
+   <key>extended</key>
+   <value>1</value>
+  </param>
+  <param>
+   <key>offset</key>
+   <value>0</value>
+  </param>
+ </request_params>
+</error>
+<?xml version="1.0" encoding="utf-8"?>
+<error>
+ <error_code>8</error_code>
+ <error_msg>Invalid request: method is unavailable without access token</error_msg>
+ <request_params list="true">
+  <param>
+   <key>oauth</key>
+   <value>1</value>
+  </param>
+  <param>
+   <key>method</key>
+   <value>wall.get.xml</value>
+  </param>
+  <param>
+   <key>owner_id</key>
+   <value>-44445981</value>
+  </param>
+  <param>
+   <key>count</key>
+   <value>100</value>
+  </param>
+  <param>
+   <key>extended</key>
+   <value>1</value>
+  </param>
+  <param>
+   <key>offset</key>
+   <value>0</value>
+  </param>
+ </request_params>
+</error>
+<?xml version="1.0" encoding="utf-8"?>
+<error>
+ <error_code>8</error_code>
+ <error_msg>Invalid request: method is unavailable without access token</error_msg>
+ <request_params list="true">
+  <param>
+   <key>oauth</key>
+   <value>1</value>
+  </param>
+  <param>
+   <key>method</key>
+   <value>wall.get.xml</value>
+  </param>
+  <param>
+   <key>owner_id</key>
+   <value>-10996457</value>
+  </param>
+  <param>
+   <key>count</key>
+   <value>100</value>
+  </param>
+  <param>
+   <key>extended</key>
+   <value>1</value>
+  </param>
+  <param>
+   <key>offset</key>
+   <value>0</value>
+  </param>
+ </request_params>
+</error>
+<?xml version="1.0" encoding="utf-8"?>
+<error>
+ <error_code>8</error_code>
+ <error_msg>Invalid request: method is unavailable without access token</error_msg>
+ <request_params list="true">
+  <param>
+   <key>oauth</key>
+   <value>1</value>
+  </param>
+  <param>
+   <key>method</key>
+   <value>wall.get.xml</value>
+  </param>
+  <param>
+   <key>owner_id</key>
+   <value>-7341037</value>
+  </param>
+  <param>
+   <key>count</key>
+   <value>100</value>
+  </param>
+  <param>
+   <key>extended</key>
+   <value>1</value>
+  </param>
+  <param>
+   <key>offset</key>
+   <value>0</value>
+  </param>
+ </request_params>
+</error>
+<?xml version="1.0" encoding="utf-8"?>
+<error>
+ <error_code>8</error_code>
+ <error_msg>Invalid request: method is unavailable without access token</error_msg>
+ <request_params list="true">
+  <param>
+   <key>oauth</key>
+   <value>1</value>
+  </param>
+  <param>
+   <key>method</key>
+   <value>wall.get.xml</value>
+  </param>
+  <param>
+   <key>owner_id</key>
+   <value>-22298919</value>
+  </param>
+  <param>
+   <key>count</key>
+   <value>100</value>
+  </param>
+  <param>
+   <key>extended</key>
+   <value>1</value>
+  </param>
+  <param>
+   <key>offset</key>
+   <value>0</value>
+  </param>
+ </request_params>
+</error>
+<?xml version="1.0" encoding="utf-8"?>
+<error>
+ <error_code>8</error_code>
+ <error_msg>Invalid request: method is unavailable without access token</error_msg>
+ <request_params list="true">
+  <param>
+   <key>oauth</key>
+   <value>1</value>
+  </param>
+  <param>
+   <key>method</key>
+   <value>wall.get.xml</value>
+  </param>
+  <param>
+   <key>owner_id</key>
+   <value>-60089702</value>
+  </param>
+  <param>
+   <key>count</key>
+   <value>100</value>
+  </param>
+  <param>
+   <key>extended</key>
+   <value>1</value>
+  </param>
+  <param>
+   <key>offset</key>
+   <value>0</value>
+  </param>
+ </request_params>
+</error>
+<?xml version="1.0" encoding="utf-8"?>
+<error>
+ <error_code>8</error_code>
+ <error_msg>Invalid request: method is unavailable without access token</error_msg>
+ <request_params list="true">
+  <param>
+   <key>oauth</key>
+   <value>1</value>
+  </param>
+  <param>
+   <key>method</key>
+   <value>wall.get.xml</value>
+  </param>
+  <param>
+   <key>owner_id</key>
+   <value>-47124169</value>
+  </param>
+  <param>
+   <key>count</key>
+   <value>100</value>
+  </param>
+  <param>
+   <key>extended</key>
+   <value>1</value>
+  </param>
+  <param>
+   <key>offset</key>
+   <value>0</value>
+  </param>
+ </request_params>
+</error>
+<?xml version="1.0" encoding="utf-8"?>
+<error>
+ <error_code>8</error_code>
+ <error_msg>Invalid request: method is unavailable without access token</error_msg>
+ <request_params list="true">
+  <param>
+   <key>oauth</key>
+   <value>1</value>
+  </param>
+  <param>
+   <key>method</key>
+   <value>wall.get.xml</value>
+  </param>
+  <param>
+   <key>owner_id</key>
+   <value>-28618880</value>
+  </param>
+  <param>
+   <key>count</key>
+   <value>100</value>
+  </param>
+  <param>
+   <key>extended</key>
+   <value>1</value>
+  </param>
+  <param>
+   <key>offset</key>
+   <value>0</value>
+  </param>
+ </request_params>
+</error>
+<?xml version="1.0" encoding="utf-8"?>
+<error>
+ <error_code>8</error_code>
+ <error_msg>Invalid request: method is unavailable without access token</error_msg>
+ <request_params list="true">
+  <param>
+   <key>oauth</key>
+   <value>1</value>
+  </param>
+  <param>
+   <key>method</key>
+   <value>wall.get.xml</value>
+  </param>
+  <param>
+   <key>owner_id</key>
+   <value>-26440644</value>
+  </param>
+  <param>
+   <key>count</key>
+   <value>100</value>
+  </param>
+  <param>
+   <key>extended</key>
+   <value>1</value>
+  </param>
+  <param>
+   <key>offset</key>
+   <value>0</value>
+  </param>
+ </request_params>
+</error>
+<?xml version="1.0" encoding="utf-8"?>
+<error>
+ <error_code>8</error_code>
+ <error_msg>Invalid request: method is unavailable without access token</error_msg>
+ <request_params list="true">
+  <param>
+   <key>oauth</key>
+   <value>1</value>
+  </param>
+  <param>
+   <key>method</key>
+   <value>wall.get.xml</value>
+  </param>
+  <param>
+   <key>owner_id</key>
+   <value>-14631557</value>
+  </param>
+  <param>
+   <key>count</key>
+   <value>100</value>
+  </param>
+  <param>
+   <key>extended</key>
+   <value>1</value>
+  </param>
+  <param>
+   <key>offset</key>
+   <value>0</value>
+  </param>
+ </request_params>
+</error>
+<?xml version="1.0" encoding="utf-8"?>
+<error>
+ <error_code>8</error_code>
+ <error_msg>Invalid request: method is unavailable without access token</error_msg>
+ <request_params list="true">
+  <param>
+   <key>oauth</key>
+   <value>1</value>
+  </param>
+  <param>
+   <key>method</key>
+   <value>wall.get.xml</value>
+  </param>
+  <param>
+   <key>owner_id</key>
+   <value>-90529595</value>
+  </param>
+  <param>
+   <key>count</key>
+   <value>100</value>
+  </param>
+  <param>
+   <key>extended</key>
+   <value>1</value>
+  </param>
+  <param>
+   <key>offset</key>
+   <value>0</value>
+  </param>
+ </request_params>
+</error>
+<?xml version="1.0" encoding="utf-8"?>
+<error>
+ <error_code>8</error_code>
+ <error_msg>Invalid request: method is unavailable without access token</error_msg>
+ <request_params list="true">
+  <param>
+   <key>oauth</key>
+   <value>1</value>
+  </param>
+  <param>
+   <key>method</key>
+   <value>wall.get.xml</value>
+  </param>
+  <param>
+   <key>owner_id</key>
+   <value>-41878699</value>
+  </param>
+  <param>
+   <key>count</key>
+   <value>100</value>
+  </param>
+  <param>
+   <key>extended</key>
+   <value>1</value>
+  </param>
+  <param>
+   <key>offset</key>
+   <value>0</value>
+  </param>
+ </request_params>
+</error>
+<?xml version="1.0" encoding="utf-8"?>
+<error>
+ <error_code>8</error_code>
+ <error_msg>Invalid request: method is unavailable without access token</error_msg>
+ <request_params list="true">
+  <param>
+   <key>oauth</key>
+   <value>1</value>
+  </param>
+  <param>
+   <key>method</key>
+   <value>wall.get.xml</value>
+  </param>
+  <param>
+   <key>owner_id</key>
+   <value>-52986034</value>
+  </param>
+  <param>
+   <key>count</key>
+   <value>100</value>
+  </param>
+  <param>
+   <key>extended</key>
+   <value>1</value>
+  </param>
+  <param>
+   <key>offset</key>
+   <value>0</value>
+  </param>
+ </request_params>
+</error>
+<?xml version="1.0" encoding="utf-8"?>
+<error>
+ <error_code>8</error_code>
+ <error_msg>Invalid request: method is unavailable without access token</error_msg>
+ <request_params list="true">
+  <param>
+   <key>oauth</key>
+   <value>1</value>
+  </param>
+  <param>
+   <key>method</key>
+   <value>wall.get.xml</value>
+  </param>
+  <param>
+   <key>owner_id</key>
+   <value>-22895420</value>
+  </param>
+  <param>
+   <key>count</key>
+   <value>100</value>
+  </param>
+  <param>
+   <key>extended</key>
+   <value>1</value>
+  </param>
+  <param>
+   <key>offset</key>
+   <value>0</value>
+  </param>
+ </request_params>
+</error>
+<?xml version="1.0" encoding="utf-8"?>
+<error>
+ <error_code>8</error_code>
+ <error_msg>Invalid request: method is unavailable without access token</error_msg>
+ <request_params list="true">
+  <param>
+   <key>oauth</key>
+   <value>1</value>
+  </param>
+  <param>
+   <key>method</key>
+   <value>wall.get.xml</value>
+  </param>
+  <param>
+   <key>owner_id</key>
+   <value>-68677653</value>
+  </param>
+  <param>
+   <key>count</key>
+   <value>100</value>
+  </param>
+  <param>
+   <key>extended</key>
+   <value>1</value>
+  </param>
+  <param>
+   <key>offset</key>
+   <value>0</value>
+  </param>
+ </request_params>
+</error>
+<?xml version="1.0" encoding="utf-8"?>
+<error>
+ <error_code>8</error_code>
+ <error_msg>Invalid request: method is unavailable without access token</error_msg>
+ <request_params list="true">
+  <param>
+   <key>oauth</key>
+   <value>1</value>
+  </param>
+  <param>
+   <key>method</key>
+   <value>wall.get.xml</value>
+  </param>
+  <param>
+   <key>owner_id</key>
+   <value>-32176610</value>
+  </param>
+  <param>
+   <key>count</key>
+   <value>100</value>
+  </param>
+  <param>
+   <key>extended</key>
+   <value>1</value>
+  </param>
+  <param>
+   <key>offset</key>
+   <value>0</value>
+  </param>
+ </request_params>
+</error>
+<?xml version="1.0" encoding="utf-8"?>
+<error>
+ <error_code>8</error_code>
+ <error_msg>Invalid request: method is unavailable without access token</error_msg>
+ <request_params list="true">
+  <param>
+   <key>oauth</key>
+   <value>1</value>
+  </param>
+  <param>
+   <key>method</key>
+   <value>wall.get.xml</value>
+  </param>
+  <param>
+   <key>owner_id</key>
+   <value>-57659973</value>
+  </param>
+  <param>
+   <key>count</key>
+   <value>100</value>
+  </param>
+  <param>
+   <key>extended</key>
+   <value>1</value>
+  </param>
+  <param>
+   <key>offset</key>
+   <value>0</value>
+  </param>
+ </request_params>
+</error>
+<?xml version="1.0" encoding="utf-8"?>
+<error>
+ <error_code>8</error_code>
+ <error_msg>Invalid request: method is unavailable without access token</error_msg>
+ <request_params list="true">
+  <param>
+   <key>oauth</key>
+   <value>1</value>
+  </param>
+  <param>
+   <key>method</key>
+   <value>wall.get.xml</value>
+  </param>
+  <param>
+   <key>owner_id</key>
+   <value>-40633321</value>
+  </param>
+  <param>
+   <key>count</key>
+   <value>100</value>
+  </param>
+  <param>
+   <key>extended</key>
+   <value>1</value>
+  </param>
+  <param>
+   <key>offset</key>
+   <value>0</value>
+  </param>
+ </request_params>
+</error>
+<?xml version="1.0" encoding="utf-8"?>
+<error>
+ <error_code>8</error_code>
+ <error_msg>Invalid request: method is unavailable without access token</error_msg>
+ <request_params list="true">
+  <param>
+   <key>oauth</key>
+   <value>1</value>
+  </param>
+  <param>
+   <key>method</key>
+   <value>wall.get.xml</value>
+  </param>
+  <param>
+   <key>owner_id</key>
+   <value>-27701671</value>
+  </param>
+  <param>
+   <key>count</key>
+   <value>100</value>
+  </param>
+  <param>
+   <key>extended</key>
+   <value>1</value>
+  </param>
+  <param>
+   <key>offset</key>
+   <value>0</value>
+  </param>
+ </request_params>
+</error>
+<?xml version="1.0" encoding="utf-8"?>
+<error>
+ <error_code>8</error_code>
+ <error_msg>Invalid request: method is unavailable without access token</error_msg>
+ <request_params list="true">
+  <param>
+   <key>oauth</key>
+   <value>1</value>
+  </param>
+  <param>
+   <key>method</key>
+   <value>wall.get.xml</value>
+  </param>
+  <param>
+   <key>owner_id</key>
+   <value>-39030419</value>
+  </param>
+  <param>
+   <key>count</key>
+   <value>100</value>
+  </param>
+  <param>
+   <key>extended</key>
+   <value>1</value>
+  </param>
+  <param>
+   <key>offset</key>
+   <value>0</value>
+  </param>
+ </request_params>
+</error>
+<?xml version="1.0" encoding="utf-8"?>
+<error>
+ <error_code>8</error_code>
+ <error_msg>Invalid request: method is unavailable without access token</error_msg>
+ <request_params list="true">
+  <param>
+   <key>oauth</key>
+   <value>1</value>
+  </param>
+  <param>
+   <key>method</key>
+   <value>wall.get.xml</value>
+  </param>
+  <param>
+   <key>owner_id</key>
+   <value>-21186991</value>
+  </param>
+  <param>
+   <key>count</key>
+   <value>100</value>
+  </param>
+  <param>
+   <key>extended</key>
+   <value>1</value>
+  </param>
+  <param>
+   <key>offset</key>
+   <value>0</value>
+  </param>
+ </request_params>
+</error>

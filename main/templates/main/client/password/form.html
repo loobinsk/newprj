@@ -1,0 +1,40 @@
+<form method="POST" action="{{ action }}" id="password-form">
+    {% csrf_token %}
+    <div>
+        {{ form.town.label_tag }}{{ form.town }}
+    </div>
+    <div>
+        {{ form.start_date.label_tag }}{{ form.start_date }}
+    </div>
+    <div>
+        {{ form.end_date.label_tag }}{{ form.end_date }}
+    </div>
+    <div>
+        {{ form.count.label_tag }}{{ form.count }}
+    </div>
+    <div>
+        {{ form.main_base }}<label for='id_main_base'>{{ form.main_base.label }}</label>
+    </div>
+    <div>
+        {{ form.vk_base }}<label for='id_vk_base'>{{ form.vk_base.label }}</label>
+    </div>
+    <div>
+        <label>{{ form.user.label }}</label>{{ form.user }}
+    </div>
+    <div>
+        {{ form.tel.label_tag }}{{ form.tel }}
+    </div>
+    <div>
+        {{ form.password.label_tag }}{{ form.password }}
+    </div>
+    <div>
+        {{ form.generate }}<label for='id_generate'>{{ form.generate.label }}</label>
+    </div>
+    <div>
+        {{ form.sms }}<label for='id_sms'>{{ form.sms.label }}</label>
+    </div>
+</form>
+
+<script type="text/javascript">
+    jQuery('#id_tel').mask('+7(999) 999-9999');
+</script>

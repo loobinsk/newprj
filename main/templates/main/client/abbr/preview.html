@@ -1,0 +1,14 @@
+{% load main_tags %}
+
+<tr class='item abbr-preview abbr-item-{{ abbr.id }}'>
+    <td>
+        {{ abbr.title }}
+    </td>
+    <td>
+        {{ abbr.desc }}
+    </td>
+    <td>
+        {% include 'main/client/abbr/edit-buttons.html' %}
+    </td>
+</tr>
+

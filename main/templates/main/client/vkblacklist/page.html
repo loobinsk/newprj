@@ -1,0 +1,23 @@
+{% extends 'page-client-center.html' %}
+
+{% load bootstrap_pagination %}
+
+{% block title %}Черный список ВКонтакте &middot; {{ block.super }}{% endblock %}
+
+{% block center %}
+
+    <h1 class="page-title">Черный список Вконтакте</h1>
+
+    <form method="get" action="{% url 'client:vkblacklist:list' %}" id="blacklist-filter-form">
+        <div class="input-group">
+            {{ filter_form.vkid }}
+            <div class="input-group-btn">
+                <button class="btn btn-default">Найти</button>
+            </div>
+        </div>
+    </form>
+
+    {% include 'main/client/vkblacklist/list.html' %}
+
+    {% bootstrap_paginate page_obj range=6 show_first_last='true' %}
+{% endblock %}

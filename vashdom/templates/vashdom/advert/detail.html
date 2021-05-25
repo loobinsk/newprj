@@ -1,0 +1,291 @@
+{% extends 'page.html' %}
+
+{% load main_tags %}
+{% load uimg_tags %}
+{% load vashdom_tags %}
+{% load cache %}
+{% load thumbnail %}
+
+{% block meta %}
+    {{ block.super }}
+    <link rel='canonical' href="{{advert.get_absolute_url}}">
+{% endblock %}
+
+{% block ogtitle %}{{ advert.title }}{% endblock ogtitle %}
+{% block ogurl %}https://{{ request.get_host }}/id{{ advert.id }}{% endblock ogurl %}
+
+{% block ogimage %}{% breakless %}
+    {% with image=advert.images.all|first %}
+        {% if image %}
+            https://{{ request.get_host }}{{ image.image.url }}
+        {% else %}
+            {{ block.super }}
+        {% endif %}
+    {% endwith %}
+{% endbreakless %}{% endblock %}
+
+{% block image_src %}{% breakless %}
+    {% with image=advert.images.all|first %}
+        {% if image %}
+            https://{{ request.get_host }}{{ image.image.url }}
+        {% else %}
+            {{ block.super }}
+        {% endif %}
+    {% endwith %}
+{% endbreakless %}{% endblock %}
+
+{% block title %}{{ advert.page_title }} - База без посредников ВАШ ДОМ{% endblock %}
+{% block description %}{{ advert.page_title }}{% endblock %}
+{% block keywords %}{{ advert.metatag }}{% endblock %}
+
+{% block content %}
+<div class="catalog-detail">
+    <div class="container">
+        <div class="row">
+            <div class="catalog-detail__content">
+                <h1 class="catalog-detail__title">
+                    <span class='catalog-detail__title-text'>
+                        {% if metatag.page_title %}
+                            {{ metatag.page_title }}
+                        {% else %}
+                        {{ advert.title }}
+                        {% endif %}
+                        
+                    </span>
+                    <span class="catalog-detail__date">{{ advert|fmt_vashdom_date }} {% if advert.is_archive %}<span class="archive">(В архиве)</span>{% endif %}</span>
+                </h1>
+
+                {% cache 3600 vashdom_catalog_detail advert.id using='redis' %}
+                    {% with images=advert.images.all %}
+                        {% if images %}
+                            <div id="carousel-example-generic" class="carousel catalog-detail__carousel" data-ride="carousel">
+                            <!-- Indicators -->
+                            <ol class="carousel-indicators">
+                                {% for img in images %}
+                                <li data-target="#carousel-example-generic" data-slide-to="{{forloop.counter0}}" class="{% if  forloop.counter0 == 0 %}active{% endif %} "></li>
+                                {% endfor %}
+                            </ol>
+                            
+                            <!-- Wrapper for slides -->
+                            <div class="carousel-inner" role="listbox">
+                                {% for img in images %}
+                                <div class="item {% if forloop.counter0 == 0 %}active{% endif %}">
+                                    {% thumbnail img.image "800x400" crop='center' as img_small %}
+                                        <a href="{{img.image.url}}" class='colorbox' rel='gallery_{{ advert.title }}'>
+                                            <img class='catalog-detail__img' src="{{ img_small.url }}" alt="{{advert.title}}">
+                                        </a>
+                                    {% endthumbnail %}
+                                    <div class="carousel-caption">
+                                        {{advert.title}}
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                            
+                            <!-- Controls -->
+                            <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+                                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                            <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+                                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                                <span class="sr-only">Next</span>
+                            </a>
+                            </div>
+                        {% endif %}
+                    {% endwith %}
+
+                    <ul class="icon-list check-list">
+                        {% for field in advert.comfort_list %}
+                            {% if field.1 %}<li><span class="glyphicon {{ field.0 }}" data-toggle="tooltip" title='{{ field.2 }}'></span> {{ field.2 }}</li>{% endif %}
+                        {% endfor %}
+                    </ul>
+                    
+                    <div class="catalog-detail__options">
+                        <div class="catalog-detail__options-col">
+                            <div class="address"><strong>Адрес: </strong>{{ advert.address }}</div>
+                            <div class="metro"><strong>Метро: </strong><a href="{{advert.metro.vashdom_main_url}}">{{ advert.metro.title }}</a></div>
+                            {% if advert.living_square %}
+                            <div class="living_square"><strong>Жилая площадь: </strong>
+                                    {{ advert.living_square }} м<sup>2</sup>
+                            </div>
+                            {% endif %}
+                            {% if advert.square %}
+                            <div class="square"><strong>Площадь: </strong>
+                                    {{ advert.square }} м<sup>2</sup>
+                            </div>
+                            {% endif %}
+                        </div>
+                        <div class="catalog-detail__options-col catalog-detail__options-col_2">
+                            {% if advert.refrigerator %}
+                                <div class="refrigerator">
+                                    <strong>Холодильник:</strong>
+                                    <span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span>
+                                </div>
+                            {% endif %}
+                            {% if advert.tv %}
+                                <div class="tv">
+                                    <strong>Телевизор:</strong>
+                                    <span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span>
+                                </div>
+                            {% endif %}
+                            {% if advert.furniture %}
+                                <div class="furniture">
+                                    <strong>Мебель:</strong>
+                                    <span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span>
+                                </div>
+                            {% endif %}
+                            {% if advert.washer %}
+                                <div class="washer">
+                                    <strong>Стиральная машина:</strong>
+                                    <span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+        
+                    <div class="catalog-detail__price">
+                        <strong>Цена: </strong>{{ advert.price|fmt_price }} руб.
+                    </div>
+
+                    {% if advert.latitude and advert.longitude %}
+                        <div class="catalog-detail__map" id="address-map">
+                        </div>
+                    {% endif %}
+                    
+                    <div class="catalog-detail__body">
+                        {{ advert.description|safe }}
+                    </div>
+                    
+                    {% comment %} {% vashdom_image_detail advert %} {% endcomment %}
+        
+                    <div class="catalog-detail__owner"><strong>Владелец </strong>{{ advert.owner_name|default_if_none:'Собственник' }}</div>
+                {% endcache %}
+                <div class="catalog-detail__owner-tel">
+                    <strong>Телефон владельца: </strong>
+        
+                    <div class="input-group">
+                        <div class="form-control password-tel">
+                            {{ advert.owner_tel|fmt_vashdom_tel }}
+                        </div>
+                        <span class="input-group-btn">
+                            <button class="btn btn-secondary btn-get-access" type="button" data-id="{{ advert.id }}" title="Показать номер телефона собственника">Открыть</button>
+                        </span>
+                    </div>
+
+                    <div class="catalog-detail__help">
+                        У нас нет агентов и комиссии. Это проверенный телефон собственника. Вы <a href="{% url 'tariff' %}" title="Пройти на страницу оплаты">оплачиваете доступ</a> и звоните напрямую хозяину.
+                    </div>
+                
+                    {% if user.is_authenticated %}
+                        {% include 'vashdom/advert/complain.html' %}
+                    {% endif %}  
+                    
+                </div>
+        
+  
+        {#        <h2>У нас нет агентов и комиссии. Вы просто оплачиваете доступ и звоните собственнику по этому номеру телефона</h2> #}
+        
+                <div align="right" class="catalog-detail__social">
+                        <div class="share42init"></div>
+                        <script type="text/javascript" src="/static/share42/share42.js"
+                                data-url="https://{{ request.get_host }}/id{{ advert.id }}"
+                                data-title="{{ advert.page_title }}"
+                                data-description="{{ advert.description }}">
+                        </script>
+                </div>
+                
+                <div class="catalog-detail__subscribtion">
+                    <p>Не нашли подходящего варианта? Бесплатно подпишитесь на рассылку и получайте уведомления о свежих объявлениях первыми:</p>
+                    <button class="btn btn-primary btn-sr-simple" data-catalog="{{ advert.id }}" title="Бесплатно оформить подписку на похожие объявления">Подписаться<br><small>на похожие объявления</small></button>
+                </div>
+
+                {% if similar_list %}
+                    {% with advert_list=similar_list  %}
+                        <div class="catalog-detail__similar">
+                            <h2 class="page-title">Похожие объявления у метро {{ advert.metro.title }}</h2>
+                            {% include 'vashdom/advert/list.html' %}
+                        </div>
+                    {% endwith %}
+                {% endif %}
+                
+                <p>Это объявление из Базы Ваш Дом № {{ advert.id }}</p>
+                
+                <a href="/{{advert.town.slug}}/" class="btn btn-primary btn-block" title="Перейти в каталог">Смотреть все объявления</a>
+                
+                <script type="text/javascript">
+                    {% if advert.latitude and advert.longitude %}
+                    function init(){
+                        var workspaceMap = new ymaps.Map("address-map", {
+                            center: [{{ advert.latitude|stringformat:'f' }}, {{ advert.longitude|stringformat:'f' }}],
+                            zoom: 16
+                        });
+            
+                        workspaceMap.controls.add('zoomControl');
+                        workspaceMap.controls.add('typeSelector');
+            
+                        var myGeoObjects = [];
+            
+                        {% if advert.live == 'F' and advert.rooms == 1 %}
+                                var icon = 'https://bazavashdom.ru{{ STATIC_URL }}img/map_point_1.png';
+                        {% elif advert.live == 'F' and advert.rooms == 2 %}
+                                var icon = 'https://bazavashdom.ru{{ STATIC_URL }}img/map_point_2.png';
+                        {% elif advert.live == 'F' and advert.rooms == 3 %}
+                                var icon = 'https://bazavashdom.ru{{ STATIC_URL }}img/map_point_3.png';
+                        {% elif advert.live == 'F' and advert.rooms == 4 %}
+                                var icon = 'https://bazavashdom.ru{{ STATIC_URL }}img/map_point_4.png';
+                        {% elif advert.live == 'R' %}
+                                var icon = 'https://bazavashdom.ru{{ STATIC_URL }}img/map_point_k.png';
+                        {% else %}
+                                var icon = 'https://bazavashdom.ru{{ STATIC_URL }}img/map_point.png';
+                        {% endif %}
+            
+                        var myGeoObject = new ymaps.GeoObject({
+                            geometry: {
+                                type: "Point",
+                                coordinates: [{{ advert.latitude|stringformat:'f' }}, {{ advert.longitude|stringformat:'f' }}]
+                            },
+                            properties: {
+                                // Контент метки.
+                {#                balloonContentBody: map_objects[i].desc,#}
+                {#                id: map_objects[i].id,#}
+                {#                loaded: false,#}
+                {#                hintContent: map_objects[i].hint,#}
+                {#                clusterCaption: map_objects[i].hint#}
+                            }
+                        }, {
+                            iconLayout: 'default#image',
+                            iconImageHref: icon,
+                            iconImageSize: [34, 50],
+                            iconImageOffset: [-17, -48]
+                        });
+            
+                        myGeoObjects.push(myGeoObject);
+            
+                        var myClusterer = new ymaps.Clusterer();
+                        myClusterer.add(myGeoObjects);
+                        workspaceMap.geoObjects.add(myClusterer);
+                    }
+            
+                    ymaps.ready(init);
+            
+                    {% endif %}
+                </script>
+            </div>
+
+            <div class="catalog-detail__sidebar">
+                {% vashdom_filter_advert_block %}
+                <div class="block subscribe-block">
+                    <img src="{{ STATIC_URL }}img/subscribe.png">
+                    <h3>Подписка на объявления</h3>
+                    <p>Получайте самые свежие объявления на свой почтовый ящик</p>
+                    <p><a href="{% url 'search-request:create' %}?catalog={{ advert.id }}" class="btn btn-primary">Подписаться</a></p>
+                </div>
+                {% include 'vashdom/block/attention-block.html' %}
+                {% include 'vashdom/block/document-block.html' %}
+                {% include 'vashdom/block/vkontakte-group.html' %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

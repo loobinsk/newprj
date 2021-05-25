@@ -1,0 +1,50 @@
+{% load uprofile_tags %}
+{% load main_tags %}
+{% load thumbnail %}
+
+<div class='item comment-preview comment-{{ comment.id }}' data-id='{{ comment.id }}' id="comment-{{ comment.id }}">
+    {% if comment.user %}
+        {% user_avatar comment.user %}
+    {% else %}
+        <div class='user-avatar'>
+            {% thumbnail comment.image "40x40" crop="center" as image %}
+                <img src='{{ image.url }}'>
+            {% empty %}
+                <img src='/static/img/noavatar40.png'>
+            {% endthumbnail %}
+        </div>
+    {% endif %}
+
+    <div class='content'>
+        <div class="username">
+            {% if comment.user %}
+                {% if comment.user.get_vkontakte_link %}
+                    <a href="{{ comment.user.get_vkontakte_link }}" rel="nofollow" target="_blank"><strong>{{ comment.user.get_full_name }}</strong></a>
+                {% else %}
+                    <strong>{{ comment.user.get_full_name }}</strong>
+                {% endif %}
+            {% else %}
+                {% if comment.vkid %}
+                    <a href="https://vk.com/id{{ comment.vkid }}" rel="nofollow" target="_blank"><strong>{{ comment.name|default:'Анонимный пользователь' }}</strong></a>
+                {% else %}
+                    <strong>{{ comment.name|default:'Анонимный пользователь' }}</strong>
+                {% endif %}
+            {% endif %}
+            написал(а):
+        </div>
+
+        <div class="text">{{ comment.text|linebreaksbr }}</div>
+
+        <div class="actions">
+            <div class="date">{{ comment.date|fmt_date }}</div>
+            <div><a href="#" class="btn-comment-reply">Ответить</a></div>
+            {% if comment.user == user or perms.ucomment.delete_comment %}
+                <div><a href="#" class="btn-comment-del text-danger" data-id='{{ comment.id }}'>Удалить</a></div>
+            {% endif %}
+        </div>
+
+        <div class="children children-{{ comment.id }}">
+            {{ children }}
+        </div>
+    </div>
+</div>

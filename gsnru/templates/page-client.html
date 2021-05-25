@@ -1,0 +1,142 @@
+{% extends "html.html" %}
+
+{% load main_tags %}
+{% load assets %}
+{% load comment_tags %}
+{% load uprofile_tags %}
+{% load cache %}
+
+{% block body_class %}{{ block.super }} client{% endblock %}
+
+{% block styles %}
+    {{ block.super }}
+    {% assets "css_agent" %}
+        <link rel="stylesheet" type="text/css" href="{{ ASSET_URL }}">
+    {% endassets %}
+{% endblock %}
+
+{% block page %}
+    <div id="header">
+        {% if not is_moder %}
+            <a href="/" class="logo"><img src='{{ STATIC_URL }}img/logo.png'></a>
+        {% endif %}
+
+        {% if not is_moder %}
+            {% tariff_stats %}
+        {% endif %}
+
+        {% if user.is_authenticated and not is_moder %}
+            <a href="{% url 'profile:my' %}" class="client-profile">{% user_avatar user %}<strong>Здравствуйте</strong>{{ user.get_full_name }}</a>
+        {% endif %}
+        {% if user.is_authenticated and is_moder and user.is_superuser %}
+            <a href="{% url 'profile:my' %}" class="client-profile">{% user_avatar user %}<strong>Здравствуйте</strong>{{ user.get_full_name }}</a>
+        {% endif %}
+
+        <div class="dropdown client-home exit auto keep-open">
+            <a href="{% url 'auth_logout' %}">ВЫЙТИ ИЗ<br>личного кабинета</a>
+            <div class="dropdown-menu">
+                {% login_block %}
+            </div>
+        </div>
+    </div>
+
+    <div id="mainmenu">
+        {% if user.is_staff %}
+            <a href="#" class='choose-town link'>{{ current_town.title }} <span class="caret"></span></a>
+        {% endif %}
+
+        <a href="{% url 'client:news:list' %}" class='link {% if request|nav_url:'/client/news/' %}active{% endif %}'>Новости</a>
+        {% if is_moder %}
+            <a href="{% url 'client:home' %}" class="link {% nav_active request 'client:home' %}">Объявления</a>
+            {% if user.is_staff %}
+                <a href="{% url 'client:advert:vk:list' %}" class="link {% nav_active request 'client:advert:vk:list' %}">Вконтакте</a>
+            {% endif %}
+            <a href="{% url 'client:advert:not_answer' %}" class="link {% nav_active request 'client:advert:not_answer' %}">Не берет трубку</a>
+        {% else %}
+            <a href="{% url 'client:home' %}?type=L&estate=F" class="link {% if request.GET.type == 'L' %}active{% endif %}">Аренда</a>
+            <a href="{% url 'client:home' %}?type=S&estate=F" class="link {% if request.GET.type == 'S' %}active{% endif %}">Продажа</a>
+            <a href="{% url 'client:home' %}?estate=H" class="link {% if request.GET.estate == 'H' %}active{% endif %}">Дома</a>
+            <a href="{% url 'client:home' %}?estate=T" class="link {% if request.GET.estate == 'T' %}active{% endif %}">Земля</a>
+            <a href="{% url 'client:home' %}?estate=C" class="link {% if request.GET.estate == 'C' %}active{% endif %}">Коммерческая</a>
+            <a href="{% url 'client:advert:vk:list' %}" class="link {% nav_active request 'client:advert:vk:list' %}">
+                <img src="{{ STATIC_URL }}img/vklink.png" class="icon"> ВКонтакте</a>
+        {% endif %}
+        {% if is_moder and perms.uprofile.view_user %}
+            <a href="{% url 'client:user:list' %}" class="link {% nav_active request 'client:user:list' %}">Пользователи</a>
+            <a href="{% url 'client:stat:moderator' %}" class="link {% nav_active request 'client:stat:moderator' %}">Статистика</a>
+        {% endif %}
+        {% if is_moder %}
+            <a href="{% url 'client:advert:moderated' %}" class='link {% nav_active request 'client:advert:moderated' %}'>Мои объявления</a>
+        {% else %}
+            <a href="{% url 'client:advert:my' %}" class='link {% nav_active request 'client:advert:my' %}'>Мои объявления
+                {% if user.get_new_request_count %}
+                    <span class="badge orange" title="Найдено еще {{ user.get_new_request_count }} клиент(ов)">+{{ user.get_new_request_count }}</span>
+                {% endif %}
+            </a>
+        {% endif %}
+
+        <a href="{% url 'client:advert:create' %}" class='link {% if request|nav_url:'/client/catalog/create' %}active{% endif %} add'><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Добавить</a>
+
+        {% if not is_moder %}
+            <div class="dropdown auto">
+                  <a href="javascript:return false;" class="dropdown-toggle link" type="button" data-toggle="dropdown" aria-expanded="true">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                  </a>
+                  <ul class="dropdown-menu" role="menu">
+                      <li>
+                          <a href="{% url 'client:company:comments' %}" class="{% nav_active request 'client:company:comments' %}">Отзывы ({% count_comments 'company' user.company.id %})</a>
+                      </li>
+                  </ul>
+            </div>
+        {% endif %}
+
+        {% if is_moder and user.is_staff %}
+            <div class="dropdown auto">
+                  <a href="javascript:return false;" class="dropdown-toggle link" type="button" data-toggle="dropdown" aria-expanded="true">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                  </a>
+                  <ul class="dropdown-menu" role="menu">
+                      <li>
+                          <a href="{% url 'client:payment:all' %}" class="{% nav_active request 'client:payment:all' %}">Платежи</a>
+                          <a href="{% url 'client:password:list' %}" class="{% nav_active request 'client:password:list' %}">Пароли БазаВашДом</a>
+                          <a href="{% url 'client:abbr:list' %}" class="{% nav_active request 'client:abbr:list' %}">Сокращения</a>
+                          <a href="{% url 'client:blacklist:list' %}" class="{% nav_active request 'client:blacklist:list' %}">Черный список</a>
+                          <a href="{% url 'client:vkblacklist:list' %}" class="{% nav_active request 'client:vkblacklist:list' %}">Черный список Вконтакте</a>
+                          <a href="{% url 'client:promotion:list' %}" class="{% nav_active request 'client:promotion:list' %}">Промоакции</a>
+                          <a href="{% url 'client:promocode:list' %}" class="{% nav_active request 'client:promocode:list' %}">Промокоды</a>
+                          <a href="{% url 'client:referral:list' %}" class="{% nav_active request 'client:referral:list' %}">Реферальные ссылки</a>
+                          <a href="{% url 'client:search-request:delivery' %}" class="{% nav_active request 'client:search-request:delivery' %}">Подписки</a>
+                          <a href="{% url 'client:comment:list' %}" class="{% nav_active request 'client:comment:list' %}">Лента отзывов</a>
+                      </li>
+                  </ul>
+            </div>
+        {% endif %}
+    </div>
+
+    {% block filter %}
+    {% endblock %}
+
+    {% block breadcrumbs %}
+        {% include 'breadcrumbs.html' %}
+    {% endblock %}
+
+    <div id='page'>
+        <div id="content">
+            {% block content %}
+
+            {% endblock %}
+        </div>
+    </div>
+
+
+
+    {% if user.is_staff %}
+        <div class="hidden">
+            {% choose_town_block %}
+        </div>
+    {% endif %}
+{% endblock %}

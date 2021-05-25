@@ -1,0 +1,99 @@
+@import '../imports.less';
+
+.register-form {
+    &__title {
+        text-align: center;
+        margin: 20px 0;
+        background: transparent;
+        border: none;
+    }
+
+    &__form {
+        .col();
+        .size(12);
+        padding-bottom: 30px;
+    }
+
+    .table-tariff {
+        background: #fff;
+        border-radius: 4px;
+
+        tr.need_vk_base {
+            background: lighten(@vkcolor, 40%);
+        }
+
+        tr.need_vk_base.need_main_base {
+            background: #fff2d6;
+
+            td {
+                .glyphicon {
+                    float: left;
+                    font-size: 30px;
+                    margin-right: 10px;
+                    color: #555;
+                }
+            }
+        }
+
+        td, th {
+            border: none !important;
+            vertical-align: middle;
+
+            &:nth-child(3) {
+                width: 110px;
+                padding: 8px 0 8px 10px;
+            }
+            &:nth-child(2) {
+                width: 185px;
+                text-align: center;
+                .md(width, 100px);
+            }
+            &:nth-child(1) {
+                .sm(font-size, 12px);
+            }
+        }
+
+        .city-hidden {
+                display: none;
+        }
+
+        input[type='radio'] {
+            z-index: 2;
+            position: relative;
+            margin-top: 15px;
+            display: inline-block;
+        }
+
+        label {
+            width: auto;
+            padding: 5px 5px 5px 30px;
+            .gradient(@secondcolor, darken(@secondcolor, 10%), lighten(@secondcolor, 10%));
+            border: 1px solid darken(@secondcolor, 15%);
+            min-height: 0;
+            z-index: 1;
+            margin-left: -25px;
+            .rounded(4px);
+            color: #fff;
+
+            &:after {
+                display: none;
+            }
+        }
+
+        select {
+            width: 150px;
+            font-weight: normal;
+            vertical-align: middle;
+        }
+    }
+
+    .agree {
+        label {
+            width: auto;
+        }
+    }
+
+    .help-text {
+        .md(display, none);
+    }
+}

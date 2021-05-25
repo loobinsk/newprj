@@ -1,0 +1,25 @@
+<div class='panel panel-default'>
+    <div class="panel-body">
+        <p>Загрузите фотографию</p>
+        <form id="user-image-form" class='image-upload-form single' method="POST" action='{% url 'img:create_multi' %}' enctype="multipart/form-data" data-id='{{ id }}'>
+            {% csrf_token %}
+
+            <div class='file-upload'>
+                <input type="file" class="single-image-input" name="images">
+                <button class="btn btn-success btn-lg file-upload-choose">Выбрать файл</button>
+            </div>
+
+            <div class="progress hidden">
+                <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0;">
+                </div>
+            </div>
+
+            <ul class="upload-image-list">
+                {% if image %}
+                    {% include 'uimg/preview.html' %}
+                {% endif %}
+            </ul>
+        </form>
+
+    </div>
+</div>

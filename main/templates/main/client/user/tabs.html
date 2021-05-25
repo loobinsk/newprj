@@ -1,0 +1,17 @@
+{% load main_tags %}
+
+{% if perms.uprofile.view_user %}
+    <ul class="nav nav-tabs company-tabs" role="tablist">
+        <li {% if request|nav_url:'detail' %}class="active"{% endif %}><a href="{% url 'client:user:detail' agent.id %}">Информация</a></li>
+        <li {% if request|nav_url:'catalog' %}class="active"{% endif %}><a href="{% url 'client:user:adverts' agent.id %}">Объявления</a></li>
+        <li {% if request|nav_url:'viewed' %}class="active"{% endif %}><a href="{% url 'client:user:viewed' agent.id %}">Открытые объявления</a></li>
+        {% if agent.site_id == 1 %}
+            <li {% if request|nav_url:'services' %}class="active"{% endif %}><a href="{% url 'client:user:services' agent.id %}">Подключенные услуги</a></li>
+            <li {% if request|nav_url:'payments/gsn' %}class="active"{% endif %}><a href="{% url 'client:user:payments' agent.id %}">Платежи</a></li>
+        {% endif %}
+        {% if agent.site_id == 5 %}
+            <li {% if request|nav_url:'payments/vashdom' %}class="active"{% endif %}><a href="{% url 'client:user:vashdom-payments' agent.id %}">Платежи БазаВашДом</a></li>
+            <li {% if request|nav_url:'passwords' %}class="active"{% endif %}><a href="{% url 'client:user:passwords' agent.id %}">Пароли ВашДом</a></li>
+        {% endif %}
+    </ul>
+{% endif %}

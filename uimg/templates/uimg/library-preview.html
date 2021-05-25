@@ -1,0 +1,7 @@
+{% load thumbnail %}
+
+<div class="item">
+    {% thumbnail image.image "100x100" as img %}
+        <img src='{{ img.url }}' data-full-image='{{ image.image.url }}'>
+    {% endthumbnail %}
+</div>

@@ -1,0 +1,15 @@
+<table class="table table-bordered referral-list">
+    <thead>
+        <tr>
+            <th>Реферальная ссылка</th>
+            <th>Кол-во переходов</th>
+            <th>Кол-во привл. пользователей</th>
+            <th>Кол-во платежей</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for referral in referral_list %}
+            {% include 'vashdom/referral/preview.html' %}
+        {% endfor %}
+    </tbody>
+</table>

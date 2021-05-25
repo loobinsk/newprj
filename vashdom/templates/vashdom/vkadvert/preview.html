@@ -1,0 +1,67 @@
+{% load main_tags %}
+{% load thumbnail %}
+{% load cache %}
+{% load vashdom_tags %}
+
+
+<div class="vk-catalog-preview catalog-item-{{ advert.id }}" data-id="{{ advert.id }}" data-url='{{advert.get_absolute_url}}'>
+{% cache 3600 vashdom_vkcatalog_preview advert.id using='redis' %}
+    
+    <div class="vk-catalog-preview__head1">
+        <div class="vk-catalog-preview__photo">
+            {% if advert.owner_photo %}
+                <img class='lazy' data-original="{{ advert.owner_photo.image.url }}">
+                <noscript>
+                    <img src="{{ advert.owner_photo.image.url }}">
+                </noscript>
+            {% else %}
+                <img src="{{ STATIC_URL }}img/noavatar.png">
+            {% endif %}
+        </div>
+        <div class="vk-catalog-preview__header">
+            <a href="{{ advert.get_absolute_url }}" class="vk-catalog-preview__title">
+                {{ advert.title }}
+                {% if advert.square %}
+                    {{advert.square}} м<sup>2</sup>
+                {% endif %}
+            </a>
+            <div class="vk-catalog-preview__name"><a href="{{advert.get_absolute_url}}">{{ advert.owner_name|default_if_none:' ' }}</a></div>
+
+            {% if advert.metro %}<div class="vk-catalog-preview__metro">м.{{ advert.metro.title }}</div>{% endif %}
+        </div>
+
+        <div class="vk-catalog-preview__date">{{ advert|fmt_vashdom_date }}</div>
+    </div>
+
+    <div class="vk-catalog-preview__body">
+        {{ advert|fmt_vashdom_advert_body|truncatewords_html:30 }}
+    </div>
+
+    <ul class="icon-list check-list vk-catalog-preview__tags">
+        {% for field in advert.comfort_list %}
+            {% if field.1 %}<li><span class="glyphicon {{ field.0 }}" data-toggle="tooltip" title='{{ field.2 }}'></span> {{ field.2 }}</li>{% endif %}
+        {% endfor %}
+    </ul>
+
+    {% comment %} {% with image_list=advert.images.all %}
+        {% if image_list|length > 0 %}
+            <div class="vk-catalog-preview__photos"><a href='{{advert.get_absolute_url}}'><span class="glyphicon glyphicon-camera" aria-hidden="true"></span> {{ image_list|length }} фотографий</a></div>
+        {% endif %}
+    {% endwith %} {% endcomment %}
+
+{% endcache %}
+
+    <div class="vk-catalog-preview__footer">
+        <div class="vk-catalog-preview__square">Площадь: {% if advert.square %}{{ advert.square }} м<sup>2</sup>{% endif %}</div>
+        <div class="vk-catalog-preview__price">{% if advert.price %}{{ advert.price }} руб.{% else %}договорная{% endif %}</div>
+        
+        {% comment %} <div class="vk-catalog-preview__vkpage"><span class="glyphicon glyphicon-link" aria-hidden="true"></span> Страница Вконтакте</div> {% endcomment %}
+        {% comment %} {% if advert.owner_tel %}<div class="tel"><span class="glyphicon glyphicon-earphone" aria-hidden="true"></span> {{ advert.owner_tel|fmt_vashdom_tel }}</div>{% endif %} {% endcomment %}
+
+        {% comment %} {% if user.is_authenticated %}
+            {% include 'vashdom/vkadvert/complain.html' %}
+        {% endif %} {% endcomment %}
+    </div>
+</div>
+
+

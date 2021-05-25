@@ -1,0 +1,17 @@
+{% load main_tags %}
+
+<div class="question-preview question question-item-{{ question.id }} editable-content">
+    <div class="content">
+        <p class="title">{{ question.body|linebreaksbr }}</p>
+        <p class="answer">{{ question.answer|linebreaksbr|truncatewords_html:30 }}</p>
+
+        <a href="{% url 'client:question:detail' question.id %}" class="btn btn-primary">Подробнее</a>
+    </div>
+
+    <div class='item-footer'>
+        <div class='date'>
+            {{ question.date|fmt_date }}
+        </div>
+    </div>
+    {% include 'main/client/question/edit-buttons.html' %}
+</div>

@@ -1,0 +1,40 @@
+{% load uimg_tags %}
+{% load uvideo_tags %}
+{% load main_tags %}
+
+<div class='news-detail news-item-{{ news.id }} editable-content'>
+    <div class="container">
+        <div class="row">
+                <div class='news-detail__content'>
+                    <h1 class='news-detail__title'>{{ news.title }}</h1>
+            
+                    {% image_detail news.images.all news.title %}
+            
+                    {% video news.video %}
+            
+                    {{ news.body|safe }}
+            
+                    <div class='news-detail__footer'>
+                        <div class='date'>
+                            {{ news.date|fmt_date }}
+                        </div>
+                        <div class="social">
+                            <div class="share42init"></div>
+                            <script type="text/javascript" src="/static/share42/share42.js"
+                                    data-url="https://{{ request.get_host }}{{ news.get_absolute_url }}"
+                                    data-title="{{ new.title }}"
+                                    data-description="{{ news.body|news_preview|striptags }}"
+                                    {% with image=news.images.all|first %}
+                                        {% if image %}
+                                            data-image="https://{{ request.get_host }}{{ image.image.url }}">
+                                        {% endif %}
+                                    {% endwith %}
+                                    ></script>
+                        </div>
+                        {% include 'vashdom/news/edit-buttons.html' %}
+                    </div>
+                </div>
+        </div>
+    </div>
+    
+</div>

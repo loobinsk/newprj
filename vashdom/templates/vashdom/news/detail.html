@@ -1,0 +1,41 @@
+{% extends 'page.html' %}
+
+{% load main_tags %}
+{% load uvideo_tags %}
+{% load uimg_tags %}
+
+{% block meta %}
+    {{ block.super }}
+    <link rel='canonical' href="{{ news.get_absolute_url }}">
+{% endblock %}
+
+{% block ogtitle %}{{ news.title }}{% endblock ogtitle %}
+{% block ogurl %}https://{{ request.get_host }}{{ news.get_absolute_url }}{% endblock ogurl %}
+
+{% block ogimage %}{% breakless %}
+    {% with image=news.images.all|first %}
+        {% if image %}
+            https://{{ request.get_host }}{{ image.image.url }}
+        {% else %}
+            {{ block.super }}
+        {% endif %}
+    {% endwith %}
+{% endbreakless %}{% endblock %}
+
+{% block image_src %}{% breakless %}
+    {% with image=news.images.all|first %}
+        {% if image %}
+            https://{{ request.get_host }}{{ image.image.url }}
+        {% else %}
+            {{ block.super }}
+        {% endif %}
+    {% endwith %}
+{% endbreakless %}{% endblock %}
+
+{% block description %}{{ news.body|news_preview|striptags }}{% endblock %}
+
+{% block title %}{{ news.title }} &middot; {{ block.super }}{% endblock %}
+
+{% block content %}
+        {% include 'vashdom/news/detail-ajax.html' %}
+{% endblock %}

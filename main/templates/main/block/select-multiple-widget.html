@@ -1,0 +1,15 @@
+{% load main_tags %}
+
+<div class="dropdown select-dropdown">
+    <div style="display: none;">
+        {{ tmpl }}
+    </div>
+    <button data-toggle="dropdown" class="btn btn-default">Выбрать{% if value %} ({{ value|length }}){% endif %}<b class="caret"></b></button>
+    <div class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+        <div class="item-list">
+            {% for item in choices %}
+                <a href="#" data-value="{{ item.0 }}" class='item {% if item.0|to_str in value %}active{% endif %}'>{{ item.1 }}</a>
+            {% endfor %}
+        </div>
+    </div>
+</div>

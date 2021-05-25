@@ -1,0 +1,28 @@
+{% load paysto_tags %}
+
+<p>Оплата производится через систему:</p>
+
+<ul class="aggregators">
+    <li class="active">
+        <a href='#robokassa-panel' data-toggle='tab' class="aggregator">
+            <img src='/static/img/robokassa.jpg'>
+        </a>
+    </li>
+{#    <li>#}
+{#        <a href='#paysto-panel' data-toggle='tab' class="aggregator">#}
+{#            <img src='/static/img/paysto.jpg'>#}
+{#        </a>#}
+{#    </li>#}
+</ul>
+
+<div class="tab-content">
+    <div role="tabpanel" class="tab-pane" id="paysto-panel">
+        {% payment_form payment %}
+    </div>
+    <div role="tabpanel" class="tab-pane active" id="robokassa-panel">
+        <form action="{{ robokassa_form.target }}" method="POST" id="robokassa-form">
+            {{ robokassa_form }}
+            <button type="submit" class="btn btn-lg btn-flt3" formtarget="__blank">Оплатить</button>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,9 @@
+<div class="bfh-selectbox company" id="{{ attrs.id }}">
+    {% for choice in choices %}
+        <div data-value="{{ choice.0 }}">{{ choice.1|safe }}</div>
+    {% endfor %}
+</div>
+
+<script type="text/javascript">
+    jQuery('#{{ attrs.id }}').bfhselectbox({filter: true, name: "{{ name }}", value:"{{ value|default_if_none:'' }}"});
+</script>

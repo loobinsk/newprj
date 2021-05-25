@@ -1,0 +1,35 @@
+{% extends 'page.html' %}
+
+{% load bootstrap_pagination %}
+{% load main_tags %}
+
+{% block title %}Новости &middot; {{ block.super }}{% endblock %}
+
+{% block content %}
+<div class="news-page">
+    <div class="container">
+        <div class="row">
+            <div class="news-page__content">
+
+                {% if perms.main.add_news %}
+                    <a href='#' class='btn-news-create btn btn-primary pull-right'><span class="glyphicon glyphicon-pencil"></span> Написать новость</a>
+                {% endif %}
+        
+                <h1 class="news-page__title">
+                    {% if metatag.page_title %}
+                        {{metatag.page_title}}
+                    {% else %}
+                        Новости
+                    {% endif %}
+                </h1>
+        
+                
+                {% if news_list %}
+                    {% include 'vashdom/news/list.html' %}
+                    {% bootstrap_paginate page_obj alignment='left' range=6 show_first_last='true'%}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

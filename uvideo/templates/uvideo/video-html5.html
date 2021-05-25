@@ -1,0 +1,12 @@
+{% load uvideo_tags %}
+
+{% video_media %}
+
+<video id="video_player" class="video-js vjs-default-skin"
+       controls preload="auto" width="100%" height="360"
+       {% if video.image %}
+            poster="{{ video.image.url }}"
+       {% endif %}
+       data-setup='{"example_option":true}'>
+    <source src="{{ video.url }}" type='{{ video.get_mime }}' />
+</video>

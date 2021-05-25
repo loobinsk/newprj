@@ -1,0 +1,11 @@
+{% load main_tags %}
+
+<tr class="referral-preview referral-{{ referral.id }} editable-content">
+    <td>{{ referral.link }}</td>
+    <td>{{ referral.site.domain }}</td>
+    <td>{{ referral.user.get_full_name }}</td>
+    <td><a href="{% url 'client:referral:referer' referral.id %}">{{ referral.conversion }}</a></td>
+    <td><a href="{% url 'client:referral:user' referral.id %}">{{ referral.get_user_count }}</a></td>
+    <td><a href="{% url 'client:referral:payment' referral.id %}">{{ referral.get_payment_count }}</a></td>
+    <td>{% include 'main/client/referral/edit-buttons.html' %}</td>
+</tr>

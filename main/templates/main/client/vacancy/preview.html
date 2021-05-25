@@ -1,0 +1,20 @@
+{% load main_tags %}
+
+<div class="vacancy-preview vacancy vacancy-item-{{ vacancy.id }} editable-content">
+    <div class="preview-image">
+        <div id="vacancy-map-{{ vacancy.id }}"></div>
+    </div>
+
+    <div class="content">
+        <h2><a href="{% url 'client:vacancy:detail' vacancy.id %}">{{ vacancy.title }}</a></h2>
+        {{ vacancy.body|linebreaksbr|truncatewords_html:30 }}
+    </div>
+
+    <div class='item-footer'>
+        <div class='date'>
+            {{ vacancy.date|fmt_date }}
+        </div>
+    </div>
+
+    {% include 'main/client/vacancy/edit-buttons.html' %}
+</div>

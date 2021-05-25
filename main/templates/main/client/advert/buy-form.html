@@ -1,0 +1,16 @@
+<form class="buy-form" method="POST" action="{{ action }}" id="buy-form-{{ id }}">
+    {% csrf_token %}
+    {{ form.advert_id }}
+    <div>
+        <label>{{ form.days.label }}</label>
+        {{ form.days }}
+    </div>
+    <div class="help-text">
+        На данный момент у вас <strong>{{ count_buys }}</strong> выкупа(ов). На каждый день расходуется 1 выкуп.
+    </div>
+    {% if not count_buys %}
+        <div>
+            <a href="{% url 'client:company:my' %}#buys" target="_blank" class="btn btn-flt3">Подключить выкупы</a>
+        </div>
+    {% endif %}
+</form>

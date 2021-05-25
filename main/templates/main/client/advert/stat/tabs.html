@@ -1,0 +1,6 @@
+{% load main_tags %}
+
+<ul class="nav nav-tabs company-tabs" role="tablist">
+    <li {% if request|nav_url:'users' %}class="active"{% endif %}><a href="{% url 'client:advert:stat:users' advert.id %}">Пользователи</a></li>
+    <li {% if request|nav_url:'password/vashdom' %}class="active"{% endif %}><a href="{% url 'client:advert:stat:password-vashdom' advert.id %}">Пароли ВашДом</a></li>
+</ul>

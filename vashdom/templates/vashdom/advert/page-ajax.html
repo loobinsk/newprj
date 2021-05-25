@@ -1,0 +1,13 @@
+{% load vashdom_tags %}
+
+{% include 'vashdom/advert/list.html' %}
+
+{% vashdom_pagination page %}
+
+<script type="text/javascript">
+    jQuery(document).ready(function() {
+        $("img.lazy").lazyload({
+            effect : "fadeIn"
+        });
+    });
+</script>

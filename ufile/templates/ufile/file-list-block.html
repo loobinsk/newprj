@@ -1,0 +1,12 @@
+{% if file_list %}
+    <div class="panel panel-default">
+        <div class="panel-heading">{{ title }}</div>
+        <div class="panel-body">
+            <ul class="file-annex">
+                {% for file in file_list %}
+                    <li><span class="glyphicon glyphicon-cloud-download"></span> <a href="{{ file.file.url }}">{{ file.name }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+{% endif %}

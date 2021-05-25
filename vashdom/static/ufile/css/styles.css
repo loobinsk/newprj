@@ -1,0 +1,95 @@
+/*UPLOAD IMAGE LIST*/
+.upload-file-list {
+    list-style-type: none;
+    margin: 10px 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+.upload-file-list li {
+    margin: 5px;
+    padding: 5px 30px 5px 5px;
+    overflow: hidden;
+    position: relative;
+    border-radius: 3px;
+}
+
+.upload-file-list li:hover {
+    background: #ddd;
+}
+
+.upload-file-list .close {
+    position: absolute;
+    right: 3px;
+    top: 3px;
+    background: #555;
+    color: #fff;
+    padding: 0 4px;
+    border-radius: 20px;
+    opacity: 0.8;
+    display: block;
+}
+.upload-file-list .close:hover {
+    opacity: 1;
+}
+
+
+
+/*FILE LIST*/
+
+.file-list {
+    text-align: left;
+    position: relative;
+    overflow: hidden;
+}
+
+.file-list ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.file-list li {
+    margin: 5px 0;
+}
+
+
+
+/*FILE UPLOAD*/
+.file-upload {
+    padding: 20px;
+    border: 2px dashed #999;
+    border-radius: 10px;
+    margin: 10px 0;
+    text-align: center;
+}
+
+.file-upload .filename {
+    margin-bottom: 10px;
+}
+
+
+/*FILE ANNEX*/
+ul.file-annex {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+ul.file-annex li {
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+ul.file-annex li:last-child {
+    border: none;
+}
+
+ul.file-annex .glyphicon {
+    font-size: 20px;
+    vertical-align: middle;
+    display: inline-block;
+    margin-right: 10px;
+}

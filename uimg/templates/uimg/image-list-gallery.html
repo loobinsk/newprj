@@ -1,0 +1,25 @@
+{% load thumbnail %}
+
+{% if image_list|length > 0 %}
+    <div class='image-list'>
+        {% for image in image_list %}
+            {% if enable_watermark %}
+                {% thumbnail image.image "200x150" crop='center' as img_small %}
+                    {% thumbnail image.image "800x600" crop='center' watermark_pos="center" as img_big %}
+                        <a class="item colorbox" href="{{ img_big.url }}" rel="image-list-{{ id }}">
+                            <img src="{{ img_small.url }}">
+                        </a>
+                    {% endthumbnail %}
+                {% endthumbnail %}
+            {% else %}
+                {% thumbnail image.image "200x150" crop='center' as img_small %}
+                    {% thumbnail image.image "800x600" crop='center' as img_big %}
+                        <a class="item colorbox" href="{{ img_big.url }}" rel="image-list-{{ id }}">
+                            <img src="{{ img_small.url }}">
+                        </a>
+                    {% endthumbnail %}
+                {% endthumbnail %}
+            {% endif %}
+        {% endfor %}
+    </div>
+{% endif %}

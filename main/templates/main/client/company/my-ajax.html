@@ -1,0 +1,75 @@
+{% load thumbnail %}
+{% load main_tags %}
+
+<div class="company-item-{{ company.id }} my-company">
+    <div class="left">
+{#        <div class="preview-image">#}
+{#            {% thumbnail company.image "100x100" as img %}#}
+{#                <img src='{{ img.url }}'>#}
+{#            {% empty %}#}
+{#                <img src='{{ STATIC_URL }}img/noavatar.png'>#}
+{#            {% endthumbnail %}#}
+{#        </div>#}
+
+        <div class='photo'>
+            {% thumbnail company.image "150x150" crop="center" as image %}
+                <img src='{{ image.url }}'>
+            {% empty %}
+                <img src='{{ STATIC_URL }}img/noimage.png'>
+            {% endthumbnail %}
+            {% if user.company.owner == user %}
+                <a href="#" class='btn-change-company-avatar hidden'>Нажмите, чтобы изменить логотип</a>
+                <form id="company-photo-form" method="POST" action="{% url 'client:company:change_avatar' %}" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ photo_form.image }}
+                </form>
+            {% endif %}
+        </div>
+{#        <div class="actions">#}
+{#            <a href="#" class="btn-company-edit btn btn-default btn-block"  data-id="{{ company.id }}">Изменить</a>#}
+{#        </div>#}
+    </div>
+
+    <div class="content">
+        <div class="title"><strong>Название агенства:</strong> {{ company.title }}</div>
+        <div class="tel"><strong>Тел.:</strong> {{ company.tel|fmt_tel }}</div>
+        <div class="email"><strong>E-mail:</strong> {{ company.email|default_if_none:'' }}</div>
+        <div class="address"><strong>Адрес:</strong> {{ company.address|default_if_none:'' }}</div>
+        <div class="inn"><strong>ИНН:</strong> {{ company.inn|default_if_none:'' }}</div>
+        <div class="ogrn"><strong>ОГРН:</strong> {{ company.ogrn|default_if_none:'' }}</div>
+    </div>
+</div>
+
+{% if user.company.owner == user %}
+    <script type="text/javascript">
+        (function($) {
+            $(document).ready(function() {
+
+                function failFunction(e) {
+                    var data = jQuery.parseJSON(e.responseText);
+                    $('.bottom-left').notify({
+                        message: { html: data.message },
+                        closable: true
+                    }).show();
+                }
+
+                $('.my-company .photo').hover(function() {
+                    $('.btn-change-company-avatar').toggleClass('hidden');
+                });
+
+                $('#id_company_image').change(function(e) {
+                    $('#company-photo-form').ajaxSubmit({
+                        target: '#tab',
+                        dataType: 'json',
+                        success: function(data) {
+                            jQuery('.my-company .photo img').attr('src', data.object);
+    {#                        window.location = "{% url 'client:company:my' %}";#}
+                        },
+                        error: failFunction
+                    });
+                });
+            });
+        })(jQuery);
+    </script>
+{% endif %}
+

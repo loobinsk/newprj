@@ -1,0 +1,30 @@
+{% extends 'page-client.html' %}
+
+{% load main_tags %}
+
+{% block scripts %}
+    {{ block.super }}
+    <script type="text/javascript" src="{{ STATIC_URL }}js/home.js"></script>
+{% endblock %}
+
+{% block body_class %}{{ block.super }} catalog{% endblock %}
+
+{% block filter %}
+    {% if not is_moder or perms.main.view_all_advert %}
+        <div id="filter">
+            {% filter_advert_client_block %}
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block breadcrumbs %}
+    {% include 'main/block/catalog-view-style.html' %}
+{% endblock %}
+
+{% block content %}
+    {% if map %}
+        {% include 'main/client/advert/business-map.html' %}
+    {% else %}
+        {% include 'main/client/home-ajax.html' %}
+    {% endif %}
+{% endblock %}

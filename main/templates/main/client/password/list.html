@@ -1,0 +1,19 @@
+<table class="table table-bordered password-list">
+    <thead>
+        <tr>
+            <th>Пользователь</th>
+            <th>Телефон</th>
+            <th>Пароль</th>
+            <th>Дата активации</th>
+            <th>Дата блокировки</th>
+            <th>Кол-во объявлений</th>
+            <th>Город</th>
+            <th>Действия</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for password in password_list %}
+            {% include 'main/client/password/preview.html' %}
+        {% endfor %}
+    </tbody>
+</table>

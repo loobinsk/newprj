@@ -1,0 +1,75 @@
+
+{% load main_tags %}
+{% load uimg_tags %}
+
+<div class="catalog-detail editable-content catalog-item-{{ advert.id }}">
+    <h1 class="page-title">{{ advert.title }} <small>#{{ advert.id }}</small></h1>
+
+    {% advert_map advert %}
+
+    {% with user=advert.user %}
+        {% include 'main/client/user/profile.html' %}
+    {% endwith %}
+
+    {% image_detail advert.images.all advert.title %}
+
+    <div class="body">
+        {{ advert.description|safe }}
+    </div>
+
+    {% if not advert.company %}
+        <div class="owner"><span class="label label-info">Собственник</span> </div>
+    {% endif %}
+    <div class="date">{{ advert.date|fmt_date }}</div>
+    {% if advert.price %}
+        <div class="price">{{ advert.price }}</div>
+    {% endif %}
+
+    <ul class="prop-list">
+        <li><strong>Дата:</strong> {{ advert.date|fmt_date }}</li>
+        <li><strong>Город:</strong> {{ advert.town.title }}</li>
+        {% if advert.metro %}
+            <li><strong>Метро:</strong> {{ advert.metro.title }}</li>
+        {% endif %}
+        {% if advert.district %}
+            <li><strong>Район:</strong> {{ advert.district.title }}</li>
+        {% endif %}
+        <li><strong>Адрес:</strong> {{ advert.address|default_if_none:'' }}</li>
+        {% if advert.need == 's' %}
+            <li><strong>Кол-во комнат:</strong>{{ advert.rooms }}</li>
+        {% elif advert.need == 'd' %}
+            <li><strong>Кол-во комнат:</strong>
+                {% if advert.live_flat1 %}1&nbsp;{% endif %}
+                {% if advert.live_flat2 %}2&nbsp;{% endif %}
+                {% if advert.live_flat3 %}3&nbsp;{% endif %}
+                {% if advert.live_flat4 %}4&nbsp;{% endif %}
+            </li>
+        {% endif %}
+        {% if advert.square %}
+            <li><strong>Общая площадь:</strong> {{ advert.square }} кв.м</li>
+        {% endif %}
+        {% if advert.living_square %}
+            <li><strong>Жилая площадь:</strong> {{ advert.living_square }} кв.м</li>
+        {% endif %}
+        {% if advert.kitchen_square %}
+            <li><strong>Площадь кухни:</strong> {{ advert.kitchen_square }} кв.м</li>
+        {% endif %}
+    </ul>
+
+    <ul class="check-list">
+        <li class="{% if advert.refrigerator %}active{% endif %}"><span class="glyphicon glyphicon-ok"></span> Холодильник</li>
+        <li class="{% if advert.tv %}active{% endif %}"><span class="glyphicon glyphicon-ok"></span> Телевизор</li>
+        <li class="{% if advert.washer %}active{% endif %}"><span class="glyphicon glyphicon-ok"></span> Стиральная машина</li>
+        <li class="{% if advert.phone %}active{% endif %}"><span class="glyphicon glyphicon-ok"></span> Телефон</li>
+        <li class="{% if advert.internet %}active{% endif %}"><span class="glyphicon glyphicon-ok"></span> Интернет</li>
+        <li class="{% if advert.condition %}active{% endif %}"><span class="glyphicon glyphicon-ok"></span> Кондиционер</li>
+        <li class="{% if advert.firniture %}active{% endif %}"><span class="glyphicon glyphicon-ok"></span> Мебель</li>
+        <li class="{% if advert.euroremont %}active{% endif %}"><span class="glyphicon glyphicon-ok"></span> Евроремонт</li>
+        <li class="{% if advert.separate_wc %}active{% endif %}"><span class="glyphicon glyphicon-ok"></span> Раздельный санузел</li>
+        <li class="{% if advert.balcony %}active{% endif %}"><span class="glyphicon glyphicon-ok"></span> Балкон</li>
+        <li class="{% if advert.lift %}active{% endif %}"><span class="glyphicon glyphicon-ok"></span> Лифт</li>
+        <li class="{% if advert.parking %}active{% endif %}"><span class="glyphicon glyphicon-ok"></span> Парковка</li>
+    </ul>
+
+    {% include 'main/client/advert/edit-buttons.html' %}
+</div>

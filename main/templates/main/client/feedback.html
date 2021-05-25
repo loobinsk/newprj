@@ -1,0 +1,11 @@
+<form id="feedback-form" method="POST" action='{% url 'client:feedback' %}'>
+    {% csrf_token %}
+    <div>
+        <label>{{ form.title.label }}</label>
+        {{ form.title }}
+    </div>
+    <div>
+        <label>{{ form.desc.label }}</label>
+        {{ form.desc }}
+    </div>
+</form>

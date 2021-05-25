@@ -1,0 +1,18 @@
+<div class="commercial-list">
+    {% if current_town.id == 1 %}
+        <div class="commercial-preview">
+            <a href="http://river-park.ru/" rel='nofollow' target="_blank"><img src="{{ STATIC_URL }}img/rec/rec3.jpg"></a>
+        </div>
+        <div class="commercial-preview">
+            <a href="http://admiral-house.ru/" rel='nofollow' target="_blank"><img src="{{ STATIC_URL }}img/rec/rec4.jpg"></a>
+        </div>
+    {% endif %}
+    {% if current_town.id == 2 %}
+        <div class="commercial-preview">
+            <a href="http://aidom.ru/luchshe-sobstvenniy-dom/" rel='nofollow' target="_blank"><img src="{{ STATIC_URL }}img/rec/rec5.jpg"></a>
+        </div>
+        <div class="commercial-preview">
+            <a href="http://www.suhodolskoe.ru/" rel='nofollow' target="_blank"><img src="{{ STATIC_URL }}img/rec/rec6.jpg"></a>
+        </div>
+    {% endif %}
+</div>

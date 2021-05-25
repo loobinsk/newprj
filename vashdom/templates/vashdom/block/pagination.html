@@ -1,0 +1,21 @@
+{% load bootstrap_pagination %}
+
+<div class="ext-pagination">
+    {% comment %} <ul class="pagination else">
+        {% if next_page_url %}
+            <li>
+                <a title="Показать еще..." href="{{ next_page_url|default:"#" }}" class="btn-catalog-next-page">Показать еще...</a>
+            </li>
+        {% endif %}
+    </ul> {% endcomment %}
+    {% if prev_page_url %}
+        <a href="{{prev_page_url}}" class="btn btn-default">
+            <i class="fa fa-angle-left"></i>
+            Предыдущая
+        </a>
+    {% endif %}
+    <a href="{{next_page_url}}" class="btn btn-default">
+        Следующая
+        <i class="fa fa-angle-right"></i>
+    </a>
+</div>

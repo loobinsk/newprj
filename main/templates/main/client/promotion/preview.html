@@ -1,0 +1,11 @@
+{% load main_tags %}
+
+<tr class="promotion-preview promotion promotion-item-{{ promotion.id }} editable-content">
+    <td><a href='{% url 'client:promocode:list' %}?promotion={{ promotion.id }}'>{{ promotion.title }}</a></td>
+    <td>{{ promotion.count_promocodes }}</td>
+    <td>{{ promotion.discount }}%</td>
+    <td>{{ promotion.site.domain }}</td>
+    <td>{{ promotion.start_date|fmt_date }}</td>
+    <td>{{ promotion.end_date|fmt_date }}</td>
+    <td>{% include 'main/client/promotion/edit-buttons.html' %}</td>
+</tr>

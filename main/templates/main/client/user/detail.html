@@ -1,0 +1,7 @@
+{% extends 'page-client-center.html' %}
+
+{% block title %}Профиль пользователя {{ object.get_full_name }} &middot; {{ block.super }}{% endblock %}
+
+{% block center %}
+    {% include 'main/client/user/detail-ajax.html' %}
+{% endblock %}

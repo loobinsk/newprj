@@ -1,0 +1,12 @@
+{% extends 'page-client-center.html' %}
+
+{% load comment_tags %}
+
+{% block title %}Отзывы об агентстве &middot; {{ block.super }}{% endblock %}
+
+{% block center %}
+    <h1 class="page-title">Отзывы об агентстве</h1>
+
+    {% show_comments 'company' company.id %}
+
+{% endblock %}

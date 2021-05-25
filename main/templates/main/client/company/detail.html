@@ -1,0 +1,9 @@
+{% extends 'page-client-center.html' %}
+
+{% load main_tags %}
+
+{% block title %}{{ company.title }} &middot; {{ block.super }}{% endblock %}
+
+{% block center %}
+    {% include 'main/client/company/detail-ajax.html' %}
+{% endblock %}

@@ -1,0 +1,34 @@
+{% extends 'page.html' %}
+
+{% load comment_tags %}
+
+{% block title %}Отзывы &middot; {{ block.super }}{% endblock %}
+
+{% block sidebar %}
+    {% include 'vashdom/block/vkontakte-group.html' %}
+{% endblock %}
+
+{% block page_content %}
+<div class="mentions">
+    <div class='container'>
+        <div class='row'>
+            <div class="mentions__content">
+                <h1 class="mentions__title">
+                    {% if metatag.page_title %}
+                        {{metatag.page_title}}
+                    {% else %}
+                        Отзывы о нас
+                    {% endif %}
+                </h1>
+
+            {#    <div id="vk_comments"></div>#}
+            {#    <script type="text/javascript">#}
+            {#    VK.Widgets.Comments("vk_comments", {limit: 10, width: "675", attach: "*", pageUrl: "https://bazavashdom.ru/otzhiv"});#}
+            {#    </script>#}
+
+                {% show_comments 'vashdom' list_template='vashdom/ucomment/list.html' %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

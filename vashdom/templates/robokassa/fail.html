@@ -1,0 +1,12 @@
+{% extends 'page.html' %}
+
+{% load vashdom_tags %}
+
+{% block title %}Неуспешная оплата{% endblock %}
+
+{% block content %}
+    <h1 class="page-title">Неуспешная оплата</h1>
+
+    {% vashdom_payment_by_id InvId %}
+
+{% endblock %}

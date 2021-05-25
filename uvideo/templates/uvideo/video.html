@@ -1,0 +1,13 @@
+{% if video %}
+    <div class="video-frame">
+        {% if video.get_video_source_type == 'Y' %}
+            {% include 'uvideo/video-youtube.html' %}
+        {% endif %}
+        {% if video.get_video_source_type == 'VK' %}
+            {% include 'uvideo/video-vk.html' %}
+        {% endif %}
+        {% if video.get_video_source_type == 'O' %}
+            {% include 'uvideo/video-html5.html' %}
+        {% endif %}
+    </div>
+{% endif %}

@@ -1,0 +1,46 @@
+{% if advert.latitude and advert.longitude %}
+    <div id="catalog-detail-map">
+        <script type="text/javascript">
+            var detailMap;
+
+            function init(){
+                var coords = [{{ advert.latitude|stringformat:'f' }},  {{ advert.longitude|stringformat:'f' }}];
+                var zoom = {{ advert.town.zoom|stringformat:'d' }}
+
+                detailMap = new ymaps.Map("catalog-detail-map", {
+                    center: coords,
+                    zoom: 15
+                });
+
+                detailMap.controls.add('zoomControl');
+                detailMap.controls.add('typeSelector');
+
+                ymaps.geocode(coords, {
+                    kind: 'metro',
+                    results: 4
+                }).then(function(res) {
+                            var legend = '<h2>Ближайшие станции метро</h2><table class="table">';
+                            for (var i=0; i<res.geoObjects.getLength(); i++) {
+                                var m = res.geoObjects.get(i);
+                                var m_coords = m.geometry.getCoordinates();
+                                dist0 = ymaps.coordSystem.geo.getDistance(coords, m_coords);
+                                dist = ymaps.formatter.distance(dist0);
+                                legend += '<tr><td>'+ m.properties.get('balloonContentBody')+'</td><td>'+dist+'</td></tr>';
+                            }
+                            legend += '</table>'
+                            jQuery('#catalog-detail-map-legend').html(legend);
+
+                            res.geoObjects.options.set('preset', 'twirl#metroMoscowIcon');
+                            detailMap.geoObjects.add(res.geoObjects);
+
+                            var placemark = new ymaps.Placemark(coords);
+                            detailMap.geoObjects.add(placemark);
+                        });
+            }
+
+            ymaps.ready(init);
+        </script>
+    </div>
+
+    <div id="catalog-detail-map-legend"></div>
+{% endif %}

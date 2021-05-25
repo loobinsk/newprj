@@ -1,0 +1,22 @@
+{% extends 'main/client/advert/preview.html' %}
+
+{% block before %}
+    <td class="float-col">
+        {% if advert.id in advert_noticed %}
+            <div class="notice-success text-success hide-fold">Письмо отправлено</div>
+        {% endif %}
+    </td>
+{% endblock %}
+
+{% block actions %}
+    {{ block.super }}
+    {% if advert.id in advert_not_send %}
+        <a href="#" class="btn btn-default btn-block btn-search-request-not-send" data-id='{{ advert.id }}' data-sr="{{ sr.id }}">
+            <span class="glyphicon glyphicon-ban-circle text-danger" aria-hidden="true"></span> Рассылка выкл.
+        </a>
+    {% else %}
+        <a href="#" class="btn btn-default btn-block btn-search-request-not-send" data-id='{{ advert.id }}' data-sr="{{ sr.id }}">
+            <span class="glyphicon glyphicon-ok-circle text-success" aria-hidden="true"></span> Рассылка вкл.
+        </a>
+    {% endif %}
+{% endblock %}

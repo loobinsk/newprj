@@ -1,0 +1,11 @@
+{% extends 'main/client/advert/preview.html' %}
+
+{% block actions %}
+    <a href="{% url 'client:advert:edit' advert.id %}" class="btn btn-default btn-block" target="_blank">Редактировать</a>
+    <a href="#" class="btn btn-danger btn-block btn-catalog-del" data-id='{{ advert.id }}'>Удалить</a>
+    {% if advert.is_archive %}
+        <a href="#" class="btn btn-default btn-block btn-catalog-from-archive" data-id='{{ advert.id }}'><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> В архиве</a>
+    {% else %}
+        <a href="#" class="btn btn-default btn-block btn-catalog-to-archive" data-id='{{ advert.id }}'><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Актуально</a>
+    {% endif %}
+{% endblock %}

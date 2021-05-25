@@ -1,0 +1,18 @@
+{% load main_tags %}
+
+<div class="catalog-list-style">
+    <div class="progress hidden" id="progress-bar">
+        <div class="bar" style="width: 0%"></div>
+    </div>
+
+    <div class="content">
+        <a href="{% url 'client:home' %}" id="catalog-style-list" class="{% if request|nav_url:'/client/' %}active{% endif %}">списком</a>
+        <a href="{% url 'client:home' %}?map=1" id="catalog-style-map">на карте</a>
+        <a href="{% url 'client:advert:favorites' %}" class="{% if request|nav_url:'/client/catalog/favorites' %}active{% endif %}">избранное</a>
+        {% if not is_moder %}
+            <a href="{% url 'client:advert:buyed' %}" class="{% if request|nav_url:'/client/catalog/buyed' %}active{% endif %}">выкупы</a>
+        {% endif %}
+
+        <div class="pull-right" id="count-find"></div>
+    </div>
+</div>

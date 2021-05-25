@@ -1,0 +1,59 @@
+@import '../imports.less';
+
+.pagination {
+    display: block;
+    text-align: center;
+}
+
+.pagination li {
+    display: inline-block;
+
+}
+
+.pagination li a {
+    border: none;
+}
+
+.ext-pagination {
+    text-align: center;
+    margin: 15px 0;
+    .sm-block({
+        display: flex;
+    });
+
+    > .btn {
+        .sm-block({
+            flex-grow: 1;
+            display: block;
+        });
+        .xs-block({
+            font-size: 12px;
+        });
+    }
+    
+    .pagination {
+        margin-left: 15px;
+        display: block;
+        overflow: hidden;
+        
+
+        > .active > a {
+            background: @primarycolor;
+            border: 1px solid @primarycolor;
+            font-weight: bold;
+        }
+
+        &.else {
+            li {
+                display: block;
+
+                a {
+                    display: block;
+                    float: none;
+                    padding: 10px;
+                    border: 1px dashed #f0f0f0;
+                }
+            }
+        }
+    }
+}

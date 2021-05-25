@@ -1,0 +1,14 @@
+{% load main_tags %}
+
+<div class="input-group date" id="{{ attrs.id }}">
+    <input value="{{ value|fmt_date_dp|default_if_none:'' }}" name="{{ name }}" class="form-control" placeholder="Дата">
+    <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+</div>
+
+<script type="text/javascript">
+    jQuery('#{{ attrs.id }}').datepicker({
+        format: 'dd.mm.yyyy',
+        autoclose: true,
+        language: 'ru'
+    });
+</script>

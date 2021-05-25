@@ -1,0 +1,59 @@
+@import '../imports.less';
+
+@sandwitch-width: 30px; 
+
+.sandwitch {
+    background: transparent;
+    border: none;
+    width: 30px;
+    height: 24px;
+    position: relative;
+
+    &:focus {
+        outline: none;
+    }
+
+    &__line1 {
+        position: absolute;
+        content: ' ';
+        top: 0px;
+        left: 0px;
+        width: @sandwitch-width;
+        border: 1px solid #fff;
+        transition-duration: 0.5s;
+    }
+
+    &__line2 {
+        position: absolute;
+        content: ' ';
+        top: 11px;
+        left: 0px;
+        width: @sandwitch-width;
+        border: 1px solid #fff;
+        transition-duration: 0.5s;
+    }
+
+    &__line3 {
+        position: absolute;
+        content: ' ';
+        bottom: 0;
+        left: 0px;
+        width: @sandwitch-width;
+        border: 1px solid #fff;
+        transition-duration: 0.5s;
+    }
+
+    &&_open {
+        .sandwitch__line1 {
+            transform: translateY(12px) rotate(135deg);
+        }
+
+        .sandwitch__line2 {
+            opacity: 0;
+        }
+
+        .sandwitch__line3 {
+            transform: translateY(-10px) rotate(-135deg);
+        }
+    }
+}

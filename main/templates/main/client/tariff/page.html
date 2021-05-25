@@ -1,0 +1,22 @@
+{% extends 'page-client.html' %}
+
+{% load bootstrap_pagination %}
+{% load main_tags %}
+
+{% block title %}Тарифы &middot; {{ block.super }}{% endblock %}
+
+{% block content %}
+        <a href='#' class='btn-tariff-create btn btn-primary pull-right'><span class="glyphicon glyphicon-pencil"></span> Создать тариф</a>
+
+        <h1 class="page-title">
+            {% block h1 %}
+                Тарифы
+            {% endblock %}
+        </h1>
+
+        {% if tariff_list %}
+            {% include 'main/client/tariff/list.html' %}
+        {% else %}
+            <div class="alert alert-info">Нет тарифов</div>
+        {% endif %}
+{% endblock %}

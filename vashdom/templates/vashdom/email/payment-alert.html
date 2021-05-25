@@ -1,0 +1,14 @@
+{% extends 'vashdom/email/base-plain.html' %}
+
+{% block content %}
+{{ subject }}
+
+ГОРОД: {{ town.title }}
+ИМЯ: {{ data.name }}
+EMAIL: {{ data.email }}
+ТЕЛЕФОН: {{ data.tel }}
+ДАТА ОПЛАТЫ: {{ data.date }}
+ВРЕМЯ ОПЛАТЫ: {{ data.hour }}:{{ data.minute }}
+СУММА: {{ data.sum }}
+КУДА СОВЕРШЕН ПЛАТЕЖ: {{ data.receiver }}
+{% endblock %}

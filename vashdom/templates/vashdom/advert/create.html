@@ -1,0 +1,58 @@
+{% extends 'page.html' %}
+
+{% load main_tags %}
+
+{% block title %}Бесплатно подать объявление &middot; {{ block.super }}{% endblock %}
+
+{% block description %}Бесплатное подать объявление о сдаче квартиры или комнаты{% endblock %}
+
+{% block content %}
+<div class="catalog-create">
+    <div class="container">
+        <div class="row">
+            <div class="catalog-create__content">
+                    <h1 class="catalog-create__title">Подать объявление о сдаче жилья бесплатно</h1>
+                    <p>Уважаемые собственники, наши операторы прозванивают каждое объявление перед добавлением в базу.<br>
+                    Чтобы не ожидать в очереди на модерацию после подачи на сайте, <strong>напишите в онлайн-консультант</strong><br>
+                    справа внизу номер телефона или номер объявления. Мы разместим Ваше объявление сразу и без звонка.</p>
+                    <br>
+                    <div class="create-form">
+                        {% include 'vashdom/advert/form.html' %}
+                        <div class="">
+                            <button class="btn btn-secondary btn-lg catalog-create__create-btn" data-loading-text="Сохранение объявления...">разместить объявление</button>
+                        </div>
+                    </div>
+                    <br>
+                    <hr>
+                    <hr>        
+                    <div>    
+                        {% if current_town.slug == 'sankt-peterburg' %}
+                        {% include 'vashdom/advert/vkspb.html' %}
+                        {% elif current_town.slug == 'moskva' %}
+                        {% include 'vashdom/advert/vkmsk.html' %}
+                        {% endif %}
+                </div>
+            </div>
+            <div class="catalog-create__sidebar">
+                {% include 'vashdom/block/vkontakte-group.html' %}
+            </div>
+        </div>
+    </div>
+        
+</div>
+
+    <script type="text/javascript">
+        $('.catalog-create__create-btn').click(function(e) {
+            $('#catalog-form').ajaxSubmit({
+                dataType: 'json',
+                success: function(data) {
+                    bootbox.hideAll();
+                    bootbox.alert(data.object.message, function(){
+                        window.location.reload();
+                    });
+                },
+                error: failFunction
+            });
+        });
+    </script>
+{% endblock %}

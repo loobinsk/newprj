@@ -1,0 +1,10 @@
+<form method="POST" action="{% url 'client:abbr:create' %}" id="abbr-form">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-flt3 pull-right btn-abbr-create">Добавить</button>
+    <dl>
+        <dt>{{ form.title.label_tag }}</dt>
+        <dd>{{ form.title }}</dd>
+        <dt>{{ form.desc.label_tag }}</dt>
+        <dd>{{ form.desc }}</dd>
+    </dl>
+</form>

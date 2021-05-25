@@ -1,0 +1,11 @@
+{% extends 'page-client-center.html' %}
+
+{% load main_tags %}
+{% load uvideo_tags %}
+{% load uimg_tags %}
+
+{% block title %}{{ news.title }} &middot; {{ block.super }}{% endblock %}
+
+{% block center %}
+        {% include 'main/client/news/detail-ajax.html' %}
+{% endblock %}

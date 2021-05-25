@@ -1,0 +1,45 @@
+{% load thumbnail %}
+
+{% if image_list|length > 0 %}
+    <div class='image-list'>
+        {% with image=image_list|first %}
+            {% if image.image.width > 300 or image.image.height > 400 %}
+                {% thumbnail image.image "300x200" as img_small %}
+                    {% if image.image.width > 1280 or image.image.height > 960 %}
+                        {% thumbnail image.image "1280x960" as img_big %}
+                            <a href="{{ img_big.url }}" class="first colorbox" rel='image-list-{{ id }}' title='{{ image.desc|default:title }}'><img src='{{ img_small.url }}'></a>
+                        {% endthumbnail %}
+                    {% else %}
+                        <a href="{{ image.image.url }}" class="first colorbox" rel='image-list-{{ id }}' title='{{ image.desc|default:title }}'><img src='{{ img_small.url }}'></a>
+                    {% endif %}
+                {% empty %}
+                    <a href="{{ image.image.url }}" class="first colorbox"  rel='image-list-{{ id }}' title='{{ image.desc|default:title }}'><img src='{{ image.image.url }}'></a>
+                {% endthumbnail %}
+            {% else %}
+                <a href="{{ image.image.url }}" class="first colorbox"  rel='image-list-{{ id }}' title='{{ image.desc|default:title }}'><img src='{{ image.image.url }}'></a>
+            {% endif %}
+        {% endwith %}
+
+        {% if image_list|length > 1 %}
+            <ul>
+                {% for image in image_list|slice:'1:' %}
+                    <li>
+                        {% thumbnail image.image "100x70" crop='top' as img_small %}
+                            {% if not image.is_animated %}
+                                {% if image.image.width > 1280 or image.image.height > 960 %}
+                                    {% thumbnail image.image "1280x960" as img_big %}
+                                        <a href="{{ img_big.url }}" class="thumbnail colorbox" rel='image-list-{{ id }}' title='{{ image.desc|default:title }}'><img src='{{ img_small.url }}'></a>
+                                    {% endthumbnail %}
+                                {% else %}
+                                    <a href="{{ image.image.url }}" class="thumbnail colorbox" rel='image-list-{{ id }}' title='{{ image.desc|default:title }}'><img src='{{ img_small.url }}'></a>
+                                {% endif %}
+                            {% else %}
+                                <a href="{{ image.image.url }}" class="thumbnail colorbox" rel='image-list-{{ id }}' title='{{ image.desc|default:title }}'><img src='{{ image.image.url }}'></a>
+                            {% endif %}
+                        {% endthumbnail %}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </div>
+{% endif %}

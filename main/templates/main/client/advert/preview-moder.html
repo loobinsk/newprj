@@ -1,0 +1,30 @@
+{% extends 'main/client/advert/preview.html' %}
+
+{% load main_tags %}
+
+{% block actions %}
+    <a href="{% url 'client:advert:edit' advert.id %}" class="btn btn-default btn-block" target="_blank">Редактировать</a>
+
+    {% if user.is_staff %}
+        <div class="dropdown stat">
+            <button class="btn btn-link btn-block dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                Статистика
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+                <li><a href="{% url 'client:advert:stat:users' advert.id %}" target="_blank">Пользователи</a></li>
+                <li><a href="{% url 'client:advert:stat:password-vashdom' advert.id %}" target="_blank">Пароли ВашДом</a></li>
+            </ul>
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block status %}
+    <div class="status">{{ advert.status|advert_status }}</div>
+    {% if advert.blocked %}
+        <div class="blocked">Заблокировано {% if user.is_staff %}{{ advert.block_user.get_full_name }}{% else %}другим пользователем{% endif %}</div>
+    {% endif %}
+    {% if advert.moderator %}
+        <div class='moderator'>Проверено: {% if user.is_staff %}{{ advert.moderator.get_full_name }} {% if advert.moderate_date %}{{ advert.moderate_date|fmt_date }}{% endif %}{% else %}другим пользователем{% endif %}</div>
+    {% endif %}
+{% endblock %}

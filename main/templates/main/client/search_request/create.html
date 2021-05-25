@@ -1,0 +1,19 @@
+{% extends 'page-client-center.html' %}
+
+{% load main_tags %}
+{% load uimg_tags %}
+
+{% block title %}Создать заявку на поиск &middot; {{ block.super }}{% endblock %}
+
+{% block center %}
+    <div class="catalog-create">
+        <h1 class="page-title">Создать заявку на поиск</h1>
+
+        <div class="create-form create-search-form">
+            {% include 'main/client/search_request/form.html' %}
+            <div class="text-center actions">
+                <button class="btn btn-flt3 btn-lg btn-search-request-form-create" data-loading-text="Сохранение заявки...">Создать заявку</button>
+            </div>
+        </div>
+    </div>
+{% endblock %}

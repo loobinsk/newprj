@@ -1,0 +1,17 @@
+{% extends 'page-sidebar2.html' %}
+
+{% block title %}Платеж #{{ payment.id }} &middot; {{ block.super }}{% endblock %}
+
+{% block scripts %}
+    {{ block.super }}
+    <script src="{{ STATIC_URL }}/js/clipboard.min.js"></script>
+{% endblock %}
+
+{% block sidebar %}
+    {% include 'vashdom/block/payment-block.html' %}
+    {% include 'vashdom/block/vkontakte-group.html' %}
+{% endblock %}
+
+{% block content %}
+    {% include 'vashdom/payment/detail-ajax.html' %}
+{% endblock %}

@@ -1,0 +1,25 @@
+{% load thumbnail %}
+{% load vashdom_tags %}
+
+<div class='image-preview'>
+    {% with image=image_list|first %}
+        {% thumbnail image.image "445x250" crop='center' as img_small %}
+            <a href="/id{{ id }}" title="{{ title }}">
+                <img data-original="{{ img_small.url }}" class="lazy">
+                <noscript>
+                    <img src="{{ img_small.url }}">
+                </noscript>
+            </a>
+        {% empty %}
+            {% if advert.longitude and advert.latitude %}
+                <a href="/id{{ id }}" title="{{ title }}">
+                    <img src='https://static-maps.yandex.ru/1.x/?l=pmap,skl&ll={{ advert.longitude|stringformat:'f' }},{{ advert.latitude|stringformat:'f' }}&z=15&size=445,300&pt={{ advert.longitude|stringformat:'f' }},{{ advert.latitude|stringformat:'f' }},pmwtm1'>
+                </a>
+            {% else %}
+                <a href="/id{{ id }}" title="{{ title }}">
+                    <img src="{% random_preview_image %}">
+                </a>
+            {% endif %}
+        {% endthumbnail %}
+    {% endwith %}
+</div>

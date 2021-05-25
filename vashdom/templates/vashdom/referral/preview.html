@@ -1,0 +1,8 @@
+{% load main_tags %}
+
+<tr class="referral-preview referral-{{ referral.id }} editable-content">
+    <td>{{ referral.link }}</td>
+    <td><a href="{% url 'referral:referer' referral.id %}">{{ referral.conversion }}</a></td>
+    <td><a href="{% url 'referral:user' referral.id %}">{{ referral.get_user_count }}</a></td>
+    <td><a href="{% url 'referral:payment' referral.id %}">{{ referral.get_payment_count }}</a></td>
+</tr>

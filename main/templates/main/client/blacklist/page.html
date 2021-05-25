@@ -1,0 +1,26 @@
+{% extends 'page-client-center.html' %}
+
+{% load bootstrap_pagination %}
+
+{% block title %}Черный список &middot; {{ block.super }}{% endblock %}
+
+{% block center %}
+
+    <a href='#' class='btn-blacklist-create btn btn-flt3 pull-right' style="margin-left: 10px;">Создать элемент</a>
+    <a href='#' class='btn-blacklist-multi-create btn btn-flt3 pull-right'>Импортировать список</a>
+
+    <h1 class="page-title">Черный список</h1>
+
+    <form method="get" action="{% url 'client:blacklist:list' %}" id="blacklist-filter-form">
+        <div class="input-group">
+            {{ filter_form.tel }}
+            <div class="input-group-btn">
+                <button class="btn btn-default">Найти</button>
+            </div>
+        </div>
+    </form>
+
+    {% include 'main/client/blacklist/list.html' %}
+
+    {% bootstrap_paginate page_obj range=6 show_first_last='true' %}
+{% endblock %}

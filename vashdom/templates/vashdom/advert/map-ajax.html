@@ -1,0 +1,105 @@
+{% load main_tags %}
+
+<script type="text/javascript">
+
+    function balloonOpen(e) {
+        if (!e.get('target').properties.get('loaded')) {
+            var id = e.get('target').properties.get('id');
+            e.get('target').properties.set('balloonContentBody', '<div class="loading"></div>');
+            jQuery.get('/id'+id+'/bal', function(data) {
+                e.get('target').properties.set('balloonContentBody', data);
+                e.get('target').properties.set('loaded', true);
+            });
+        }
+    }
+
+    function clusterBalloonOpen(e) {
+        var geos = e.get('target').getData().properties.get('geoObjects');
+        for (var i=0; i<geos.length; i++) {
+            if (!geos[i].properties.get('loaded')) {
+                var id = geos[i].properties.get('id')
+                geos[i].properties.set('balloonContentBody', '<div class="loading"></div>');
+{#                jQuery.get('/catalog/'+id+'/balloon', function(data) {#}
+{#                    geos[i].properties.set('balloonContentBody', data);#}
+{#                    geos[i].properties.set('loaded', true);#}
+{#                });#}
+                jQuery.ajax({
+                    url: '/id'+id+'/bal',
+                    context: geos[i],
+                    success: function(data) {
+                        this.properties.set('balloonContentBody', data);
+                        this.properties.set('loaded', true);
+                    }
+                })
+            }
+        }
+    }
+
+    function init(){
+        var map_objects = {{ map_objects|jsonify }};
+
+        var workspaceMap = new ymaps.Map("business-map", {
+            center: [{{ current_town.latitude|stringformat:'f' }}, {{ current_town.longitude|stringformat:'f' }}],
+            zoom: {{ current_town.zoom|stringformat:'d' }}
+        });
+
+        workspaceMap.controls.add('zoomControl');
+        workspaceMap.controls.add('typeSelector');
+
+        var myGeoObjects = [];
+
+        for (var i=0; i<map_objects.length; i++) {
+            var icon = 'https://bazavashdom.ru{{ STATIC_URL }}img/map_point.png';
+            switch (map_objects[i].pointer) {
+                case 1:
+                    icon = 'https://bazavashdom.ru{{ STATIC_URL }}img/map_point_1.png';
+                    break;
+                case 2:
+                    icon = 'https://bazavashdom.ru{{ STATIC_URL }}img/map_point_2.png';
+                    break;
+                case 3:
+                    icon = 'https://bazavashdom.ru{{ STATIC_URL }}img/map_point_3.png';
+                    break;
+                case 4:
+                    icon = 'https://bazavashdom.ru{{ STATIC_URL }}img/map_point_4.png';
+                    break;
+                case 'k':
+                    icon = 'https://bazavashdom.ru{{ STATIC_URL }}img/map_point_k.png';
+                    break;
+            }
+
+            var myGeoObject = new ymaps.GeoObject({
+                geometry: {
+                    type: "Point",
+                    coordinates: [map_objects[i].x, map_objects[i].y]
+                },
+                properties: {
+                    // Контент метки.
+{#                    iconContent: comp.logo,#}
+                    balloonContentBody: map_objects[i].desc,
+                    id: map_objects[i].id,
+                    loaded: false,
+                    hintContent: map_objects[i].hint,
+                    clusterCaption: map_objects[i].hint
+                }
+            }, {
+                iconLayout: 'default#image',
+                iconImageHref: icon,
+                iconImageSize: [34, 50],
+                iconImageOffset: [-17, -48]
+            });
+            myGeoObject.events.add("balloonopen", balloonOpen);
+            myGeoObjects.push(myGeoObject);
+        }
+
+        var myClusterer = new ymaps.Clusterer();
+        myClusterer.add(myGeoObjects);
+        workspaceMap.geoObjects.add(myClusterer);
+        myClusterer.events.add("balloonopen", clusterBalloonOpen);
+    }
+
+    ymaps.ready(init);
+</script>
+
+<div class="map" id="business-map">
+</div>

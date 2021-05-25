@@ -1,0 +1,436 @@
+{% load uimg_tags %}
+{% load main_tags %}
+
+<form method="POST" action="{{ action }}" id="catalog-form" data-advert-id={{ advert.id }}>
+    {% csrf_token %}
+
+    <div class="row">
+        <div class="col col-1">
+            <div class="address">
+                {{ form.address.label_tag }}
+                {{ form.address }}
+                <div class="dropdown map auto keep-open">
+                    <a href="javascript:void(0);" data-toogle='dropdown'>
+                        <span class="glyphicon glyphicon-map-marker"></span> <span class="title">Карта</span>
+                    </a>
+                    <div class="dropdown-menu">
+                        <div id="address-map"></div>
+                    </div>
+                </div>
+                <div class="help">
+                    Введите адрес, нажмите Enter, и местоположение на карте, район и метро определяться автоматически
+                </div>
+            </div>
+
+            {{ form.latitude }}
+            {{ form.longitude }}
+
+            <div class="for_need_sale">
+                {{ form.metro.label_tag }}
+                {{ form.metro }}
+            </div>
+            <div class="for_need_demand hidden">
+                {{ form.metro.label_tag }}
+                {{ form.need_metro }}
+            </div>
+            <div>
+                {{ form.district.label_tag }}
+                {{ form.district }}
+            </div>
+
+            <hr>
+            <div>
+                {{ form.type2 }}
+            </div>
+            <div>
+                {{ form.estate }}
+            </div>
+            <hr>
+            <div class="for_room for_flat">
+                {{ form.live }}
+                <span class="for_need_sale">
+                    {{ form.rooms }}
+                </span>
+                <span class="for_flat">
+                    <div class="checkbox-list for_need_demand hidden">
+                        {{ form.live_flat1 }}<label for="id_live_flat1">{{ form.live_flat1.label }}</label>
+                        {{ form.live_flat2 }}<label for="id_live_flat2">{{ form.live_flat2.label }}</label>
+                        {{ form.live_flat3 }}<label for="id_live_flat3">{{ form.live_flat3.label }}</label>
+                        {{ form.live_flat4 }}<label for="id_live_flat4">{{ form.live_flat4.label }}</label>
+                    </div>
+                </span>
+            </div>
+            <div class="for_house hidden">
+                {{ form.country }}
+            </div>
+            <div class="for_commercial hidden">
+                {{ form.commercial }}
+            </div>
+            <div class="for_territory hidden">
+                {{ form.territory }}
+            </div>
+            <div class="for_room for_flat for_house">
+                {{ form.limit }}
+            </div>
+
+            <div class="dropdown comfort auto keep-open">
+                <a href="#" data-toogle='dropdown'>
+                    Добавить удобства
+                    <ul class='icon-list'>
+                        {% for field in advert.comfort_list %}
+                            {% if field.1 %}<span class="glyphicon {{ field.0 }}"></span>{% endif %}
+                        {% endfor %}
+                    </ul>
+                </a>
+                <div class="dropdown-menu">
+                    <div class='for_flat for_room for_house for_commercial'>
+                        <h3>Интерьер</h3>
+                        <div class="btn-group options" data-toggle="buttons">
+                            {{ form.refrigerator|add_class:'for_flat for_room for_house' }}
+                            {{ form.tv|add_class:'for_flat for_room for_house' }}
+                            {{ form.washer|add_class:'for_flat for_room for_house' }}
+                            {{ form.phone }}
+                            {{ form.internet }}
+                            {{ form.conditioner }}
+                            {{ form.furniture }}
+                            {{ form.separate_wc }}
+                            {{ form.balcony }}
+                        </div>
+                    </div>
+
+                    <div class='for_flat for_room for_house for_commercial'>
+                        <div class="for_lease">
+                            <h3>Проживание</h3>
+                            <div class="btn-group options" data-toggle="buttons">
+                                {{ form.live_one }}
+                                {{ form.live_two }}
+                                {{ form.live_pare }}
+                                {{ form.live_more }}
+                                {{ form.live_child }}
+                                {{ form.live_animal }}
+                                {{ form.live_girl }}
+                                {{ form.live_man }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class='for_house for_commercial for_territory for_sale hidden'>
+                        <h3>Коммуникации</h3>
+                        <div class="btn-group options" data-toggle="buttons">
+                            {{ form.electric }}
+                            {{ form.gas }}
+                            {{ form.water }}
+                            {{ form.sewage }}
+                            {{ form.brick_building }}
+                            {{ form.wood_building }}
+                        </div>
+                    </div>
+
+                    <div class='for_flat for_room for_house for_commercial'>
+                        <h3>Ремонт</h3>
+                        <div class="btn-group options" data-toggle="buttons">
+                            {{ form.euroremont }}
+                            {{ form.redecoration }}
+                            {{ form.no_remont }}
+                            {{ form.need_remont }}
+                        </div>
+                    </div>
+
+                    <div class='for_flat for_room for_house for_commercial for_territory'>
+                        <h3>Разное</h3>
+                        <div class="btn-group options" data-toggle="buttons">
+                            {{ form.parking }}
+                            {{ form.lift|add_class:'for_flat for_room for_commercial' }}
+                            {{ form.concierge|add_class:'for_flat for_room' }}
+                            {{ form.guard }}
+                            {{ form.garage|add_class:'for_flat for_room for_commercial for_house' }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col col-2">
+            <div class="floor-count for_flat for_room for_house for_commercial">
+                <label>Этаж</label>
+                {{ form.floor }} <span class="for_need_sale">из {{ form.count_floor }}</span>
+                <span class="for_need_demand hidden">до {{ form.floor_max }}</span>
+            </div>
+{#            <div class='square'>#}
+{#                <label>Площадь</label>#}
+{#                {{ form.square }}#}
+{#                {{ form.living_square }}#}
+{#                {{ form.kitchen_square }}#}
+{#                м<sup>2</sup>#}
+{#            </div>#}
+            <div class='square'>
+                <label>Общая площадь, м<sup>2</sup></label>
+                {{ form.square }} <span class="for_need_demand hidden"> до {{ form.square_max }}</span>
+            </div>
+            <div class='square for_flat for_room for_house for_commercial'>
+                <label>Жилая площадь, м<sup>2</sup></label>
+                {{ form.living_square }} <span class="for_need_demand hidden"> до {{ form.living_square_max }}</span>
+            </div>
+            <div class='square for_flat for_room for_house for_commercial'>
+                <label>Кухня, м<sup>2</sup></label>
+                {{ form.kitchen_square }} <span class="for_need_demand hidden"> до {{ form.kitchen_square_max }}</span>
+            </div>
+            <hr>
+            <div>Подробное описание</div>
+            <div>
+                {{ form.body }}
+            </div>
+            <div class="price">
+                {{ form.price.label_tag }}
+                <span class="for_need_demand hidden">
+                    от {{ form.min_price }} руб. - до
+                </span>
+                {{ form.price }} руб.
+            </div>
+            <hr>
+            <div>
+                <label>Имя</label>
+                {{ form.owner_name }}
+            </div>
+            <div class="owner-tel">
+                <label>Телефон</label>
+                {{ form.owner_tel }}
+            </div>
+            <div>
+                {% if is_moder %}
+                    <label>&nbsp;</label>
+                    <a href="#" class="btn btn-default btn-lg btn-catalog-is-agent" data-id='{{ advert.id }}' data-input='owner_tel'>
+                        Это агент
+                    </a>
+                    <a href="#" class="btn btn-default btn-lg btn-catalog-not-answer" data-id='{{ advert.id }}'>
+                        Не отвечает на звонок
+                    </a>
+                    <a href="#" class="btn btn-default btn-lg btn-catalog-irrelevant" data-id='{{ advert.id }}'>
+                        Неактуальное
+                    </a>
+                {% endif %}
+            </div>
+
+            {% if is_moder and user.is_staff %}
+                {% if advert.company %}
+                    <div class="agent-name">
+                        <label>Разместил агент:</label>
+                        <a href='{% url 'client:user:detail' advert.user.id %}'>{{ advert.user.get_full_name }}</a>
+                    </div>
+                    <div class="agent-tel">
+                        <label>Телефон:</label>
+                         {{ advert.user.tel|fmt_tel }}
+                    </div>
+                    <div class="agent-company">
+                        <label>Агентство:</label>
+                        <a href='{% url 'client:company:detail' advert.company.id %}'>{{ advert.company.title }}</a>
+                    </div>
+                {% endif %}
+            {% endif %}
+        </div>
+    </div>
+
+    {{ form.images }}
+</form>
+
+<div class="row" style="margin-top: -40px; padding-bottom: 40px;">
+    <div class="col col-1">
+        {% image_upload_multiple form.images %}
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    var addressMap;
+    var estate = 'flat';
+    var adtype = 'lease';
+    var need = 'need_sale';
+    var myGeoObjects = [];
+    var advert_town = {{ map_town.id }};
+
+    jQuery('#id_price').mask('999999999');
+    jQuery('#id_square').mask('999999999');
+    jQuery('#id_kitchen_square').mask('999999999');
+
+    function show_estate() {
+        var new_estate = 'flat';
+
+        switch(jQuery('#catalog-form input[name="estate"]:checked').val()) {
+            case 'F':
+                switch(jQuery('#catalog-form input[name="live"]:checked').val()) {
+                    case 'R':
+                        new_estate = 'room';
+                        break;
+                    case 'F':
+                        new_estate = 'flat';
+                        break;
+                }
+                break;
+            case 'H':
+                new_estate = 'house';
+                break;
+            case 'C':
+                new_estate = 'commercial';
+                break;
+            case 'T':
+                new_estate = 'territory';
+                break;
+            default:
+                new_estate = estate;
+        }
+
+        jQuery('#catalog-form .for_'+estate).addClass('hidden');
+        estate = new_estate;
+        jQuery('#catalog-form .for_'+estate).removeClass('hidden');
+
+        var new_adtype = 'lease';
+        var new_need = 'need_sale';
+        switch(jQuery('#catalog-form input[name="type2"]:checked').val()) {
+            case 'LS':
+                new_adtype = 'lease';
+                new_need = 'need_sale';
+                break;
+            case 'SS':
+                new_adtype = 'sale';
+                new_need = 'need_sale';
+                break;
+            case 'LD':
+                new_adtype = 'lease';
+                new_need = 'need_demand';
+                break;
+            case 'SD':
+                new_adtype = 'sale';
+                new_need = 'need_demand';
+                break;
+            default:
+                new_adtype = adtype;
+                new_need = need;
+        }
+
+        jQuery('#catalog-form .for_'+adtype).addClass('hidden');
+        adtype = new_adtype;
+        jQuery('#catalog-form .for_'+adtype).removeClass('hidden');
+
+        jQuery('#catalog-form .for_'+need).addClass('hidden');
+        need = new_need;
+        jQuery('#catalog-form .for_'+need).removeClass('hidden');
+    }
+
+    function init(){
+        addressMap = new ymaps.Map("address-map", {
+            center: [{{ map_town.latitude|stringformat:'f' }}, {{ map_town.longitude|stringformat:'f' }}],
+            zoom: {{ map_town.zoom|stringformat:'d' }}
+        });
+
+        addressMap.controls.add('zoomControl');
+        addressMap.controls.add('typeSelector');
+
+        {% if form.latitude.value and form.longitude.value %}
+            var myGeoObject = new ymaps.GeoObject({
+                geometry: {
+                    type: "Point",
+                    coordinates: [{{ form.latitude.value|stringformat:'f' }}, {{ form.longitude.value|stringformat:'f' }}]
+                }
+            }, {
+                iconLayout: 'default#image',
+                iconImageHref: 'http://xn--c1aul.xn--p1ai{{ STATIC_URL }}img/point-red.png',
+                iconImageSize: [26, 43],
+                iconImageOffset: [-13, -38]
+            });
+            addressMap.geoObjects.add(myGeoObject);
+            addressMap.setCenter([{{ form.latitude.value|stringformat:'f' }}, {{ form.longitude.value|stringformat:'f' }}]);
+        {% endif %}
+    }
+
+    ymaps.ready(init);
+
+    jQuery('#id_address').change(function(e){
+        var address_string = 'Россия, {{ map_town.title }}, '+ jQuery(this).val();
+        var myGeocoder = ymaps.geocode(address_string);
+        myGeocoder.then(
+                function (res) {
+                    var placemark = res.geoObjects.get(0);
+                    if (placemark) {
+                        var coord = placemark.geometry.getCoordinates();
+                        var myGeoObject = new ymaps.GeoObject({
+                            geometry: {
+                                type: "Point",
+                                coordinates: [coord[0], coord[1]]
+                            }
+                        }, {
+                            iconLayout: 'default#image',
+                            iconImageHref: 'http://xn--c1aul.xn--p1ai{{ STATIC_URL }}img/point-red.png',
+                            iconImageSize: [26, 43],
+                            iconImageOffset: [-13, -38]
+                        });
+
+                        addressMap.setCenter(coord);
+                        for (var i=0; i<myGeoObjects.length; i++) {
+                            addressMap.geoObjects.remove(myGeoObjects[i]);
+                        }
+                        myGeoObjects = [];
+                        addressMap.geoObjects.add(myGeoObject);
+                        myGeoObjects.push(myGeoObject);
+                        jQuery('#id_latitude').val(coord[0]);
+                        jQuery('#id_longitude').val(coord[1]);
+                        jQuery('#catalog-form .address .map').addClass('found');
+
+                        //определение станции метро
+                        ymaps.geocode(coord, {
+                            kind: 'metro',
+                            results: 4
+                        }).then(function(res) {
+                                    if (res.geoObjects.getLength() > 0) {
+                                        var m = res.geoObjects.get(0);
+                                        var metro_name = m.properties.get('name').replace('метро', '');
+                                        jQuery.get('/metro/typehead', {query: metro_name, town: advert_town}, function(data) {
+                                            if (data.length > 0) {
+                                                jQuery('#id_metro input[type="hidden"]').val(data[0].id);
+                                                jQuery('#id_metro .bfh-selectbox-option').html(data[0].title);
+                                            }
+                                        }, 'json');
+                                    }
+                                });
+
+                        //определение района
+                        ymaps.geocode(coord, {
+                            kind: 'district',
+                            results: 4
+                        }).then(function(res) {
+                                    if (res.geoObjects.getLength() > 0) {
+                                        var m = res.geoObjects.get(0);
+                                        var district_name = m.properties.get('name').replace('район', '');
+                                        jQuery.get('/district/typehead', {query: district_name, town: advert_town}, function(data) {
+                                            if (data.length > 0) {
+                                                jQuery('#id_district input[type="hidden"]').val(data[0].id);
+                                                jQuery('#id_district .bfh-selectbox-option').html(data[0].title);
+                                            }
+                                        }, 'json');
+                                    }
+                                });
+                    }
+
+                },
+                function (err) {
+                    // обработка ошибки
+                }
+        );
+    });
+
+    jQuery('input[name="estate"]').change(show_estate);
+    jQuery('input[name="live"]').change(show_estate);
+    jQuery('input[name="type2"]').change(show_estate);
+
+
+    jQuery('#catalog-form .comfort input[type="checkbox"]').change(function(e){
+        if (this.checked) {
+            jQuery(this.parentNode).find('.glyphicon').clone().appendTo(jQuery(this).parents('.comfort').find('.icon-list'));
+        } else {
+            var classes = jQuery(this.parentNode).find('.glyphicon').attr('class');
+            jQuery(this).parents('.comfort').find('.icon-list').find('span[class="'+classes+'"]').remove();
+        }
+
+    });
+
+    show_estate();
+</script>
+

@@ -1,0 +1,18 @@
+{% extends 'email/email.html' %}
+
+{% load main_tags %}
+
+{% block content %}
+    {% if parent %}
+        <h3>Вы писали:</h3>
+        <p>{{ parent.text|linebreaksbr }}</p>
+        <p>Дата: {{ parent.date|fmt_date }}</p>
+        <p>Ссылка: <a href="{{ parent.url }}#comment-{{ parent.id }}">{{ parent.url }}#comment-{{ parent.id }}</a></p>
+        <hr>
+    {% endif %}
+
+    <h3>Вам ответил(а) {{ comment.user.get_full_name }}:</h3>
+    <p>{{ comment.text|linebreaksbr }}</p>
+    <p>Дата: {{ comment.date|fmt_date }}</p>
+    <p>Ссылка: <a href="{{ comment.url }}#comment-{{ comment.id }}">{{ comment.url }}#comment-{{ parent.id }}</a></p>
+{% endblock %}

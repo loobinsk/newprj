@@ -1,0 +1,8 @@
+{% load main_tags %}
+
+<div class="district-preview district district-item-{{ district.id }} editable-content">
+    <div class="content">
+        <h2><a href="#" class="btn-district-edit" data-id='{{ district.id }}'>{{ district.title }}</a></h2>
+    </div>
+    {% include 'main/client/district/edit-buttons.html' %}
+</div>

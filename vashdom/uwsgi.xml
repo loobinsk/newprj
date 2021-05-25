@@ -1,0 +1,40 @@
+<!-- UWSGI XML Configuration File -->
+<uwsgi>
+
+    <!-- Сокет для передачи данных -->
+    <socket>/var/www/vd/web/vashdom/uwsgi.sock</socket>
+    <chmod-socket>666</chmod-socket>
+
+    <!-- Путь к виртуальному окружению -->
+    <home>/var/www/vd/env/gsn/</home>
+
+    <!-- Нам понадобится включенный python плагин -->
+    <plugins>python</plugins>
+
+    <!-- Дополнительный python-путь -->
+    <pythonpath>/var/www/vd/web</pythonpath>
+
+    <!-- Модуль python с определением wsgi приложения -->
+    <module>vashdom.wsgi</module>
+
+    <!-- Количество процессов -->
+    <processes>2</processes>
+
+    <!-- Максимальное количество соединений для каждого процесса -->
+    <max-requests>5000</max-requests>
+
+    <!-- Максимальный размер запроса -->
+    <buffer-size>32768</buffer-size>
+
+    <!-- Убивать каждое соединение требующее больше 30 сек для обработки -->
+    <harakiri>60</harakiri>
+
+    <reload-on-as>300</reload-on-as>
+    <reload-on-rss>4800</reload-on-rss>
+    <vacuum>true</vacuum>
+
+    <reload-mercy>8</reload-mercy>
+    <master />
+    <no-orphans />
+
+</uwsgi>

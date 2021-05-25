@@ -1,0 +1,16 @@
+{% load main_tags %}
+{% load cache %}
+{% load uvideo_tags %}
+{% load uimg_tags %}
+
+<div class='item tariff-preview tariff-item-{{ tariff.id }} editable-content'>
+
+    <div class='content'>
+        <h2 class='title'>{{ tariff.title }}</h2>
+        <div class="price">{{ tariff.price }}</div>
+        <div class="desc">{{ tariff.desc|linebreaksbr }}</div>
+    </div>
+
+    {% include 'main/client/tariff/edit-buttons.html' %}
+</div>
+

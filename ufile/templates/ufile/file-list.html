@@ -1,0 +1,21 @@
+{% if file_list|length > 0 %}
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            Приложение
+        </div>
+        <div class="panel-body">
+            <div class='file-list'>
+                <ul>
+                    {% for file in file_list %}
+                        <li>
+                            <span class="glyphicon glyphicon-paperclip"></span>
+                            <a href="{{ file.file.url }}" target="__blank">
+                                {{ file.name }}
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endif %}

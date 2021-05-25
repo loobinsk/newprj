@@ -1,0 +1,12 @@
+<form method="POST" action="{{ action }}" id="sr-simple-form" class="">
+    {% csrf_token %}
+    {{ form.catalog_id }}
+    <div class="email">
+        <label>{{ form.email.label }}</label>
+        {{ form.email }}
+    </div>
+
+    <div class="additional">
+        <a href="{% url 'search-request:create' %}?catalog={{ advert.id }}">Расширенные настройки подписки</a>
+    </div>
+</form>

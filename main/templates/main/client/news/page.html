@@ -1,0 +1,30 @@
+{% extends 'page-client-center.html' %}
+
+{% load bootstrap_pagination %}
+{% load main_tags %}
+
+{% block title %}Новости &middot; {{ block.super }}{% endblock %}
+
+{% block center %}
+        {% if perms.main.add_news %}
+            <a href='#' class='btn-news-create-client btn btn-primary pull-right'><span class="glyphicon glyphicon-pencil"></span> Написать новость</a>
+        {% endif %}
+
+        <h1 class="page-title">
+            {% block h1 %}
+                Новости
+            {% endblock %}
+        </h1>
+
+        <div class="sidebar">
+        </div>
+
+        <div class="news-page with-sidebar">
+            {% if news_list %}
+                {% include 'main/client/news/list.html' %}
+                {% bootstrap_paginate page_obj alignment='left' range=6 show_first_last='true'%}
+            {% else %}
+                <div class="alert alert-info">Нет новостей</div>
+            {% endif %}
+        </div>
+{% endblock %}

@@ -1,0 +1,110 @@
+<!doctype html>
+{% load metatags %}
+{% get_metatag as metatag %}
+<html>
+<head>
+	{% block meta %}
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="msvalidate.01" content="4BE19ED12AC958189F0CA28C1035B5EB" />
+        <meta name="google-site-verification" content="TjgZplfl8gRLxdMAf3OSwJlNPFtJfT4I9ESNGDaUcyQ" />
+        <meta name='yandex-verification' content='44eebc8ca3bf08a1' />
+        <meta name='wmail-verification' content='9676b2c2b64f1856338cce297f21b986' />
+        <meta name="verification" content="6b5e6d449e93d63ff455d4c679ee0d" />
+        {% if metatag.og_title %}
+            {{metatag.render_ogtitle}}
+        {% else %}
+            <meta name="og:title" content="{% block ogtitle %}{% endblock %}"/>
+        {% endif %}
+        <meta name="og:url" content="{% block ogurl %}{% endblock %}"/>
+        <meta name="og:site_name" content="БазаВашДом"/>
+        {% if metatag.og_image %}
+            {{metatag.render_ogimage}}
+        {% else %}
+            <meta name="og:image" content="{% block ogimage %}https://{{ request.get_host }}/static/img/image_src.jpg{% endblock %}" />
+        {% endif %}
+        <meta name="og:site_name" content="БазаВашДом"/>
+        <link rel="image_src" href="{% block image_src %}https://{{ request.get_host }}/static/img/image_src.jpg{% endblock %}" />
+    {% endblock %}
+    {% if metatag.keywords %}
+        {{metatag.render_keywords}}
+    {% else %}
+        <meta name="keywords" content="{% block keywords %}аренда квартир, снять квартиру,
+        снять квартиру без посредников, сдать комнату без посредников, снять комнату без посредников, сдать,
+        снять, база собственников, база недвижимости, аренда квартир{% endblock %}"/>
+    {% endif %}
+    {% if metatag.description %}
+        {{metatag.render_description}}
+    {% else %}
+        <meta name="description" content="{% block description %}Cнять квартиру, комнату без посредников.
+        Аренда жилья без комиссии удобно и выгодно. На сайте Вы можете снять жилье без агентов. База недвижимости от собственников.{% endblock %}"/>
+    {% endif %}
+    {% block styles %}
+        <link rel="icon" href="/static/img/favicon.ico" />
+        {% if debug %}
+            <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}packed/styles.css">
+        {% else %}
+            <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}packed/styles.min.css">
+        {% endif %}
+	{% endblock %}
+	{% block scripts %}
+        {% if debug %}
+            <script type="text/javascript" src="{{ STATIC_URL }}packed/scripts.js"></script>
+        {% else %}
+            <script type="text/javascript" src="{{ STATIC_URL }}packed/scripts.min.js"></script>
+        {% endif %}
+        <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU&load=package.standard,package.geoObjects,package.clusters" type="text/javascript"></script>
+        <script type="text/javascript" src="//vk.com/js/api/openapi.js?116"></script>
+        <script type="text/javascript">
+         VK.init({apiId: 2840375, onlyWidgets: true});
+        </script>
+        <script type="text/javascript" src="https://vk.com/js/api/share.js?92" charset="windows-1251"></script>
+        
+	{% endblock %}
+
+    {% if metatag.title %}
+        {{metatag.render_title}}
+    {% else %}
+        <title>{% block title %}База недвижимости без посредников ВАШ ДОМ{% endblock %}</title>
+    {% endif %}
+    
+
+<!-- Yandex.Metrika counter --> <script type="text/javascript"> (function (d, w, c) { (w[c] = w[c] || []).push(function() { try { w.yaCounter24582740 = new Ya.Metrika({ id:24582740, clickmap:true, trackLinks:true, accurateTrackBounce:true, webvisor:true, trackHash:true }); } catch(e) { } }); var n = d.getElementsByTagName("script")[0], s = d.createElement("script"), f = function () { n.parentNode.insertBefore(s, n); }; s.type = "text/javascript"; s.async = true; s.src = "https://mc.yandex.ru/metrika/watch.js"; if (w.opera == "[object Opera]") { d.addEventListener("DOMContentLoaded", f, false); } else { f(); } })(document, window, "yandex_metrika_callbacks"); </script> <noscript><div><img src="https://mc.yandex.ru/watch/24582740" style="position:absolute; left:-9999px;" alt="" /></div></noscript> <!-- /Yandex.Metrika counter -->
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-82284903-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+{# <script type="text/javascript">(window.Image ? (new Image()) : document.createElement('img')).src = location.protocol + '//vk.com/rtrg?r=AXgBlkDi5Ar6eReAMbxRSO8XstNzanGMCVtOd7IhSNmrGlhNcilf5csKqE53p6D0DHKWIZ9rS7ZT7JC59m6A14xnd/7qNbV0gZUaO2ZwEkV69Kx3BQnfOVAXexT*PCE6s3WbnhVu54bcXysE/2dirP2qmt3AFWXX7KpMdj*jGHQ-&pixel_id=1000047104';</script>#}
+
+</head>
+
+<body class='offcanvas__page offcanvas-filter__page {% block body_class %}{% endblock %}'>
+
+	{% block page %}
+	{% endblock %}
+    <div class='notifications top-left'></div>
+
+{#    <div class="hidden">#}
+{#        {% csrf_token %}#}
+{#    </div>#}
+
+    {% include 'messages.html' %}
+
+
+<!-- BEGIN JIVOSITE CODE {literal} -->
+<script type='text/javascript'>
+(function(){ var widget_id = 'hxlcPXNFm3';var d=document;var w=window;function l(){
+var s = document.createElement('script'); s.type = 'text/javascript'; s.async = true; s.src = '//code.jivosite.com/script/widget/'+widget_id; var ss = document.getElementsByTagName('script')[0]; ss.parentNode.insertBefore(s, ss);}if(d.readyState=='complete'){l();}else{if(w.attachEvent){w.attachEvent('onload',l);}else{w.addEventListener('load',l,false);}}})();</script>
+<!-- {/literal} END JIVOSITE CODE -->
+
+
+</body>
+</html>

@@ -1,0 +1,25 @@
+@import '../imports.less';
+
+.ext-links {
+    padding: 15px 0 0 0;
+    margin-top: 25px;
+    border-top: 1px solid #f0f0f0;
+    font-size: 12px;
+    overflow: hidden;
+    display: flex;
+    .sm(flex-wrap, wrap);
+
+    &__col {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+        width: 50%;
+        padding-right: 15px;
+        .xs(width, 100%);
+        .xs(padding-right, 0);
+    }
+
+    li {
+        margin: 5px 0;
+    }
+}

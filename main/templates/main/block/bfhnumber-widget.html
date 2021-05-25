@@ -1,0 +1,5 @@
+<input type="text" class="bfh-number {{ attrs.class }}" id="{{ attrs.id }}" name="{{ name }}" value="{{ value|default_if_none:'' }}" {% if min %}data-min="{{ min }}"{% endif %} {% if max %}data-max="{{ max }}"{% endif %}>
+
+<script type="text/javascript">
+    jQuery('#{{ attrs.id }}').bfhnumber();
+</script>

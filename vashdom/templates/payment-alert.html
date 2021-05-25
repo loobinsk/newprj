@@ -1,0 +1,56 @@
+{% extends 'page-sidebar.html' %}
+
+{% block title %}Уведомление о платеже &middot; {{ block.super }}{% endblock %}
+
+{% block sidebar %}
+    {% include 'vashdom/block/vkontakte-group.html' %}
+{% endblock %}
+
+{% block content %}
+    <h1 class="page-title">Уведомление о платеже</h1>
+
+    <form id="payment-alert-form" class="form" method="post" action="{% url 'payment-alert' %}">
+        {% csrf_token %}
+        <div class="town">
+            <label>{{ form.town.label }}</label>
+            {{ form.town }}
+        </div>
+        <div class="date">
+            <label>{{ form.date.label }}</label>
+            <div style="display: inline-block; width:250px;">{{ form.date }}</div>
+        </div>
+        <div class="hour">
+            <label>{{ form.hour.label }}</label>
+            {{ form.hour }}
+        </div>
+        <div class="minute">
+            <label>{{ form.minute.label }}</label>
+            {{ form.minute }}
+        </div>
+        <div class="sum">
+            <label>{{ form.sum.label }}</label>
+            {{ form.sum }}
+        </div>
+        <div class="receiver">
+            <label>{{ form.receiver.label }}</label>
+            {{ form.receiver }}
+        </div>
+        <div class="tel">
+            <label>{{ form.tel.label }}</label>
+            {{ form.tel }}
+        </div>
+        <div class="name">
+            <label>{{ form.name.label }}</label>
+            {{ form.name }}
+        </div>
+        <div class="email">
+            <label>{{ form.email.label }}</label>
+            {{ form.email }}
+        </div>
+        <div class="submit">
+            <button class="btn btn-secondary btn-lg">Отправить уведомление</button>
+        </div>
+
+    </form>
+
+{% endblock %}

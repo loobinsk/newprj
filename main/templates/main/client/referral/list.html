@@ -1,0 +1,18 @@
+<table class="table table-bordered referral-list">
+    <thead>
+        <tr>
+            <th>Ссылка</th>
+            <th>Сайт</th>
+            <th>Владелец</th>
+            <th>Кол-во переходов</th>
+            <th>Кол-во привл. пользователей</th>
+            <th>Кол-во платежей</th>
+            <th>Действия</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for referral in referral_list %}
+            {% include 'main/client/referral/preview.html' %}
+        {% endfor %}
+    </tbody>
+</table>

@@ -1,0 +1,210 @@
+{% load main_tags %}
+
+<div class="catalog-filter">
+    <form method="get" action="{{ url }}">
+        <div class="row">
+            <div class="col col1">
+                <h3>Объявления</h3>
+                {{ form.type2 }}
+{#                {% if form.type.value != 'L' %}#}
+{#                    {{ form.type3 }}#}
+{#                {% endif %}#}
+                {% if form.type.value != 'S' %}
+                    {% if form.estate.value == 'F' or form.estate.value == 'H' %}
+                        <div class='limit_day'>{{ form.limit_day }}<label for="id_limit_day">{{ form.limit_day.label }}</label></div>
+                    {% endif %}
+                {% endif %}
+
+                {{ form.type }}
+                {{ form.estate }}
+                {{ form.map }}
+            </div>
+
+            <div class="col col2">
+                <h3>
+                    {% if form.type.value == 'S' %}
+                        Продавец
+                    {% else %}
+                        Арендодатель
+                    {% endif %}
+                </h3>
+                <div>{{ form.owner_agent }}<label for="id_owner_agent">{{ form.owner_agent.label }}</label></div>
+                <div>{{ form.owner_owner }}<label for="id_owner_owner">{{ form.owner_owner.label }}</label></div>
+
+                {% if is_moder and user.is_staff %}
+                    <div>
+                        {{ form.id }}
+                        {{ form.owner_tel }}
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="col col3">
+                {% if form.estate.value == 'T' or form.estate.value == 'C' or form.estate.value == 'H' %}
+                    <h3>Назначение</h3>
+                {% else %}
+                    <h3>Комнат</h3>
+                    {{ form.rooms }}
+                {% endif %}
+                {% if form.estate.value == 'H' %}
+                    {{ form.country }}
+                {% endif %}
+                {% if form.estate.value == 'C' %}
+                    {{ form.commercial }}
+                {% endif %}
+                {% if form.estate.value == 'T' %}
+                    {{ form.territory }}
+                {% endif %}
+            </div>
+
+            <div class="col col4">
+                <h3>Удобства</h3>
+
+                <div class="dropdown comfort auto keep-open">
+                    <a data-toggle="dropdown" href="#">Выбрать</a>
+                    <div class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                        <div class='for_flat for_room for_house for_commercial'>
+                            <h3>Интерьер</h3>
+                            <div class="btn-group options" data-toggle="buttons">
+                                {{ form.refrigerator|add_class:'for_flat for_room for_house' }}
+                                {{ form.tv|add_class:'for_flat for_room for_house' }}
+                                {{ form.washer|add_class:'for_flat for_room for_house' }}
+                                {{ form.phone }}
+                                {{ form.internet }}
+                                {{ form.conditioner }}
+                                {{ form.firniture }}
+                                {{ form.separate_wc }}
+                                {{ form.balcony }}
+                            </div>
+                        </div>
+
+                        <div class='for_flat for_room for_house for_commercial'>
+                            <div class="for_lease">
+                                <h3>Проживание</h3>
+                                <div class="btn-group options" data-toggle="buttons">
+                                    {{ form.live_one }}
+                                    {{ form.live_two }}
+                                    {{ form.live_pare }}
+                                    {{ form.live_more }}
+                                    {{ form.live_child }}
+                                    {{ form.live_animal }}
+                                    {{ form.live_girl }}
+                                    {{ form.live_man }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class='for_house for_house for_commercial for_territory'>
+                            <h3>Коммуникации</h3>
+                            <div class="btn-group options" data-toggle="buttons">
+                                {{ form.electric }}
+                                {{ form.gas }}
+                                {{ form.water }}
+                                {{ form.sewage }}
+                                {{ form.brick_building }}
+                                {{ form.wood_building }}
+                            </div>
+                        </div>
+
+                        <div class='for_flat for_room for_house for_commercial'>
+                            <h3>Ремонт</h3>
+                            <div class="btn-group options" data-toggle="buttons">
+                                {{ form.euroremont }}
+                                {{ form.redecoration }}
+                                {{ form.no_remont }}
+                                {{ form.need_remont }}
+                            </div>
+                        </div>
+
+                        <div class='for_flat for_room for_house for_commercial'>
+                            <h3>Разное</h3>
+                            <div class="btn-group options" data-toggle="buttons">
+                                {{ form.parking }}
+                                {{ form.lift|add_class:'for_flat for_room for_commercial' }}
+                                {{ form.concierge|add_class:'for_flat for_room' }}
+                                {{ form.guard }}
+                                {{ form.garage }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <p>Для более детального поиска вы можете указать дополнительные параметры</p>
+            </div>
+
+            <div class="col col5">
+                <h3>Расположение</h3>
+                {{ form.metro }}
+                {{ form.district }}
+            </div>
+
+            <div class="col col6">
+                <h3>Цена</h3>
+                {{ form.min_price }}
+                {{ form.max_price }}
+                <div>
+                    <input id="price-slider" type="text" class="slider" value="" data-slider-min="0"
+                           data-slider-max="200000" data-slider-step="5000"
+                           data-slider-value="[{{ form.min_price.value|default:'0' }},{{ form.max_price.value|default:'200000' }}]"
+                           data-slider-orientation="horizontal" data-slider-selection="after">
+                </div>
+            </div>
+
+            {% if form.estate.value != 'T' %}
+                <div class="col col7">
+                    <h3>Этаж</h3>
+                    {{ form.min_floor }}
+                    {{ form.max_floor }}
+                    <div>{{ form.not_first_floor }}<label for="id_not_first_floor">{{ form.not_first_floor.label }}</label></div>
+                    <div>{{ form.not_last_floor }}<label for="id_not_last_floor">{{ form.not_last_floor.label }}</label></div>
+                </div>
+            {% endif %}
+
+            <div class="col col8 {% if form.estate.value == 'T' %}as_7{% endif %}">
+                <h3>Площадь</h3>
+                {{ form.min_square }}
+                {{ form.max_square }}
+                <div>
+                    <input id="square-slider" type="text" class="slider" value="" data-slider-min="0"
+                           data-slider-max="100" data-slider-step="10"
+                           data-slider-value="[{{ form.min_square.value|default:'0' }},{{ form.max_square.value|default:'100' }}]"
+                           data-slider-orientation="horizontal" data-slider-selection="after">
+                </div>
+            </div>
+
+            <div class="col col9 {% if form.estate.value == 'T' %}as_8{% endif %}">
+                <h3>Дата</h3>
+                {{ form.date }}
+                <div>{{ form.archive }}<label for="id_archive">{{ form.archive.label }}</label></div>
+            </div>
+        </div>
+
+        <div class="action">
+            <button class="btn btn-flt3 btn-search">Подобрать</button>
+            <button type="reset" class="btn btn-default shadow btn-reset">Очистить</button>
+        </div>
+
+    </form>
+</div>
+
+<script type="text/javascript">
+    jQuery(document).ready(function(){
+        jQuery('#price-slider').slider()
+            .on('slide', function(e){
+                jQuery('#id_min_price').val(e.value[0]);
+                jQuery('#id_max_price').val(e.value[1]);
+            });
+
+        jQuery('#square-slider').slider()
+                .on('slide', function(e){
+                    jQuery('#id_min_square').val(e.value[0]);
+                    jQuery('#id_max_square').val(e.value[1]);
+                });
+        jQuery('#id_type2 input').change(function(e){
+            if (jQuery(this).val() == 'LS' || jQuery(this).val() == 'LD') {
+                jQuery('.limit_day').removeClass('hidden');
+            } else {
+                jQuery('.limit_day').addClass('hidden');
+            }
+        });
+    });
+</script>

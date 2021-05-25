@@ -1,0 +1,25 @@
+{% load main_tags %}
+{% load uimg_tags %}
+{% load vashdom_tags %}
+
+<div class="catalog-balloon item catalog-item-{{ advert.id }}">
+    <div class="content">
+        <h2>{{ advert.title }}</h2>
+        {% vashdom_image_preview advert %}
+        <div class="date"><strong>Размещено:</strong> {{ advert|fmt_vashdom_date }}</div>
+        <div class="address"><strong>Адрес:</strong>{% spaceless %}{{ advert.address|linebreaksbr }}{% endspaceless %}</div>
+        {% if advert.price %}
+            <div class="price"><strong>Цена:</strong>{{ advert.price|fmt_price }} р.</div>
+        {% endif %}
+        {% if advert.square %}
+            <div class="square"><strong>Площадь:</strong>{{ advert.square }} м<sup>2</sup></div>
+        {% endif %}
+{#        <ul class="icon-list">#}
+{#            {% for field in advert.comfort_list %}#}
+{#                {% if field.1 %}<li><span class="glyphicon {{ field.0 }}" data-toggle="tooltip" title='{{ field.2 }}'></span> </li>{% endif %}#}
+{#            {% endfor %}#}
+{#        </ul>#}
+
+        <a href="/id{{ advert.id }}" target="__blank" class="btn btn-secondary">Показать</a>
+    </div>
+</div>

@@ -1,0 +1,21 @@
+{% extends 'page-client-center.html' %}
+
+{% load bootstrap_pagination %}
+{% load main_tags %}
+
+{% block title %}Промоакции &middot; {{ block.super }}{% endblock %}
+
+{% block center %}
+        <a href='#' class='btn-promotion-create btn btn-primary pull-right'><span class="glyphicon glyphicon-pencil"></span> Создать промоакцию</a>
+
+        <h1 class="page-title">
+            Промоакции
+        </h1>
+
+        {% if promotion_list %}
+            {% include 'main/client/promotion/list.html' %}
+            {% bootstrap_paginate page_obj alignment='left' range=6 show_first_last='true'%}
+        {% else %}
+            <div class="alert alert-info">Нет промоакци</div>
+        {% endif %}
+{% endblock %}

@@ -1,0 +1,54 @@
+{% extends 'page-client-center.html' %}
+
+{% load main_tags %}
+{% load bootstrap_pagination %}
+
+{% block title %}ГСН24 &middot; {{ block.super }}{% endblock %}
+
+{% block center %}
+    <h1 class="page-title">ГСН24</h1>
+    <p>Система недвижимости онлайн "Агент-Клиент" | Ссылка для клиентов <a href="http://gsn24.ru/{{ user.agent24_code }}" target="_blank">GSN24.RU</a> и
+        <a href="http://xn--24-glc4bt.xn--p1ai/{{ user.agent24_code }}" target="_blank">ГСН24.РФ</a> | Код доступа для клиентов в ГСН24: <span class="agent24-code">{{ user.agent24_code }}</span>
+        <a href="http://xn--24-glc4bt.xn--p1ai/{{ user.agent24_code }}" class="btn btn-flt3" target="_blank"> Войти в ГСН24</a></p>
+
+    <form id="agent24-perms-form" method="post" action="{% url 'client:client-request:perms' %}">
+        {% csrf_token %}
+        <h2 class="page-title">Доступ клиентов к разделам объявлений</h2>
+
+        <div class="owners">
+            <span>
+                {{ agent24_form.agent24_view_owner }}<label for="id_agent24_view_owner">{{ agent24_form.agent24_view_owner.label }}</label>
+            </span>
+            <span>
+                {{ agent24_form.agent24_view_company }}<label for="id_agent24_view_company">{{ agent24_form.agent24_view_company.label }}</label>
+            </span>
+        </div>
+
+        {{ agent24_form.enable_perms }}
+    </form>
+
+    <h1 class="page-title">Заявки от клиентов</h1>
+    {% include 'main/client/client-request/list.html' %}
+    {% bootstrap_paginate page_obj range=6 show_first_last='true' %}
+
+    <script type="text/javascript">
+        jQuery(document).ready(function(){
+
+            jQuery('#agent24-perms-form').ajaxForm({
+                form: this,
+                dataType: 'json',
+                error: function(e) {
+                    var data = jQuery.parseJSON(e.responseText);
+                    $('.bottom-left').notify({
+                        message: { html: data.message },
+                        closable: true
+                    }).show();
+                }
+            });
+
+            jQuery('#agent24-perms-form input[type="checkbox"]').change(function(){
+                jQuery('#agent24-perms-form').submit();
+            });
+        });
+    </script>
+{% endblock %}

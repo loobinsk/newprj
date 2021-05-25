@@ -1,0 +1,9 @@
+{% load main_tags %}
+
+<tr class="blacklist-preview blacklist blacklist-item-{{ blacklist.id }}">
+        <td><a href='https://vk.com/id{{ blacklist.vkid }}' target="_blank" rel="nofollow">{{ blacklist.vkid }}</a></td>
+        <td>{{ blacklist.body|linebreaksbr|truncatewords_html:30|default_if_none:'&nbsp;' }}</td>
+        <td>
+            {% include 'main/client/vkblacklist/edit-buttons.html' %}
+        </td>
+</tr>

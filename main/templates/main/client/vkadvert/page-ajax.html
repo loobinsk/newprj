@@ -1,0 +1,21 @@
+{% load main_tags %}
+
+{% if page_obj.number > 1 %}
+    <div class="page-delimiter">
+        <span class="page">Страница {{ page_obj.number }}</span>
+    </div>
+{% endif %}
+
+{% include 'main/client/vkadvert/list.html' %}
+
+{% pagination page_obj %}
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('#count-find').html('Найдено {{ page_obj.paginator.count }} объявлений в г.{{ current_town.title }}');
+
+        $("img.lazy").lazyload({
+            effect : "fadeIn"
+        });
+    });
+</script>

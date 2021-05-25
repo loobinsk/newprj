@@ -1,0 +1,46 @@
+<div class="bfh-selectbox user" id="{{ attrs.id }}">
+    {% for user in user_list %}
+        <div data-value="{{ user.id }}">
+            <small>{{ user.site.domain }}</small>
+            <strong>{{ user.get_full_name }} ({{ user.username }})</strong>
+            {% if user.email %}<i>{{ user.email }}</i>{% endif %}
+        </div>
+    {% endfor %}
+</div>
+
+<script type="text/javascript">
+    jQuery('#{{ attrs.id }}').bfhselectbox({filter: true, name: "{{ name }}", value:"{{ value|default_if_none:'' }}"});
+</script>
+
+
+<script type="text/javascript">
+    var user_typeahead = new Bloodhound({
+        datumTokenizer: Bloodhound.tokenizers.whitespace,
+        queryTokenizer: Bloodhound.tokenizers.whitespace,
+        identify: function(obj) { return obj.id; },
+        remote: {
+            url: '/client/user/typehead?site_id={{ site_id }}&query=%QUERY',
+            wildcard: '%QUERY'
+        },
+        prefetch: {
+            url: '/client/user/typehead?site_id={{ site_id }}&query=',
+            cache: false
+        }
+    });
+
+    var user_template = Handlebars.compile(
+            '{% verbatim %}{{#each users}}<li><a tabindex="-1" href="#" data-option="{{ id }}"><small>{{ site }}</small><strong>{{ fullname }} ({{ username }})</strong>{{#if email}}<i>{{ email }}</i>{{/if}}</a></li>{{/each}}{% endverbatim %}'
+    );
+
+    var promise = user_typeahead.initialize();
+    promise
+    .done(function() { update_user_typehead(user_typeahead.all()) });
+
+    jQuery('#{{ attrs.id }} .bfh-selectbox-filter').keyup(function(e){
+        user_typeahead.search(jQuery(this).val(), function(datum){}, update_user_typehead);
+    });
+
+    function update_user_typehead(datum) {
+        jQuery('#{{ attrs.id }} ul[role="option"]').html(user_template({users:datum}));
+    }
+</script>

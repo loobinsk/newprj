@@ -1,0 +1,6 @@
+{% if can_edit %}
+    <ul class="actions">
+        <li><a href="#" class="btn-blacklist-edit"  data-id="{{ blacklist.id }}">Изменить</a></li>
+        <li><a href="#" class="btn-blacklist-del text-danger"  data-id="{{ blacklist.id }}">Удалить</a></li>
+    </ul>
+{% endif %}

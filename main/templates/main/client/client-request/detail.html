@@ -1,0 +1,28 @@
+{% extends 'page-client-center.html' %}
+
+{% load main_tags %}
+{% load bootstrap_pagination %}
+
+{% block title %}ГСН24 &middot; {{ block.super }}{% endblock %}
+
+{% block center %}
+    <div class="cr-detail">
+        <h1 class="page-title">Заявка</h1>
+        <div class="row">
+            <div class="col-xs-3">
+                <div class="date"><strong>Дата:</strong> {{ cr.date|fmt_date }}</div>
+                <div class="name"><strong>Имя:</strong> {{ cr.name }}</div>
+            </div>
+            <div class="col-xs-3">
+                <div class="tel"><strong>Телефон:</strong> {{ cr.tel|fmt_tel }}</div>
+                <div class="email"><strong>E-mail:</strong> {{ cr.email|default_if_none:'' }}</div>
+            </div>
+        </div>
+
+        {% if cr.body %}
+            <div class="body">{{ cr.body }}</div>
+        {% endif %}
+
+        {% include 'main/client/advert/list.html' %}
+    </div>
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends 'page-client.html' %}
+
+{% load bootstrap_pagination %}
+
+{% block title %}Города &middot; {{ block.super }}{% endblock %}
+
+{% block content %}
+
+    <a href='#' class='btn-town-create btn btn-primary pull-right'><span class="glyphicon glyphicon-pencil"></span> Создать город</a>
+
+    <h1 class="page-title">Городов</h1>
+
+    {% include 'main/client/town/list.html' %}
+
+    {% bootstrap_paginate page_obj range=6 show_first_last='true' %}
+{% endblock %}

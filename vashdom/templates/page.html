@@ -1,0 +1,291 @@
+{% extends "html.html" %}
+
+{% load main_tags %}
+{% load vashdom_tags %}
+{% load thumbnail %}
+
+{% block page %}
+    <div class="header">
+        <div class='container'>
+            <div class='row'>
+                <button id='header-sandwitch' class="header__sandwitch sandwitch">
+                    <span class="sandwitch__line1"></span>
+                    <span class="sandwitch__line2"></span>
+                    <span class="sandwitch__line3"></span>
+                </button>
+
+                <a href="{% url 'home' %}" class="header__logo"><img alt="База квартир от собственников" title="Перейти на главную" src="{{ STATIC_URL }}img/logo.png"></a>
+                
+                <div class="header__contacts">
+                    <span class="header__regim">ЕЖЕДНЕВНО С 10:00 - 22:00</span>
+                    {% if current_town.slug == 'moskva' %}
+                        <div class="header__tel">+7(812) 507-67-47</div>
+                    {% elif current_town.slug == 'sankt-peterburg' %}
+                        <div class="header__tel">+7(812) 507-67-47</div>
+                    {% elif current_town.slug == 'ekaterinburg' %}
+                        <div class="header__tel">+7(343) 226-03-32</div>
+                    {% elif current_town.slug == 'novosibirsk' %}
+                        <div class="header__tel">+7(383) 207-82-33</div>
+                    {% endif %}
+                </div>
+
+                <div class="header__user-block user-block">
+                    {% if user.is_authenticated %}
+                            <a href="{% url 'profile:my' %}" class="user-block__profile" title="Страница аккаунта">Мой профиль</a>
+                            <a href="{% url 'auth_logout' %}" class="user-block__logout" title="Выйти из аккаунта">Выход</a>
+                    {% else %}
+                            <a href="{% url 'registration_register' %}" class="user-block__register" title="Зарегистрироваться на сайте">
+                                <span class="user-block__register-title">Регистрация</span>
+                                <i class="fa fa-key user-block__register-icon"></i>
+                            </a>
+                            <a href="{% url 'auth_login' %}" class="user-block__auth" title="Вход в аккаунт">
+                                <span class="user-block__auth-title">Авторизация</span>
+                                <i class="fa fa-user-o user-block__auth-icon"></i>
+                            </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mainmenu">
+        <div class="container">
+            <div class="row">
+                <div class="mainmenu__content">
+                    <div class="dropdown choose-town" title="Еще города..">
+                        <a href="#" data-toggle="dropdown">{{ current_town.title }} <span class="caret"></span></a>
+                        <div class="dropdown-menu">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="choose-town__col">
+                                        {% vashdom_choose_town_block %}
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+
+                    <ul class="mainmenu__items">
+{#                        <li class="{% nav_active request 'home' %}"><a href="{% url 'home' %}" title="Главная страница">Главная</a></li>#}
+                        <li><a href="/{{current_town.slug}}/" title="Смотреть объявления каталога Ваш Дом">База Ваш Дом</a></li>
+                        <li><a href="/vk/{{current_town.slug}}/" title="Смотреть объявления каталога ВКонтакте">База ВК</a></li>
+                        <li class="{% nav_active request 'advert:create' %}"><a href="{% url 'advert:create' %}" title="Сдать квартиру за 3 дня">Добавить</a></li>
+                        <li class="{% nav_active request 'tariff' %}"><a href="{% url 'tariff' %}" title="Тарифы на доступ">Оплата</a></li>
+{#                        <li class="{% nav_active request 'contacts' %}"><a href="{% url 'contacts' %}" title="Контактная информация">Контакты</a></li>#}
+                        <li class="{% if request|nav_url:'/poisk' %}active{% endif %}"><a href="/poisk" title="Подбор жилья под Ваши требования">Подбор</a></li>
+                        <li class="{% if request|nav_url:'/guarantee' %}active{% endif %}"><a href="/guarantee" title="Наша гарантия">Гарантия</a></li>
+                        <li class="{% if request|nav_url:'/otzhiv' %}active{% endif %}"><a href="/otzhiv" title="Отзывы">Отзывы</a></li>
+                        <li class="{% if request|nav_url:'/node/5/' %}active{% endif %}"><a href="/node/5/" title="Как пользоваться сайтом">FAQ</a></li>
+                    </ul>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% block breadcrumbs %}
+        <div class="container">
+            <div class="row">
+                <div class="breadcrumb__col">
+                    {% include 'breadcrumbs.html' %}
+                </div>
+            </div>
+        </div>
+    {% endblock breadcrumbs %}
+    
+    
+
+    {% block page_content %}
+        <div class='page'>
+            {% block content %}
+
+            {% endblock %}
+        </div>
+    {% endblock %}
+
+    <div class="footer-page">
+        <div class='container'>
+            <div class='row'>
+                <div class="footer-page__col1">
+                    {% if current_town.slug == 'moskva' %}
+                        <h3>Аренда без комиссии в Москве</h3>
+                    {% elif current_town.slug == 'sankt-peterburg' %}
+                        <h3>Аренда без комиссии в Санкт-Петербурге</h3>
+                    {% elif current_town.slug == 'ekaterinburg' %}
+                        <h3>Аренда без комиссии в Екатеринбурге</h3>
+                    {% elif current_town.slug == 'novosibirsk' %}
+                        <h3>Аренда без комиссии в Новосибирске</h3>
+                    {% endif %}
+                    <p><a href="/{{current_town.slug}}/komnata/" title="Комнаты от собственников">Комнаты</a></p>
+                    <p><a href="/{{current_town.slug}}/kvartira/1-komnatnaya/" title="Однокомнатные квартиры от собственников">1-комнатные квартиры </a></p>
+                    <p><a href="/{{current_town.slug}}/kvartira/2-komnatnaya/" title="Двухкомнатные квартиры от собственников">2-х комнатные квартиры </a></p>
+                    <p><a href="/{{current_town.slug}}/kvartira/3-komnatnaya/" title="Трехкомнатные квартиры от собственников">3-х комнатные квартиры </a></p>
+                    <p><a href="/{{current_town.slug}}/kvartira/4-komnatnaya/" title="Четырех и более комнатные квартиры от собственников">4-х и более комнатные </a></p>
+                    <p><a href="/{{current_town.slug}}/" title="Показать все предложения">Все предложения</a></p>
+                </div>
+                <div class="footer-page__col2">
+                    <h3>Собственникам:</h3>
+                    <p><a href="/add" title="Бесплатно разместить объявление">Добавить объявление</a></p>
+                    <p>&nbsp;</p>
+                    <h3>Документы:</h3>
+                    <p><a href="/doc/" title="Форма договора аренды жилья">Договор найма жилья</a></p>
+{#                    <p><a href="/info">Опись имущества</a></p>#}
+                    <p><a href="/doc/" title="Форма соглашения об задатке">Соглашение о задатке</a></p>
+
+                </div>
+                <div class="footer-page__col3">
+                    <h3>Информация: </h3>
+                    <p><a href="/news/" title="Новости в сфере аренды недвижимости и акции проекта">Новости и акции</a></p>
+{#                    <p><a href="/">Принцип работы</a></p>#}
+                    <p><a href="/payments" title="Тарифы на подключение">Подключение к сервису</a></p>
+{#                     <p><a href="/robokassa/payment">Способы оплаты </a></p>#}
+					<p><a href="/guarantee" title="Наша гарантия">Гарантия</a></p>
+                    <p><a href="/node/5/" title="Ответы на часто задаваемые вопросы">Ответы на вопросы</a></p>
+					<p><a href="/info" title="Коммерческое подключение">Полезная информация</a></p>
+                    <p><a href="/node/8048" title="Как не попасться на удочку мошенников">Информация о мошенниках</a></p>
+{#                    <p><a href="/info">Агентствам недвижимости </a></p>#}
+					<p><a href="/contact" title="Как с нами связаться">Контактная информация </a></p>
+                    <p><a href="/otzhiv">Отзывы о сервисе</a></p>
+                </div>
+                <div class="footer-page__col4">
+                    <p><img alt="База недвижимости без посредников Ваш Дом" title="Сервис База Ваш Дом" src="{{ STATIC_URL }}img/logo.png" style="height:54px; width:200px"></p>
+
+                    <p>Недвижимость без посредников<br>
+                    Бесплатное размещение объявлений</p>
+
+                    {% if current_town.slug == 'moskva' %}
+                        <p>С нашей помощью Вы сможете снять <br>
+                        квартиру или комнату без посредников<br>
+                        в Москве и Московской области.</p>
+
+                        <p>Тел.: +7 (812) 507-67-47<br>
+                        Email: Msk@Bazavashdom.ru</p>
+                    {% elif current_town.slug == 'sankt-peterburg' %}
+                        <p>С нашей помощью Вы сможете снять <br>
+                        квартиру или комнату без посредников<br>
+                        в Санкт-Петербурге и Ленинградской области.</p>
+
+                        <p>Тел.: +7 (812) 507-67-47<br>
+                        Email: Spb@Bazavashdom.ru</p>
+                    {% elif current_town.slug == 'ekaterinburg' %}
+                        <p>С нашей помощью Вы сможете снять <br>
+                        квартиру или комнату без посредников<br>
+                        в Екатеринбурге и Свердловской области.</p>
+
+                        <p>Тел.: +7 (343) 226-03-32<br>
+                        Email: Ekb@Bazavashdom.ru</p>
+                    {% elif current_town.slug == 'novosibirsk' %}
+                        <p>С нашей помощью Вы сможете снять <br>
+                        квартиру или комнату без посредников<br>
+                        в Новосибирске и Новосибирской области.</p>
+
+                        <p>Тел.: +7 (383) 207-82-33<br>
+                        Email: nsk@Bazavashdom.ru</p>
+                    {% endif %}
+						
+                </div>
+            </div>
+            <div class='row'>
+                <div class="footer-page__col5">
+                    <div class="social">
+                        Мы в соц. сетях:
+                        {% if current_town.slug == 'moskva' %}
+                            <a class="icon icon-facebook" href="https://www.facebook.com/groups/vashdom.msk/" target="_blank" title="Facebook"> </a>
+                            <a class="icon icon-vkontakte" href="https://vk.com/club27921854" target="_blank" title="ВКонтакте"> </a>
+                            <a class="icon icon-odnoklassniki" href="https://www.odnoklassniki.ru/bez.agenta" target="_blank" title="Одноклассники"> </a>
+{#                            <a class="icon icon-gplus" href="https://vk.com/club27921854" rel="publisher" target="_blank" title="Google+"> </a>#}
+                            <a class="icon icon-twitter" href="https://twitter.com/Bazavashdom_com" target="_blank" title="Twitter"> </a>
+                            <a class="icon icon-livejournal" href="https://bazavashdom.livejournal.com" target="_blank" title="LiveJournal"> </a>
+                        {% elif current_town.slug == 'sankt-peterburg' %}
+                            <a class="icon icon-facebook" href="https://www.facebook.com/groups/baza.vashdom/" target="_blank" title="Facebook"> </a>
+                            <a class="icon icon-vkontakte" href="https://vk.com/club23108006" target="_blank" title="ВКонтакте"> </a>
+                            <a class="icon icon-odnoklassniki" href="https://www.odnoklassniki.ru/bez.agentov" target="_blank" title="Одноклассники"> </a>
+{#                            <a class="icon icon-gplus" href="https://vk.com/club27921854" rel="publisher" target="_blank" title="Google+"> </a>#}
+                            <a class="icon icon-twitter" href="https://twitter.com/Bazavashdom_ru" target="_blank" title="Twitter"> </a>
+                            <a class="icon icon-livejournal" href="https://bazavashdom.livejournal.com" target="_blank" title="LiveJournal"> </a>
+                        {% elif current_town.slug == 'ekaterinburg' %}
+                            <a class="icon icon-facebook" href="https://www.facebook.com/groups/vashdom.ekb/" target="_blank" title="Facebook"> </a>
+                            <a class="icon icon-vkontakte" href="https://vk.com/club35859869" target="_blank" title="ВКонтакте"> </a>
+                            <a class="icon icon-odnoklassniki" href="https://www.odnoklassniki.ru/group/51931322515587" target="_blank" title="Одноклассники"> </a>
+{#                            <a class="icon icon-gplus" href="https://vk.com/club27921854" rel="publisher" target="_blank" title="Google+"> </a>#}
+                            <a class="icon icon-twitter" href="https://twitter.com/Bazavashdom_ekb" target="_blank" title="Twitter"> </a>
+                            <a class="icon icon-livejournal" href="https://bazavashdom.livejournal.com" target="_blank" title="LiveJournal"> </a>
+                        {% elif current_town.slug == 'novosibirsk' %}
+                            <a class="icon icon-facebook" href="https://www.facebook.com/groups/vashdom.nsk/" target="_blank" title="Facebook"> </a>
+                            <a class="icon icon-vkontakte" href="https://vk.com/club35840256" target="_blank" title="ВКонтакте"> </a>
+                            <a class="icon icon-odnoklassniki" href="https://www.odnoklassniki.ru/group/51620973772931" target="_blank" title="Одноклассники"> </a>
+{#                            <a class="icon icon-gplus" href="https://vk.com/club27921854" rel="publisher" target="_blank" title="Google+"> </a>#}
+                            <a class="icon icon-twitter" href="https://twitter.com/Bazavashdom_nsk" target="_blank" title="Twitter"> </a>
+                            <a class="icon icon-livejournal" href="https://bazavashdom.livejournal.com" target="_blank" title="LiveJournal"> </a>
+                        {% endif %}
+					</div>
+                    <p>Аренда квартир и комнат в&nbsp;
+                        <a href="/moskva/" title="Аренда квартир и комнат по Москве и области без агентов">Москве</a>,
+                        <a href="/sankt-peterburg/" title="Аренда квартир и комнат по Санкт-Петербургу и области без агентов">Санкт-Петербурге</a>,
+                        <a href="/novosibirsk/" title="Аренда квартир и комнат по Новосибирску и области без агентов">Новосибирске</a>,
+                        <a href="/ekaterinburg/" title="Аренда квартир и комнат по Екатеринбургу и области без агентов">Екатеринбурге</a>&nbsp;без комиссии.</p>
+                    <p>Общедоступное подключение к базе предназначено для некоммерческого использования. <a href="/info/">Подробнее</a></p>
+                    <p>Использование сайта и подача объявлений, означает согласие с <a href="/agreement/">пользовательским соглашением</a>, а также <a href="/politika-konfidencialnosti/">политикой конфиденциальности</a></p>
+					<p>© “ВАШ ДОМ” 2010 - 2021 — Недвижимость без посредников. При использовании материалов гиперссылка на
+                        <a href="https://bazavashdom.ru" title="База собственников недвижимости Ваш Дом">БазаВашДом.рф</a> обязательна.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% block offcanvas %}
+    <div class="offcanvas">
+        <div class="offcanvas__bar">
+            {% block offcanvas_content %}
+            <ul class="offcanvas__menu">
+                <li class="offcanvas__item">
+                    <a class='offcanvas__link' href="/{{current_town.slug}}/" title="Смотреть объявления каталога Ваш Дом">База Ваш Дом</a>
+                </li>
+                <li class="offcanvas__item">
+                    <a class='offcanvas__link' href="/vk/{{current_town.slug}}/" title="Смотреть объявления каталога ВКонтакте">База ВК</a>
+                </li>
+                <li class="offcanvas__item {% nav_active request 'advert:create' %}">
+                    <a class='offcanvas__link' href="{% url 'advert:create' %}" title="Сдать квартиру за 3 дня">Добавить</a>
+                </li>
+                <li class="offcanvas__item {% nav_active request 'tariff' %}">
+                    <a class='offcanvas__link' href="{% url 'tariff' %}" title="Тарифы на доступ">Оплата</a>
+                </li>
+                <li class="offcanvas__item {% if request|nav_url:'/poisk' %}active{% endif %}">
+                    <a class='offcanvas__link' href="/poisk" title="Подбор жилья под Ваши требования">Подбор</a>
+                </li>
+                <li class="offcanvas__item{% if request|nav_url:'/guarantee' %}active{% endif %}">
+                    <a class='offcanvas__link' href="/guarantee" title="Наша гарантия">Гарантия</a>
+                </li>
+                <li class="offcanvas__item{% if request|nav_url:'/node/5/' %}active{% endif %}">
+                    <a class='offcanvas__link' href="/node/5/" title="Как пользоваться сайтом">О сервисе</a>
+                </li>                
+
+                {% if user.is_authenticated %}
+                    <li class="offcanvas__item">
+                        <a href="{% url 'profile:my' %}" class="offcanvas__link">Мой профиль</a>
+                    </li>
+                    <li class="offcanvas__item">
+                        <a href="{% url 'auth_logout' %}" class="offcanvas__link">Выход</a>
+                    </li>
+                {% else %}
+                    <li class="offcanvas__item">
+                        <a href="{% url 'registration_register' %}" class="offcanvas__link">
+                            Регистрация
+                        </a>
+                    </li>
+                    <li class="offcanvas__item">
+                        <a href="{% url 'auth_login' %}" class="offcanvas__link">
+                            Авторизация
+                        </a>
+                    </li>
+                {% endif %}
+            </ul>
+            {% vashdom_offcanvas_town_block %}
+            {% endblock offcanvas_content %}
+        </div>
+        <div class="offcanvas__close"></div>
+    </div>
+    {% endblock offcanvas %}
+{% endblock %}

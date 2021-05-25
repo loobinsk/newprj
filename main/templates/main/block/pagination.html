@@ -1,0 +1,28 @@
+{% load bootstrap_pagination %}
+
+{% if is_client %}
+    <div class="ext-pagination">
+        <ul class="pagination left">
+            {% if next_page_url %}
+                <li>
+                    <a title="Следующая страница" href="{{ next_page_url|default:"#" }}" class="btn-catalog-next-page">Следующая страница →</a>
+                </li>
+            {% endif %}
+        </ul>
+
+        <div class="numbers">
+            {% bootstrap_paginate page_obj range=6 %}
+        </div>
+    </div>
+{% else %}
+    <div class="ext-pagination">
+        <ul class="pagination else">
+            {% if next_page_url %}
+                <li>
+                    <a title="Показать еще..." href="{{ next_page_url|default:"#" }}" class="btn-catalog-next-page">Следующая страница</a>
+                </li>
+            {% endif %}
+        </ul>
+        {% bootstrap_paginate page_obj range=10 %}
+    </div>
+{% endif %}

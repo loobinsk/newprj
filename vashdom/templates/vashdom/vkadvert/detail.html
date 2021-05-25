@@ -1,0 +1,150 @@
+{% extends 'page.html' %}
+
+{% load main_tags %}
+{% load uimg_tags %}
+{% load vashdom_tags %}
+{% load cache %}
+
+{% block meta %}
+    {{ block.super }}
+    <link rel='canonical' href="{{advert.get_absolute_url}}">
+{% endblock %}
+
+{% block ogtitle %}{{ advert.title }}{% endblock ogtitle %}
+{% block ogurl %}https://{{ request.get_host }}/vkid/{{ advert.id }}{% endblock ogurl %}
+
+{% block ogimage %}
+    {% with image=advert.images.all|first %}
+        {% if image %}
+            https://{{ request.get_host }}{{ image.image.url }}
+        {% endif %}
+    {% endwith %}
+{% endblock %}
+
+{% block title %}{{ advert.page_title }} - {{ block.super }}{% endblock %}
+{% block description %}{{ advert.page_title }}{% endblock %}
+{% block keywords %}{{ advert.metatag }}{% endblock %}
+
+{% block content %}
+<div class="catalog-detail">
+        <div class="container">
+            <div class="row">
+                <div class="catalog-detail__content">
+                    <h1 class="catalog-detail__header">
+                        <span class='catalog-detail__title-text'>{{ advert.title }}</span>
+                        <span class="catalog-detail__date"><strong>{{ advert|fmt_vashdom_date }}</strong> {% if advert.is_archive %}<span class="archive">(В архиве)</span>{% endif %}</span>
+                    </h1>
+                    {% cache 3600 vashdom_vkcatalog_detail advert.id using='redis' %}
+                    <div class="catalog-detail__options">
+                        <div class="catalog-detail__options-col">
+            {#                <div class="address"><strong>Адрес: </strong>{{ advert.address }}</div>#}
+                            {% if advert.metro %}
+                                <div class="metro"><strong>Метро: </strong><a href="{{advert.metro.vashdom_vk_url}}">{{ advert.metro.title }}</a></div>
+                            {% endif %}
+                            {% if advert.living_square %}
+                                <div class="living_square"><strong>Жилая площадь: </strong>
+                                        {{ advert.living_square }} м<sup>2</sup>
+                                </div>
+                            {% endif %}
+                            {% if advert.square %}
+                                <div class="square"><strong>Площадь: </strong>
+                                        {{ advert.square }} м<sup>2</sup>
+                                </div>
+                            {% endif %}
+                        </div>
+                        <div class="catalog-detail__options-col">
+                            {% if advert.refrigerator %}
+                                <div class="refrigerator">
+                                    <strong>Холодильник:</strong>
+                                    <span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span>
+                                </div>
+                            {% endif %}
+                            {% if advert.tv %}
+                                <div class="tv">
+                                    <strong>Телевизор:</strong>
+                                    <span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span>
+                                </div>
+                            {% endif %}
+                            {% if advert.furniture %}
+                                <div class="furniture">
+                                    <strong>Мебель:</strong>
+                                    <span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span>
+                                </div>
+                            {% endif %}
+                            {% if advert.washer %}
+                                <div class="washer">
+                                    <strong>Стиральная машина:</strong>
+                                    <span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    {% if advert.price %}
+                        <div class="catalog-detail__price">
+                            <strong>Цена: </strong>{{ advert.price|fmt_price }} руб.
+                        </div>
+                    {% endif %}
+
+                    <div class="catalog-detail__body">
+                        {{ advert|fmt_vashdom_advert_body|linebreaksbr }}
+
+                        <ul class="icon-list check-list">
+                            {% for field in advert.comfort_list %}
+                                {% if field.1 %}<li><span class="glyphicon {{ field.0 }}" data-toggle="tooltip" title='{{ field.2 }}'></span> {{ field.2 }}</li>{% endif %}
+                            {% endfor %}
+                        </ul>
+                    </div>
+
+                    {% vashdom_image_detail advert %}
+
+                    <div class="catalog-detail__owner">
+                        <div class="catalog-detail__photo">
+                            {% if advert.owner_photo %}
+                                <img src="{{ advert.owner_photo.image.url }}">
+                            {% else %}
+                                <img src="{{ STATIC_URL }}img/noavatar.png">
+                            {% endif %}
+                        </div>
+                        <strong>Владелец</strong>{{ advert.owner_name|default_if_none:'Собственник' }}<br>
+                        <div class="password-vkid"></div>
+                    </div>
+                    {% endcache %}
+
+                    <div class="catalog-detail__owner-tel">
+                        <strong>Телефон: </strong>
+
+                        
+                        <div class="input-group">
+                            <div class="form-control password-tel">
+                                {{ advert.owner_tel|fmt_vashdom_tel|default:'Телефон' }}
+                            </div>
+                            <span class="input-group-btn">
+                                <button class="btn btn-secondary btn-get-access vk" type="button" data-id="{{ advert.id }}">Открыть</button>
+                            </span>
+                        </div>
+                        <div class="catalog-detail__help">
+                            Чтобы иметь возможность просматривать номера собственников, нужно <a href="{% url 'tariff' %}">оплатить доступ</a>.
+                        </div>
+                        {% if user.is_authenticated %}
+                        {% include 'vashdom/vkadvert/complain.html' %}
+                        {% endif %}
+                    </div>
+                    <p>Это объявление из Базы ВК № {{ advert.id }}</p>
+                    <div class="catalog-detail__buttons">
+                        <a href="/vk/{{advert.town.slug}}/" class="btn btn-default" title="Перейти в каталог">Все объявления Базы Вконтакте</a> 
+                        <a href="/{{advert.town.slug}}/" class="btn btn-default pull-right" title="Перейти в каталог">Смотреть основную Базу Ваш Дом</a>
+                    </div>
+                </div>
+
+                <div class="catalog-detail__sidebar">
+                    {% vashdom_filter_vkadvert_block %}
+                    {% include 'vashdom/block/attention-block.html' %}
+                    {% include 'vashdom/block/document-block.html' %}
+                    {% include 'vashdom/block/vkontakte-group.html' %}
+                </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

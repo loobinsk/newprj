@@ -1,0 +1,36 @@
+{% load main_tags %}
+{% load uimg_tags %}
+
+<div class="catalog-balloon item catalog-item-{{ advert.id }}">
+    <div class="preview-image">
+    {% with images=advert.images.all %}
+        {% if images %}
+            {% image_preview_100 images %}
+        {% else %}
+            <div class="noimage"></div>
+        {% endif %}
+    {% endwith %}
+    </div>
+    <div class="content">
+        <h2>{{ advert.title }}</h2>
+        <div class="address">{% spaceless %}{{ advert.address }}{% endspaceless %}</div>
+        <div style="overflow: hidden;">
+            {% if advert.price %}
+                <div class="price">{{ advert.price|fmt_price }} р.</div>
+            {% endif %}
+            {% if advert.square %}
+                <div class="square">{{ advert.square }} м<sup>2</sup></div>
+            {% endif %}
+        </div>
+        <ul class="icon-list">
+            {% for field in advert.comfort_list %}
+                {% if field.1 %}<li><span class="glyphicon {{ field.0 }}" data-toggle="tooltip" title='{{ field.2 }}'></span> </li>{% endif %}
+            {% endfor %}
+        </ul>
+        <div class="showtel">
+            <a href="#" class="show-owner-tel" data-id="{{ advert.id }}">
+                Показать телефон
+            </a>
+        </div>
+    </div>
+</div>

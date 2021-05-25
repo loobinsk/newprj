@@ -1,0 +1,22 @@
+{% extends 'page-client-center.html' %}
+
+{% load main_tags %}
+{% load bootstrap_pagination %}
+
+{% block title %}Объявления {{ company.title }} &middot; {{ block.super }}{% endblock %}
+
+{% block center %}
+    <h1 class="page-title">Агентство {{ company.title }}</h1>
+
+    <ul class="nav nav-tabs company-tabs" role="tablist">
+        <li><a href="{% url 'client:company:detail' company.id %}">Информация</a></li>
+        <li><a href="{% url 'client:company:agents' company.id %}">Агенты</a></li>
+        <li class="active"><a href="{% url 'client:company:adverts' company.id %}">Объявления</a></li>
+        <li><a href="{% url 'client:company:open-adverts' company.id %}">Открытые объявления</a></li>
+        <li><a href="{% url 'client:company:services' company.id %}">Подключенные услуги</a></li>
+    </ul>
+
+    {% include 'main/client/advert/list.html' %}
+
+    {% bootstrap_paginate page_obj range=6 show_first_last='true' %}
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends 'page-client-center.html' %}
+
+{% load bootstrap_pagination %}
+{% load main_tags %}
+
+{% block title %}Подписки &middot; {{ block.super }}{% endblock %}
+
+{% block center %}
+
+    <h1 class="page-title">Подписки (найдено {{ page_obj.paginator.count }})</h1>
+
+    <form method="GET" action="{% url 'client:search-request:delivery' %}" id="delivery-filter-form" class="row">
+        <div class="col-xs-3">
+            <div>
+                <label>{{ filter_form.username.label }}</label>
+                {{ filter_form.username }}
+            </div>
+            <div>
+                <label>{{ filter_form.site.label }}</label>
+                {{ filter_form.site }}
+            </div>
+        </div>
+        <div class="col-xs-3">
+            <div>
+                <label>{{ filter_form.email.label }}</label>
+                {{ filter_form.email }}
+            </div>
+        </div>
+        <div class="col-xs-3 text-right">
+            <input type="submit" class="btn btn-flt3" value="Поиск">
+        </div>
+    </form>
+
+    {% include 'main/client/search_request/delivery-list.html' %}
+
+    {% bootstrap_paginate page_obj range=6 show_first_last='true' %}
+{% endblock %}

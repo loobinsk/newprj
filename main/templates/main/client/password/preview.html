@@ -1,0 +1,18 @@
+{% load main_tags %}
+
+<tr class="password-preview password password-item-{{ password.id }} editable-content">
+    <td>
+        {% if password.user %}
+            <a href="{% url 'client:user:detail' password.user.id %}">{{ password.user.get_full_name }}</a>
+        {% else %}
+            &nbsp;
+        {% endif %}
+    </td>
+    <td>{{ password.tel|fmt_tel }}</td>
+    <td><a href='{% url 'client:password:adverts' password.id %}'>{{ password.password }}</a></td>
+    <td>{{ password.start_date|fmt_date }}</td>
+    <td>{{ password.end_date|fmt_date }}</td>
+    <td>{{ password.count }}</td>
+    <td>{{ password.town.title }}</td>
+    <td>{% include 'main/client/password/edit-buttons.html' %}</td>
+</tr>

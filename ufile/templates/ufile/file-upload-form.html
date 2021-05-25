@@ -1,0 +1,25 @@
+<div class='panel panel-default'>
+    <div class="panel-body">
+        <p>Загрузите файлы</p>
+        <form id="user-file-form" class='file-upload-form' method="POST" action='{% url 'file:create' %}' enctype="multipart/form-data" data-id='{{ id }}'>
+            {% csrf_token %}
+
+            <div class='file-upload'>
+                <div class='hidden'>{{ form.file }}</div>
+                <button class="btn btn-success btn-lg file-upload-choose">Выбрать файл</button>
+            </div>
+
+            <div class="progress hidden">
+                <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0;">
+                </div>
+            </div>
+
+            <ul class="upload-file-list">
+                {% for file in file_list %}
+                    <li data-id="{{ file.id }}">{{ file.name }}<button class="close" aria-hidden="true" data-id='{{ file.id }}'>&times;</button></li>
+                {% endfor %}
+            </ul>
+        </form>
+
+    </div>
+</div>

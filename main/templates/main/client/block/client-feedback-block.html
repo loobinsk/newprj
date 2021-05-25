@@ -1,0 +1,28 @@
+{% extends 'block.html' %}
+
+{% block title %}Связь с администратором{% endblock %}
+{% block class%}{{ block.super }} feedback-form-block{% endblock %}
+
+{% block content %}
+    <div class="your-manager">
+        <div class="preview-image">
+            <img src='/static/img/manager.jpg'>
+        </div>
+        <div class="title">Ваш менеджер</div>
+        <div class="name">Сергей</div>
+        <div class="email"></div>
+    </div>
+
+    <form id="feedback-form-block" class='form short' method="POST" action='{% url 'client:feedback' %}'>
+        {% csrf_token %}
+        <div>
+            <label>{{ form.title.label }}</label>
+            {{ form.title }}
+        </div>
+        <div>
+            <label>{{ form.desc.label }}</label>
+            {{ form.desc }}
+        </div>
+    </form>
+    <button class="btn btn-flt3 btn-block btn-feedback-client" data-loading-text='Отправка сообщения...'>Написать менеджеру</button>
+{% endblock %}

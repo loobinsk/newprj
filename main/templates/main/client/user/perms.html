@@ -1,0 +1,166 @@
+{% extends 'page-client-center.html' %}
+
+{% load main_tags %}
+{% load thumbnail %}
+
+{% block title %}Ограничения доступа пользователя {{ object.get_full_name }} &middot; {{ block.super }}{% endblock %}
+
+{% block center %}
+
+<div class="user-detail user-item-{{ object.id }} editable-content">
+    <h1 class="page-title">Ограничения доступа пользователя {{ object.get_full_name }}</h1>
+
+    <div class="preview-image">
+        {% thumbnail object.image "100x100" crop='center' as img %}
+            <img src='{{ img.url }}'>
+        {% empty %}
+            <img src='{{ STATIC_URL }}img/noavatar.png'>
+        {% endthumbnail %}
+    </div>
+
+    <div class="content">
+        <h2>{{ object.get_full_name }}</h2>
+
+        <form method="POST" action="{{ action }}" id="user-perms-form">
+            {% csrf_token %}
+            <div class="is_active">
+                {{ form.is_active }} <label for="id_is_active">Агент может заходить в свой личный кабинет</label>
+            </div>
+
+            <h2 class="page-title">Доступ к тарифам</h2>
+
+            {{ form.enable_perms }}
+
+            <h2 class="page-title">Доступ дням недели</h2>
+
+            <div class="day">
+                <div class="hidden">
+                    {{ form.day1_min_hour }}
+                    {{ form.day1_max_hour }}
+                </div>
+                <label class="title">Понедельник</label>
+                <div class="interval" id="day1_interval">{{ form.day1_min_hour.value|default:'0' }}:00 - {{ form.day1_max_hour.value|default:'24' }}:00</div>
+                <input id="day1-slider" type="text" class="slider" value="" data-slider-min="0"
+                           data-slider-max="24" data-slider-step="1"
+                           data-slider-value="[{{ form.day1_min_hour.value|default:'0' }},{{ form.day1_max_hour.value|default:'24' }}]"
+                           data-slider-orientation="horizontal" data-slider-selection="after">
+                <span class="active">
+                    {{ form.day1_active }} <label for="id_day1_active">Активен</label>
+                </span>
+            </div>
+            
+            <div class="day">
+                <div class="hidden">
+                    {{ form.day2_min_hour }}
+                    {{ form.day2_max_hour }}
+                </div>
+                <label class="title">Вторник</label>
+                <div class="interval" id="day2_interval">{{ form.day2_min_hour.value|default:'0' }}:00 - {{ form.day2_max_hour.value|default:'24' }}:00</div>
+                <input id="day2-slider" type="text" class="slider" value="" data-slider-min="0"
+                           data-slider-max="24" data-slider-step="1"
+                           data-slider-value="[{{ form.day2_min_hour.value|default:'0' }},{{ form.day2_max_hour.value|default:'24' }}]"
+                           data-slider-orientation="horizontal" data-slider-selection="after">
+                <span class="active">
+                    {{ form.day2_active }} <label for="id_day2_active">Активен</label>
+                </span>
+            </div>
+            
+            <div class="day">
+                <div class="hidden">
+                    {{ form.day3_min_hour }}
+                    {{ form.day3_max_hour }}
+                </div>
+                <label class="title">Среда</label>
+                <div class="interval" id="day3_interval">{{ form.day3_min_hour.value|default:'0' }}:00 - {{ form.day3_max_hour.value|default:'24' }}:00</div>
+                <input id="day3-slider" type="text" class="slider" value="" data-slider-min="0"
+                           data-slider-max="24" data-slider-step="1"
+                           data-slider-value="[{{ form.day3_min_hour.value|default:'0' }},{{ form.day3_max_hour.value|default:'24' }}]"
+                           data-slider-orientation="horizontal" data-slider-selection="after">
+                <span class="active">
+                    {{ form.day3_active }} <label for="id_day3_active">Активен</label>
+                </span>
+            </div>
+            
+            <div class="day">
+                <div class="hidden">
+                    {{ form.day4_min_hour }}
+                    {{ form.day4_max_hour }}
+                </div>
+                <label class="title">Четверг</label>
+                <div class="interval" id="day4_interval">{{ form.day4_min_hour.value|default:'0' }}:00 - {{ form.day4_max_hour.value|default:'24' }}:00</div>
+                <input id="day4-slider" type="text" class="slider" value="" data-slider-min="0"
+                           data-slider-max="24" data-slider-step="1"
+                           data-slider-value="[{{ form.day4_min_hour.value|default:'0' }},{{ form.day4_max_hour.value|default:'24' }}]"
+                           data-slider-orientation="horizontal" data-slider-selection="after">
+                <span class="active">
+                    {{ form.day4_active }} <label for="id_day4_active">Активен</label>
+                </span>
+            </div>
+            
+            <div class="day">
+                <div class="hidden">
+                    {{ form.day5_min_hour }}
+                    {{ form.day5_max_hour }}
+                </div>
+                <label class="title">Пятница</label>
+                <div class="interval" id="day5_interval">{{ form.day5_min_hour.value|default:'0' }}:00 - {{ form.day5_max_hour.value|default:'24' }}:00</div>
+                <input id="day5-slider" type="text" class="slider" value="" data-slider-min="0"
+                           data-slider-max="24" data-slider-step="1"
+                           data-slider-value="[{{ form.day5_min_hour.value|default:'0' }},{{ form.day5_max_hour.value|default:'24' }}]"
+                           data-slider-orientation="horizontal" data-slider-selection="after">
+                <span class="active">
+                    {{ form.day5_active }} <label for="id_day5_active">Активен</label>
+                </span>
+            </div>
+            
+            <div class="day">
+                <div class="hidden">
+                    {{ form.day6_min_hour }}
+                    {{ form.day6_max_hour }}
+                </div>
+                <label class="title">Суббота</label>
+                <div class="interval" id="day6_interval">{{ form.day6_min_hour.value|default:'0' }}:00 - {{ form.day6_max_hour.value|default:'24' }}:00</div>
+                <input id="day6-slider" type="text" class="slider" value="" data-slider-min="0"
+                           data-slider-max="24" data-slider-step="1"
+                           data-slider-value="[{{ form.day6_min_hour.value|default:'0' }},{{ form.day6_max_hour.value|default:'24' }}]"
+                           data-slider-orientation="horizontal" data-slider-selection="after">
+                <span class="active">
+                    {{ form.day6_active }} <label for="id_day6_active">Активен</label>
+                </span>
+            </div>
+            
+            <div class="day">
+                <div class="hidden">
+                    {{ form.day7_min_hour }}
+                    {{ form.day7_max_hour }}
+                </div>
+                <label class="title">Воскресенье</label>
+                <div class="interval" id="day7_interval">{{ form.day7_min_hour.value|default:'0' }}:00 - {{ form.day7_max_hour.value|default:'24' }}:00</div>
+                <input id="day7-slider" type="text" class="slider" value="" data-slider-min="0"
+                           data-slider-max="24" data-slider-step="1"
+                           data-slider-value="[{{ form.day7_min_hour.value|default:'0' }},{{ form.day7_max_hour.value|default:'24' }}]"
+                           data-slider-orientation="horizontal" data-slider-selection="after">
+                <span class="active">
+                    {{ form.day7_active }} <label for="id_day7_active">Активен</label>
+                </span>
+            </div>
+
+
+            <button class="btn btn-flt3 btn-large btn-user-perms-save">Сохранить</button>
+        </form>
+    </div>
+</div>
+
+<script type="text/javascript">
+    jQuery(document).ready(function(){
+        {% for day in week_range %}
+            jQuery('#day{{ day }}-slider').slider()
+                .on('slide', function(e){
+                    jQuery('#id_day{{ day }}_min_hour').val(e.value[0]);
+                    jQuery('#id_day{{ day }}_max_hour').val(e.value[1]);
+                    jQuery('#day{{ day }}_interval').html(e.value[0] + ':00 - ' + e.value[1] + ':00');
+                });
+        {% endfor %}
+    });
+</script>
+{% endblock %}

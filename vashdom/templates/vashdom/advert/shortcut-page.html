@@ -1,0 +1,15 @@
+{% extends 'vashdom/advert/page.html' %}
+
+{% block page_title %}
+    {% if override_page_title %}
+        <h1 class="catalog-page__title">
+            {% if metatag.page_title %}
+                {{metatag.page_title}}
+            {% else %}
+                {{override_page_title}}
+            {% endif %}
+        </h1>
+    {% else %}
+        {{block.super}}
+    {% endif %}
+{% endblock page_title %}

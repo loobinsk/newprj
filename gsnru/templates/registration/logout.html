@@ -1,0 +1,12 @@
+{% extends 'page.html' %}
+
+{% block title %}Выход  &middot; {{ block.super }}{% endblock %}
+
+{% block content %}
+    <h1 class="page-title">Выход</h1>
+    <p>Спасибо, что были с нами. Ждем вас снова.</p>
+    <p>Переадресация...</p>
+    <script type="text/javascript">
+        window.location = '{% url 'auth_login' %}';
+    </script>
+{% endblock %}

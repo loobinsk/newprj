@@ -1,0 +1,21 @@
+{% extends 'page.html' %}
+
+{% load vashdom_tags %}
+
+{% block title %}Платеж успешно завершен{% endblock %}
+
+{% block content %}
+<div class="payment-result">
+    <div class="container">
+        <div class="row">
+            <div class="payment-result__content">
+                <h1 class="payment-result__title">Платеж успешно завершен</h1>
+
+                {% vashdom_payment_by_id PAYMENT_ID %}
+            </div>
+        </div>
+    </div>
+</div>
+    
+
+{% endblock %}

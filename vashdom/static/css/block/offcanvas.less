@@ -1,0 +1,153 @@
+@import '../imports.less';
+
+.offcanvas {
+    position: fixed;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 100;
+    visibility: hidden;
+
+    &__close {
+        position: absolute;
+        background: #000;
+        content: ' ';
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 500;
+        .opacity(0);
+        .transition-duration(0.3s);
+    }
+
+    &&_active {
+        visibility: visible;
+        
+        .offcanvas__close {
+            .opacity(0.4);
+        }
+    }
+
+    &__bar {
+        position: absolute;
+        width: 25%;
+        .md(width, 50%);
+        .xs(width, 80%);
+        top: 0;
+        bottom: 0;
+        left: 0;
+        padding: 25px 0;
+        background: @primarycolor;
+        z-index: 520;
+        transform: translateX(-100%);
+        .transition-duration(0.3s);
+        overflow-y: auto;
+    }
+
+    &__menu {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+
+        &&_town {
+            padding-top: 15px;
+            margin-top: 15px;
+            border-top: 1px solid darken(@primarycolor, 10%);
+        }
+    }
+
+    &__children {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+
+        .offcanvas__link {
+            padding: 10px 25px 10px 45px;
+        }
+    }
+
+    &__item {
+        &&_additional {
+            display: none;
+
+            &.visible {
+                display: block;
+            }
+        }
+    }
+
+    &__link {
+        display: block;
+        padding: 7px 25px;
+        font-size: 14px;
+        color: #fff;
+        text-transform: uppercase;
+
+        &:hover, &:focus {
+            text-decoration: underline;
+            color: #fff;
+        }
+
+        &&_level-0 {
+            text-transform: uppercase;
+        }
+
+        &&_active, &.active {
+            text-decoration: underline;
+        }
+
+        > .badge {
+            background: transparent;
+            font-weight: normal;
+            color: @grey500;
+            padding-top: 5px;
+        }
+
+        &&_alltowns {
+            text-decoration: underline;
+            text-decoration-style: dashed;
+        }
+    }
+
+    &__page {
+        transition-duration: 0.5s;
+
+        &&_active {
+            transform: translateX(25%);
+            .md(transform, translateX(50%));
+            .xs(transform, translateX(80%));
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+
+            &-remove {
+                position: fixed;
+                top: 0;
+                bottom: 0;
+                left: 0;
+                right: 0;
+            }
+        }
+    }
+
+    &__logo {
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+        margin-bottom: 25px;
+
+        &:hover, &:focus {
+            text-decoration: none;
+        }
+        
+        img {
+            max-height: 50px;
+            max-width: 100%;
+            .transition-duration(0.3s);
+        }
+    }
+}

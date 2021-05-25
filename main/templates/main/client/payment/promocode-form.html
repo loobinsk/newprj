@@ -1,0 +1,34 @@
+<form action="{% url 'client:payment:promocode' %}" method="POST" id="promo-form">
+    {% csrf_token %}
+    {{ form.payment }}
+
+    <p>Если у вас есть ПРОМОКОД для получения скидки, введите его сюда и
+        нажмите кнопку <i>АКТИВИРОВАТЬ ПРОМОКОД</i></p>
+
+    <div>
+        {{ form.code }}
+    </div>
+
+    <button type="submit" class="btn btn-lg btn-flt3 btn-promocode-activate" data-loading-text="Подождите...">Активировать промокод</button>
+</form>
+
+<script type="text/javascript">
+    jQuery(document).ready(function(){
+        function failFunction(e) {
+            var data = jQuery.parseJSON(e.responseText);
+            $('.bottom-left').notify({
+                message: { html: data.message },
+                closable: true,
+                type: 'notice'
+            }).show();
+        }
+
+        jQuery('#promo-form').ajaxForm({
+            dataType: 'json',
+            success: function(data, status, xhr, form) {
+                window.location.reload();
+            },
+            error: failFunction
+        })
+    });
+</script>

@@ -1,0 +1,11 @@
+{% if can_edit %}
+    <div class="btn-group edit-buttons">
+        <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+            <span class="glyphicon glyphicon-tasks"></span> Действия <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" role="menu">
+            <li><a href="#" class="btn-vacancy-edit"  data-id="{{ vacancy.id }}">Изменить</a></li>
+            <li><a href="#" class="btn-vacancy-del"  data-id="{{ vacancy.id }}">Удалить</a></li>
+        </ul>
+    </div>
+{% endif %}

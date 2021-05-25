@@ -1,0 +1,18 @@
+<table class="table table-bordered promotion-list">
+    <thead>
+        <tr>
+            <th>Название</th>
+            <th>Выдано</th>
+            <th>Скидка</th>
+            <th>Сайт</th>
+            <th>Дата начала</th>
+            <th>Дата конца</th>
+            <th>Действия</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for promotion in promotion_list %}
+            {% include 'main/client/promotion/preview.html' %}
+        {% endfor %}
+    </tbody>
+</table>

@@ -1,0 +1,41 @@
+{#<div class="dropdown complain">#}
+{#    <a href="#" data-toggle='dropdown' class="">Пожаловаться на объявление <i class="caret"></i></a>#}
+{#    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">#}
+{#        <li><a href="#" class="btn-vkcomplain" data-id='{{ advert.id }}' data-reason="7">Это агент</a></li>#}
+{#        <li><a href="#" class="btn-vkcomplain" data-id='{{ advert.id }}' data-reason="1">Объявление не актуально</a></li>#}
+{#        <li><a href="#" class="btn-vkcomplain" data-id='{{ advert.id }}' data-reason="2">Вымышленный объект</a></li>#}
+{#        <li><a href="#" class="btn-vkcomplain" data-id='{{ advert.id }}' data-reason="3">Спам или реклама</a></li>#}
+{#        <li><a href="#" class="btn-vkcomplain" data-id='{{ advert.id }}' data-reason="4">Неверная информация</a></li>#}
+{#    </ul>#}
+{#</div>#}
+
+<a href="#" class="btn btn-link complain" data-toggle="modal"
+   data-target="#complain-dlg-{{ advert.id }}">Пожаловаться</a>
+
+<div class="modal fade" id="complain-dlg-{{ advert.id }}">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Пожаловаться на объявление №{{ advert.id }}</h4>
+            </div>
+            <div class="modal-body">
+                <ul class="complain-menu">
+                    <li><a href="#" class="btn-vkcomplain" data-id='{{ advert.id }}' data-reason="7">Это агент</a></li>
+                    <li><a href="#" class="btn-vkcomplain" data-id='{{ advert.id }}' data-reason="1">Объявление не
+                        актуально</a></li>
+                    <li><a href="#" class="btn-vkcomplain" data-id='{{ advert.id }}' data-reason="2">Вымышленный
+                        объект</a></li>
+                    <li><a href="#" class="btn-vkcomplain" data-id='{{ advert.id }}' data-reason="3">Спам или
+                        реклама</a></li>
+                    <li><a href="#" class="btn-vkcomplain" data-id='{{ advert.id }}' data-reason="4">Неверная
+                        информация</a></li>
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+            </div>
+        </div>
+    </div>
+</div>

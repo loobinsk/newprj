@@ -1,0 +1,18 @@
+{% extends 'page-client-center.html' %}
+
+{% load main_tags %}
+{% load bootstrap_pagination %}
+
+{% block title %}Объявления открытые паролем &middot; {{ block.super }}{% endblock %}
+
+{% block center %}
+    <h1 class="page-title">Объявления открытые паролем {{ password.password }}</h1>
+
+    {% if advert_list %}
+        {% include 'main/client/advert/list.html' %}
+        {% bootstrap_paginate page_obj range=6 show_first_last='true' %}
+    {% else %}
+        <div class="alert alert-info ">Объявлений нет</div>
+    {% endif %}
+
+{% endblock %}

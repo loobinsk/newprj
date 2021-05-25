@@ -1,0 +1,9 @@
+<form method="POST" action="{{ action }}" id="vacancy-form">
+    {% csrf_token %}
+    <dl>
+        <dt>{{ form.title.label_tag }}</dt>
+        <dd>{{ form.title }}</dd>
+        <dt>{{ form.body.label_tag }}</dt>
+        <dd>{{ form.body }}</dd>
+    </dl>
+</form>

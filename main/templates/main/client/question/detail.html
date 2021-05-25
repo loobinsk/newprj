@@ -1,0 +1,9 @@
+{% extends 'page-client.html' %}
+
+{% load main_tags %}
+
+{% block title %}Вопрос №{{ question.id }} &middot; {{ block.super }}{% endblock %}
+
+{% block content %}
+    {% include 'main/client/question/detail-ajax.html' %}
+{% endblock %}

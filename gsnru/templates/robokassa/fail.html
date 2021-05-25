@@ -1,0 +1,15 @@
+{% extends 'page-client-center.html' %}
+
+{% load main_tags %}
+
+{% block title %}Неуспешная оплата{% endblock %}
+
+{% block center %}
+    <h1>Неуспешная оплата</h1>
+
+    {% payment_by_id InvId %}
+
+    <p>
+        <a href="{% url 'client:payment:history' %}" class="btn btn-flt3">Перейти в список заказов</a>
+    </p>
+{% endblock %}

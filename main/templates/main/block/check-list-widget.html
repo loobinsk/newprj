@@ -1,0 +1,8 @@
+<div class="{{ id }}">
+    {% for choice in choices %}
+        <div class="item">
+            <input type="radio" name="{{ id }}" id="{{ id }}_{{ choice.0 }}" value="{{ choice.0 }}" {% if choice.0 == value %}checked{% endif %}>
+            <label for="{{ id }}_{{ choice.0 }}">{{ choice.1|safe }}</label>
+        </div>
+    {% endfor %}
+</div>

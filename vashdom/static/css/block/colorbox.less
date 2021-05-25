@@ -1,0 +1,56 @@
+@import '../imports.less';
+
+#colorbox {
+
+    #cboxClose {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        border-radius: 4px;
+        overflow: hidden;
+    }
+
+    #cboxMiddleLeft, #cboxMiddleRight, #cboxBottomCenter, #cboxBottomRight, #cboxBottomLeft,
+    #cboxTopLeft, #cboxTopCenter, #cboxTopRight  {
+        background: transparent;
+    }
+
+    #cboxContent {
+        position: relative;
+        background: transparent;
+
+    }
+
+    #cboxPrevious {
+        position: absolute;
+        top: 50%;
+        left: 20px;
+        border-radius: 4px;
+        overflow: hidden;
+        opacity: 0.5;
+
+        &:hover {
+            opacity: 1;
+        }
+    }
+
+    #cboxNext {
+        position: absolute;
+        top: 50%;
+        left: auto;
+        right: 20px;
+        border-radius: 4px;
+        overflow: hidden;
+        opacity: 0.5;
+
+        &:hover {
+            opacity: 1;
+        }
+    }
+
+    #cboxCurrent {
+        left: 0;
+        right: 0;
+        text-align: center;
+    }
+}

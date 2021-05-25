@@ -1,0 +1,28 @@
+{% load main_tags %}
+
+<div class="stat-block">
+    <h2>
+        <strong>Недвижимость и цены</strong>
+        {% if adtype == 'L' %}Аренда{% endif %}
+        {% if adtype == 'S' %}Продажа{% endif %}
+        недвижимости в г.{{ town.title }}
+    </h2>
+    <div class="content">
+        <dl>
+            <dt>Комнаты</dt>
+            <dd>{{ room|fmt_price }} руб.</dd>
+
+            <dt>1 ком. квартиры</dt>
+            <dd>{{ flat1|fmt_price }} руб.</dd>
+
+            <dt>2 ком. квартиры</dt>
+            <dd>{{ flat2|fmt_price }} руб.</dd>
+
+            <dt>3 ком. квартиры</dt>
+            <dd>{{ flat3|fmt_price }} руб.</dd>
+
+            <dt>Коттеджи</dt>
+            <dd>{{ house|fmt_price }} руб.</dd>
+        </dl>
+    </div>
+</div>

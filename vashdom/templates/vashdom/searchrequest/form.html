@@ -1,0 +1,125 @@
+{% load uimg_tags %}
+{% load main_tags %}
+
+<form method="POST" action="{{ action }}" id="sr-form" class="">
+    {% csrf_token %}
+    <font size="+0,5"> <p style="text-indent: 5%">Каждый день мы размещаем на сайте сотни проверенных объявлений с прямыми телефонами собственников. 
+    Чтобы не мониторить сайт каждый час, можете указать Ваши требования к жилью и получать уведомления о новых вариантах на почту сразу после их появления. 
+    Также, при заказе услуги поиска, мы в первую очередь проверяем подходящие объявления, чтобы Вы успели снять лучшее жилье.</p></font>
+    <br>
+    <div class="live line">
+        <label>Мне нужна</label>{{ form.live }}
+    </div>
+
+    <div class="flat-room for_flat hidden line">
+        <div>{{ form.live_flat1 }}{{ form.live_flat1.label_tag }}</div>
+        <div>{{ form.live_flat2 }}{{ form.live_flat2.label_tag }}</div>
+        <div>{{ form.live_flat3 }}{{ form.live_flat3.label_tag }}</div>
+        <div>{{ form.live_flat4 }}{{ form.live_flat4.label_tag }}</div>
+    </div>
+
+    <div class="metro line">
+        {{ form.metro.label_tag }}
+        {{ form.metro }}
+    </div>
+{#    <div class="district line">#}
+{#        {{ form.district.label_tag }}#}
+{#        {{ form.district }}#}
+{#    </div>#}
+
+    <div class="square line">
+        <label>Площадь, м<sup>2</sup></label>
+        <div class="content">
+            {{ form.square }}
+            <input id="square-slider" type="text" class="slider" value="" data-slider-min="0"
+                   data-slider-max="150" data-slider-step="1"
+                   data-slider-value="[{{ form.square.value|default:'0' }},{{ form.square_max.value|default:'150' }}]"
+                   data-slider-orientation="horizontal" data-slider-selection="after">
+            {{ form.square_max }}
+        </div>
+    </div>
+
+    <div class="comfort line">
+        <div>{{ form.refrigerator }}{{ form.refrigerator.label_tag }}</div>
+        <div>{{ form.tv}}{{ form.tv.label_tag }}</div>
+        <div>{{ form.washer }}{{ form.washer.label_tag }}</div>
+{#        <div>{{ form.phone }}{{ form.phone.label_tag }}</div>#}
+{#        <div>{{ form.internet }}{{ form.internet.label_tag }}</div>#}
+{#        <div>{{ form.conditioner }}{{ form.conditioner.label_tag }}</div>#}
+        <div>{{ form.furniture }}{{ form.furniture.label_tag }}</div>
+{#        <div>{{ form.separate_wc }}{{ form.separate_wc.label_tag }}</div>#}
+{#        <div>{{ form.balcony }}{{ form.balcony.label_tag }}</div>#}
+{#        <div>{{ form.euroremont }}{{ form.euroremont.label_tag }}</div>#}
+{#        <div>{{ form.parking }}{{ form.parking.label_tag }}</div>#}
+{#        <div>{{ form.lift }}{{ form.lift.label_tag }}</div>#}
+    </div>
+
+    <div class="price line">
+        <label>Цена в рублях:</label>
+        <div class="content">
+            {{ form.min_price }}
+            <input id="price-slider" type="text" class="slider" value="" data-slider-min="0"
+                   data-slider-max="100000" data-slider-step="1000"
+                   data-slider-value="[{{ form.min_price.value|default:'0' }},{{ form.price.value|default:'100000' }}]"
+                   data-slider-orientation="horizontal" data-slider-selection="after">
+            {{ form.price }}
+        </div>
+    </div>
+
+    <div class="tel line">
+        <label>Ваш телефон</label>
+        {{ form.owner_tel }}
+    </div>
+    <div class="email line">
+        <label>E-mail</label>
+        {{ form.owner_email }}
+    </div>
+
+{#    <div class="agree line">#}
+{#        {{ form.agree }} <label for="id_agree">Я согласен(на) и принимаю#}
+{#        <a href="/agreement/" target="_blank" class="btn-agreement" data-id='#id_agree'>условия работы сервиса и размещения объявлений</a></label>#}
+{#    </div>#}
+</form>
+
+<script type="text/javascript">
+    var live = 'flat';
+
+    jQuery('#id_price').mask('999999999');
+    jQuery('#id_square').mask('999999999');
+    jQuery('#id_living_square').mask('999999999');
+    jQuery('#id_kitchen_square').mask('999999999');
+
+    function show_catalog_estate() {
+        var new_live = 'flat';
+
+        switch(jQuery('#sr-form select[name="live"]').val()) {
+            case 'R':
+                new_live = 'room';
+                break;
+            case 'F':
+                new_live = 'flat';
+                break;
+        }
+
+
+        jQuery('#sr-form .for_'+live).addClass('hidden');
+        live = new_live;
+        jQuery('#sr-form .for_'+live).removeClass('hidden');
+    }
+
+    show_catalog_estate();
+    jQuery('#id_live').change(show_catalog_estate);
+
+    jQuery('#square-slider').slider()
+        .on('slide', function(e){
+            jQuery('#id_square').val(e.value[0]);
+            jQuery('#id_square_max').val(e.value[1]);
+        });
+
+    jQuery('#price-slider').slider()
+        .on('slide', function(e){
+            jQuery('#id_min_price').val(e.value[0]);
+            jQuery('#id_price').val(e.value[1]);
+        });
+</script>
+

@@ -1,0 +1,9 @@
+<table class="catalog-list">
+    {% for advert in advert_list %}
+        {% if is_moder %}
+            {% include 'main/client/advert/preview-my-moder.html' %}
+        {% else %}
+            {% include 'main/client/advert/preview-my.html' %}
+        {% endif %}
+    {% endfor %}
+</table>

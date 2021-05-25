@@ -1,0 +1,6 @@
+{% extends 'main/client/advert/preview-moder.html' %}
+
+{% block actions %}
+    {{ block.super }}
+    <a href="#" class="btn btn-danger btn-block btn-catalog-del" data-id='{{ advert.id }}'>Удалить</a>
+{% endblock %}

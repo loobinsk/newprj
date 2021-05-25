@@ -1,0 +1,23 @@
+
+@import '../imports.less';
+
+.breadcrumb {
+    background: transparent;
+    padding: 0;
+    margin: 15px 0;
+
+    &__col {
+        .col();
+        .size(12);
+    }
+
+    a {
+        color: #999;
+    }
+
+    li:last-child {
+        a {
+            color: #666;
+        }
+    }
+}

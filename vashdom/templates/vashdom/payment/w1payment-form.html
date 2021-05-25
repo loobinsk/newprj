@@ -1,0 +1,20 @@
+
+<form action="{{ w1_form.action_url }}" method="POST" accept-charset="UTF-8">
+    <h2 class="paytitle">или</h2>
+    {{ w1_form }}
+    <button type="submit" class="btn btn-block btn-secondary">Перейти для оплаты счета в единую кассу</button>
+    <br> 
+    <div align="right">
+    <p>Если браузер не поддерживает переадресацию, скопируйте прямую ссылку на Ваш счет</p>
+    <input type="text" id="w1_url" value="{{ w1_url }}">
+    <button type="button" class="btn_copy" data-clipboard-target="#w1_url">Копировать</button>
+    </div>
+    <br> 
+    <b>Примерное время до получения смс с паролем: 1:40 сек.</b>
+    <br>
+    <br>
+    <div>
+    <a class="colorbox" href="/static/img/all1.jpg" rel="image-list" title="Подтверждение"> <img src="/static/img/2disp.jpg" /> </a>
+    </div>
+
+</form>

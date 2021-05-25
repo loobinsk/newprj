@@ -1,0 +1,147 @@
+.comments {
+    overflow: hidden;
+}
+
+.comments .btn-comment-else {
+    background: #fff;
+    border: 2px dashed #4abce4;
+    text-transform: uppercase;
+    color: #666;
+}
+
+.comments .btn-comment-else:hover {
+    background: #ddd;
+    color: #333;
+    border-style: solid;
+}
+
+
+.comment-form {
+    padding: 15px 0;
+}
+
+.comment-form .user-avatar {
+    float: left;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.comment-form .user-avatar img {
+    width: 40px;
+    height: 40px;
+}
+
+.comment-form form {
+    margin-left: 50px;
+}
+
+.comment-form .comment-footer {
+    min-height: 35px;
+    margin-top: 10px;
+}
+
+.comment-form .name {
+    float: left;
+}
+
+.comment-form .name label {
+    text-transform: uppercase;
+    font-weight: normal;
+    width: 100px;
+}
+
+.comment-form .name input[type="text"] {
+    width: 250px;
+}
+
+.comment-form .captcha-form {
+    float: none; !important;
+    width: 300px;
+    margin-left: 300px;
+}
+.comment-form .captcha-form img {
+    width: auto;
+    height: 34px;
+}
+.comment-form .captcha-form label {
+    text-transform: uppercase;
+    font-weight: normal;
+    display: block;
+}
+
+.comment-form .captcha-form img {
+    display: inline-block;
+    vertical-align: top;
+    border: 1px #ddd;
+    border-style: solid none solid solid;
+}
+
+.comment-form .captcha-form .btn-refresh-captcha,
+.comment-form .captcha-form .btn-refresh-captcha:focus {
+    margin-right: 15px;
+    border-radius: 0 4px 4px 0;
+    background: #fff;
+    color: #999;
+    border: 1px #ddd;
+    border-style: solid solid solid none;
+    vertical-align: top;
+    outline: none;
+}
+
+.comment-form .captcha-form .btn-refresh-captcha:hover {
+    color: #479cba;
+}
+
+.comment-form .captcha-form input[type="text"] {
+    width: 130px;
+    display: inline-block;
+}
+
+
+
+.comment-preview {
+    overflow: hidden;
+    margin: 0 0 30px 0;
+}
+
+.comment-preview:last-child {
+    margin: 0;
+}
+
+.comment-preview .user-avatar {
+    float: left;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.comment-preview .user-avatar img {
+    width: 40px;
+    height: 40px;
+}
+
+.comment-preview .content {
+    margin-left: 50px;
+}
+
+.comment-preview .date {
+    color: #777;
+}
+
+.comment-preview .children .comment-preview:first-child {
+    margin-top: 15px;
+}
+
+.comment-preview .footer {
+    margin: 5px 0;
+    font-size: 12px;
+    overflow: hidden;
+}
+
+.comment-preview .footer > div {
+    float: left;
+    margin-right: 15px;
+}
+
+.comment-preview .comment-form {
+    margin-left: -50px;
+}

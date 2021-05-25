@@ -1,0 +1,5 @@
+<div class="bfh-selectbox metro" id="{{ attrs.id }}" data-name="{{ name }}" data-value="{{ value|default_if_none:'' }}" data-filter="true">
+    {% for choice in choices %}
+        <div data-value="{{ choice.0 }}">{{ choice.1 }}</div>
+    {% endfor %}
+</div>

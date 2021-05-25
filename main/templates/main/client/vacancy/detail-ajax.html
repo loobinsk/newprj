@@ -1,0 +1,16 @@
+{% load main_tags %}
+
+<div class='vacancy-detail vacancy-item-{{ vacancy.id }} editable-content'>
+    <div class='content'>
+        <h1 class='page-title'>{{ vacancy.title }}</h1>
+        {{ vacancy.body|linebreaksbr }}
+    </div>
+
+    <div class='item-footer'>
+        <div class='date'>
+            {{ vacancy.date|fmt_date }}
+        </div>
+    </div>
+
+    {% include 'main/client/vacancy/edit-buttons.html' %}
+</div>

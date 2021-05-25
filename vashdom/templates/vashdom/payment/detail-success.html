@@ -1,0 +1,25 @@
+{% load main_tags %}
+{% load vashdom_tags %}
+
+{% if payment %}
+<article class="payment-detail payment-item-{{ payment.id }}">
+    <h1 class="payment-detail__title">{% if title %}{{ title }}: {% endif %}Платеж №{{ payment.id }}</h1>
+
+    <div class="content">
+        <div class="date"><strong>Дата:</strong> {{ payment.created|fmt_date }}</div>
+        <div class="town"><strong>Город</strong> {{ payment.town.title }}</div>
+        <div class="tariff"><strong>Тариф:</strong>
+            {% if payment.tariff.tariff_type == 'c' %}
+                {{ payment.count }} объявлений
+            {% else %}
+                {{ payment.tariff.title }}
+            {% endif %}
+        </div>
+        <div class="sum"><strong>Сумма:</strong> {{ payment.total }} р.</div>
+        <div class="tel"><strong>Телефон:</strong> {{ payment.tel|fmt_tel }}</div>
+
+        <div class="password"><strong>Ваш пароль:</strong> {{ payment.password.password }}</div>
+
+    </div>
+</article>
+{% endif %}

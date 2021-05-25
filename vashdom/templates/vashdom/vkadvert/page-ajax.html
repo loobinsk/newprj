@@ -1,0 +1,20 @@
+{% load vashdom_tags %}
+
+{% include 'vashdom/vkadvert/list.html' %}
+
+{% vashdom_pagination page %}
+
+<script type="text/javascript">
+    jQuery(document).ready(function() {
+        $("img.lazy").lazyload({
+            effect : "fadeIn"
+        });
+
+        $('.colorbox').colorbox({
+            scalePhotos: true,
+            maxWidth: '100%',
+            maxHeight: '100%',
+            fixed: true
+        });
+    });
+</script>

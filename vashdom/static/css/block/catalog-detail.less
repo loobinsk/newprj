@@ -1,0 +1,218 @@
+@import '../imports.less';
+
+.catalog-detail {
+    &__content {
+        .col();
+        .size(9);
+        .size-sm(12);
+        padding-bottom: 30px;
+    }
+
+    &__sidebar {
+        .col();
+        .size(3);
+        .sm(display, none);
+        background: #1a88ae;
+
+        .block {
+            .rounded(4px);
+            margin-bottom: 15px;
+            padding: 15px;
+            color: #fff;
+            background: #1a88ae;
+    
+            h3 {
+                font-size: 16px;
+                margin: 0 0 10px 0;
+                padding: 0;
+            }
+    
+            p a {
+                color: lighten(@primarycolor, 50%);
+            }
+        }
+    }
+
+
+    &__title {
+        padding: 0 0 15px 0;
+        margin: 0;
+        border-bottom: 1px solid #ddd;
+        font-weight: bold;
+        color: #555;
+        display: flex;
+        align-items: center;
+        .md(flex-wrap, wrap);
+        
+
+        &-text {
+            flex-grow: 1;
+            display: block;
+            .md(width, 100%);
+        }
+    }
+
+    &__date {
+        font-size: 14px;
+        margin: 5px 0;
+
+        .value {
+            padding: 2px 5px;
+            background: @primarycolor;
+            .rounded(4px);
+            color: #fff;
+        }
+    }
+
+
+    &__options {
+        display: flex;
+        .sm-block({
+            flex-wrap: wrap;
+        });
+
+        &-col {
+            flex-grow: 1;
+            
+            & > div {
+                margin-bottom: 5px;
+
+                strong {
+                    display: inline-block;
+                    width: 140px;
+                }
+
+                .glyphicon {
+                    color: @primarycolor;
+                    font-size: 16px;
+                    vertical-align: top;
+                }
+            }
+
+            &&_2 {
+                .sm(display, none);
+            }
+        }
+    }
+
+    &__body {
+        padding: 15px 0;
+        margin: 15px 0;
+        border: 1px #ddd;
+        border-style: dashed none dashed none;
+    }
+
+    &__owner {
+        overflow: hidden;
+
+        strong {
+            display: block;
+            text-transform: uppercase;
+        }
+    }
+
+    &__photo {
+        float: left;
+        width: 60px;
+        height: 60px;
+        overflow: hidden;
+        .rounded(100%);
+         margin-right: 10px;
+
+        img {
+            width: 60px;
+            height: 60px;
+        }
+    }
+
+    &__owner-tel {
+        margin: 10px 0;
+
+        strong {
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+
+        .input-group {
+            max-width: 350px;
+        }
+
+        .form-control {
+            font-size: 18px;
+            height: auto;
+            .sm(font-size, 12px);
+        }
+
+        .btn {
+            .sm(font-size, 12px);
+        }
+    }
+
+    &__help {
+        font-size: 12px;
+        margin: 10px 0;
+        color: @grey600;
+    }
+
+    .carousel-inner {
+        > .item > a > img {
+            width: 100%;
+        } 
+    }
+
+    &__map {
+        height: 200px;
+        margin-bottom: 15px;
+    }
+
+    &__price {
+        font-size: 30px;
+        color: @secondcolor;
+
+        strong {
+            font-size: 16px;
+        }
+    }
+
+    .icon-list {
+        margin-top: 5px;
+    }
+
+    &__subscribtion {
+        margin-top: 25px;
+        border-top: 1px dashed #bbb;
+        padding: 25px 0;
+        display: flex;
+        align-items: flex-start;
+        .sm(flex-wrap, wrap);
+    }
+
+    &__social {
+        margin: 15px 0;
+    }
+
+    &__similar {
+        margin: 15px 0;
+    } 
+
+    &__buttons {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+
+        .sm-block({
+            flex-direction: column;
+        });
+
+        .btn {
+            margin-bottom: 10px;
+            width: 50%;
+            font-size: 12px;
+            .sm(width, auto);
+        }
+    }
+
+    &__carousel {
+        margin: 0 -15px 0 -15px;
+    }
+}

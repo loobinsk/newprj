@@ -1,0 +1,21 @@
+{% load main_tags %}
+
+<div class="connected-service-preview connected-service connected-service-item-{{ service.id }}">
+    <div class="content">
+        <h2>{{ service.perm.title }}</h2>
+        <div class="status">
+            {% if service.active %}
+                <span class="label label-info">Включена</span>
+            {% else %}
+                <span class="label label-danger">Отключена</span>
+            {% endif %}
+        </div>
+        <div class="start_date">С {{ service.start_date }}</div>
+        <div class="end_date">По {{ service.end_date }}</div>
+        <div class="elapsed">{{ service.elapsed_time }}</div>
+        <div class="actions">
+            <a href="#" class="btn-service-edit" data-id='{{ service.id }}'>Изменить</a><br>
+            <a href="#" class="btn-service-del text-danger" data-id='{{ service.id }}'>Удалить</a>
+        </div>
+    </div>
+</div>

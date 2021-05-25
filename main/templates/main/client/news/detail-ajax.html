@@ -1,0 +1,22 @@
+{% load uimg_tags %}
+{% load uvideo_tags %}
+{% load main_tags %}
+
+<div class='news-detail news-item-{{ news.id }} editable-content'>
+    <div class='content'>
+        <h1 class='page-title'>{{ news.title }}</h1>
+
+        {% image_detail news.images.all news.title %}
+
+        {% video news.video %}
+
+        {{ news.body|safe }}
+
+        <div class='item-footer'>
+{#            <div class='date'>#}
+{#                {{ news.date|fmt_date }}#}
+{#            </div>#}
+            {% include 'main/client/news/edit-buttons.html' %}
+        </div>
+    </div>
+</div>

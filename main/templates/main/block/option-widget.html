@@ -1,0 +1,4 @@
+<label class="btn btn-sm btn-flt7 {{ attrs.class }} {% if checked %}active{% endif %}">
+    <input type="checkbox" name="{{ name }}" {% if checked %}checked{% endif %}>
+    <span class="glyphicon {{ name }}"></span> {{ label|default_if_none:'' }}
+</label>

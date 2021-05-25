@@ -1,0 +1,9 @@
+{% extends 'page-client-center.html' %}
+
+{% block title %}Мой профиль  &middot; {{ block.super }}{% endblock %}
+
+{% block center %}
+    <h2 class="page-title">Мой профиль</h2>
+
+    {% include 'uprofile/profile-form.html' %}
+{% endblock %}

@@ -1,0 +1,23 @@
+<script type="text/javascript">
+    function init(){
+        var myMap, myPlacemark;
+
+        {% for town in town_list %}
+            {% if town.latitude and town.longitude and town.zoom %}
+                myMap = new ymaps.Map("town-map-{{ town.id }}", {
+                    center: [{{ town.latitude|stringformat:'f' }}, {{ town.longitude|stringformat:'f' }}],
+                    zoom: {{ town.zoom|stringformat:'d' }}
+                });
+
+            {% endif %}
+        {% endfor %}
+    }
+
+    ymaps.ready(init);
+</script>
+
+<div class="town-list">
+    {% for town in town_list %}
+        {% include 'main/client/town/preview.html' %}
+    {% endfor %}
+</div>

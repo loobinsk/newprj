@@ -1,0 +1,56 @@
+{% extends 'page-client-center.html' %}
+
+{% load bootstrap_pagination %}
+
+{% block title %}Пользователи &middot; {{ block.super }}{% endblock %}
+
+{% block center %}
+    {% if perms.uprofile.add_user %}
+        <a href='#' class='btn-user-create btn btn-flt3 pull-right'>Создать пользователя</a>
+    {% endif %}
+
+    <h1 class="page-title">Пользователи</h1>
+
+    <form method="GET" action="{% url 'client:user:list' %}" id="user-filter-form" class="row">
+        <div class="col-xs-3">
+            <div>
+                <label>{{ filter_form.username.label }}</label>
+                {{ filter_form.username }}
+            </div>
+            <div>
+                <label>{{ filter_form.site.label }}</label>
+                {{ filter_form.site }}
+            </div>
+            <div>
+                {{ filter_form.moderator }}<label for="id_flt_moderator">{{ filter_form.moderator.label }}</label>
+            </div>
+        </div>
+        <div class="col-xs-3">
+            <div>
+                <label>{{ filter_form.email.label }}</label>
+                {{ filter_form.email }}
+            </div>
+            <div>
+                <label>{{ filter_form.tel.label }}</label>
+                {{ filter_form.tel }}
+            </div>
+        </div>
+        <div class="col-xs-3">
+            <div>
+                <label>{{ filter_form.company.label }}</label>
+                {{ filter_form.company }}
+            </div>
+            <div>
+                <label>{{ filter_form.status.label }}</label>
+                {{ filter_form.status }}
+            </div>
+        </div>
+        <div class="col-xs-3 text-right">
+            <input type="submit" class="btn btn-flt3" value="Поиск">
+        </div>
+    </form>
+
+    {% include 'main/client/user/list.html' %}
+
+    {% bootstrap_paginate page_obj range=6 show_first_last='true' %}
+{% endblock %}

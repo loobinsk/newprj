@@ -1,0 +1,45 @@
+<form method="POST" action="{{ action }}" id="user-form" class="form">
+    {% csrf_token %}
+
+    <ul class="nav nav-tabs" role="tablist">
+        <li class="active"><a href="#user" role="tab" data-toggle="tab">Пользователь</a></li>
+{#        <li><a href="#user-access" role="tab" data-toggle="tab">Доступ</a></li>#}
+    </ul>
+
+    <div class="tab-content">
+        <div class="tab-pane active" id="user">
+            <p>
+                {{ form.first_name.label_tag }}
+                {{ form.first_name }}
+            </p>
+            <p>
+                {{ form.last_name.label_tag }}
+                {{ form.last_name }}
+            </p>
+            <p>
+                {{ form.tel.label_tag }}
+                {{ form.tel }}
+            </p>
+            <p>
+                <label></label>{{ form.is_active }}{{ form.is_active.label_tag }}
+            </p>
+            <p>
+                <label>{{ form.username.label }}</label>
+                {{ form.username }}
+            </p>
+            <p>
+                <label>{{ form.password1.label }}</label>
+                {{ form.password1 }}
+            </p>
+            <p>
+                <label>{{ form.password2.label }}</label>
+                {{ form.password2 }}
+            </p>
+        </div>
+    </div>
+
+</form>
+
+<script type="text/javascript">
+    jQuery('#user-form #id_tel').mask('+7(999) 999-9999');
+</script>

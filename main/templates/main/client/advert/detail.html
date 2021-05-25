@@ -1,0 +1,10 @@
+{% extends 'page-client.html' %}
+
+{% load main_tags %}
+{% load uimg_tags %}
+
+{% block title %}{{ advert.title }} &middot; {{ block.super }}{% endblock %}
+
+{% block content %}
+    {% include 'main/client/advert/detail-ajax.html' %}
+{% endblock %}

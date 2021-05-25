@@ -1,0 +1,15 @@
+{% load main_tags %}
+
+<div class="town-preview town town-item-{{ town.id }} editable-content">
+    <div class="preview-image">
+        <div id="town-map-{{ town.id }}"></div>
+    </div>
+
+    <div class="content">
+        <h2><a href="{% url 'client:town:detail' town.id %}">{{ town.title }}</a></h2>
+        <p>Широта: {{ town.latitude|default_if_none:'-' }}</p>
+        <p>Долгота: {{ town.longitude|default_if_none:'-' }}</p>
+    </div>
+
+    {% include 'main/client/town/edit-buttons.html' %}
+</div>

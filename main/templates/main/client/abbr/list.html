@@ -1,0 +1,14 @@
+<table class='table table-bordered abbr-list'>
+    <thead>
+        <tr>
+            <th>Сокращение</th>
+            <th>Расшифровка</th>
+            <th>Действия</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for abbr in abbr_list %}
+            {% include 'main/client/abbr/preview.html' %}
+        {% endfor %}
+    </tbody>
+</table>

@@ -1,0 +1,20 @@
+{% if can_edit %}
+    {% if my %}
+        <div class="edit-buttons">
+            <a href="#" class="btn-user-edit-by-user" data-id="{{ object.id }}" data-name='{{ object.get_full_name }}'>Изменить</a>
+            &nbsp;&nbsp;
+            <a href="#" class="btn-user-del-by-user text-danger" data-id="{{ object.id }}" data-name='{{ object.get_full_name }}'>Удалить</a>
+        </div>
+    {% else %}
+        <div class="edit-buttons">
+            <a href="#" class="btn-user-edit" data-id="{{ object.id }}" data-name='{{ object.get_full_name }}'>Изменить</a>
+            &nbsp;&nbsp;
+            <a href="#" class="btn-user-del text-danger" data-id="{{ object.id }}" data-name='{{ object.get_full_name }}'>Удалить</a>&nbsp;&nbsp;
+            {% if perms.main.change_user %}
+                <a href="#" class="btn-user-status text-warning"  data-id="{{ object.id }}" data-status='a' data-name="{{ object.get_short_name }}">Сделать активный</a>&nbsp;&nbsp;
+                <a href="#" class="btn-user-status text-warning"  data-id="{{ object.id }}" data-status='m' data-name="{{ object.get_short_name }}">Отправить на модерацию</a>&nbsp;&nbsp;
+                <a href="#" class="btn-user-status text-danger"  data-id="{{ object.id }}" data-status='b' data-name="{{ object.get_short_name }}">Заблокировать</a>
+            {% endif %}
+        </div>
+    {% endif %}
+{% endif %}
